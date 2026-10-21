@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MDS_TI | Solicitação de Testes</title>
 
     <style>
@@ -15,9 +16,23 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background:
-                radial-gradient(circle at 10% 20%, rgba(0, 207, 255, 0.16), transparent 30%),
-                radial-gradient(circle at 90% 80%, rgba(0, 119, 255, 0.14), transparent 35%),
-                linear-gradient(135deg, #06111f, #0a1d32 50%, #071522);
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0, 207, 255, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(0, 119, 255, 0.14),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #06111f,
+                    #0a1d32 50%,
+                    #071522
+                );
+
             color: #ffffff;
             min-height: 100vh;
         }
@@ -27,6 +42,8 @@
             margin: auto;
             padding: 35px 25px 50px;
         }
+
+        /* HEADER */
 
         .header {
             display: flex;
@@ -44,14 +61,26 @@
         .logo-icon {
             width: 52px;
             height: 52px;
+
             border-radius: 15px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 23px;
             font-weight: 800;
-            background: linear-gradient(135deg, #00d4ff, #0077ff);
-            box-shadow: 0 0 28px rgba(0, 200, 255, 0.28);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d4ff,
+                    #0077ff
+                );
+
+            box-shadow:
+                0 0 28px
+                rgba(0, 200, 255, 0.28);
         }
 
         .logo-name {
@@ -69,6 +98,8 @@
             font-size: 13px;
         }
 
+        /* CONTEÚDO PRINCIPAL */
+
         .main {
             display: grid;
             grid-template-columns: 0.9fr 1.1fr;
@@ -76,16 +107,27 @@
             align-items: center;
         }
 
+        /* LADO ESQUERDO */
+
         .hero-tag {
             display: inline-block;
+
             color: #00d4ff;
-            background: rgba(0, 212, 255, 0.09);
-            border: 1px solid rgba(0, 212, 255, 0.23);
+
+            background:
+                rgba(0, 212, 255, 0.09);
+
+            border:
+                1px solid
+                rgba(0, 212, 255, 0.23);
+
             padding: 8px 14px;
             border-radius: 30px;
+
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 1px;
+
             margin-bottom: 22px;
         }
 
@@ -123,20 +165,37 @@
             width: 27px;
             height: 27px;
             min-width: 27px;
+
             border-radius: 50%;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             color: #00d4ff;
-            background: rgba(0, 212, 255, 0.1);
+
+            background:
+                rgba(0, 212, 255, 0.10);
         }
 
+        /* FORMULÁRIO */
+
         .card {
-            background: rgba(10, 28, 48, 0.90);
-            border: 1px solid rgba(136, 180, 218, 0.16);
+            background:
+                rgba(10, 28, 48, 0.90);
+
+            border:
+                1px solid
+                rgba(136, 180, 218, 0.16);
+
             border-radius: 24px;
+
             padding: 32px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.32);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.32);
+
             backdrop-filter: blur(15px);
         }
 
@@ -151,14 +210,25 @@
             margin-bottom: 27px;
         }
 
+        /* MENSAGEM DE SUCESSO */
+
         .success {
-            background: rgba(27, 209, 126, 0.12);
-            border: 1px solid rgba(27, 209, 126, 0.42);
+            background:
+                rgba(27, 209, 126, 0.12);
+
+            border:
+                1px solid
+                rgba(27, 209, 126, 0.42);
+
             color: #7ff0bb;
+
             border-radius: 12px;
+
             padding: 14px;
             margin-bottom: 20px;
         }
+
+        /* CAMPOS */
 
         .row {
             display: grid;
@@ -172,8 +242,11 @@
 
         label {
             display: block;
+
             margin-bottom: 7px;
+
             color: #c8d7e5;
+
             font-size: 13px;
             font-weight: 600;
         }
@@ -182,68 +255,124 @@
         select,
         textarea {
             width: 100%;
-            border: 1px solid #25435e;
+
+            border:
+                1px solid #25435e;
+
             border-radius: 11px;
+
             background: #0a1c2e;
             color: #ffffff;
+
             padding: 13px 14px;
+
             font-size: 14px;
+
             outline: none;
+
             transition: 0.2s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #668199;
         }
 
         input:focus,
         select:focus,
         textarea:focus {
             border-color: #00cfff;
-            box-shadow: 0 0 0 3px rgba(0, 207, 255, 0.09);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 207, 255, 0.09);
         }
 
         textarea {
-            min-height: 105px;
+            min-height: 110px;
             resize: vertical;
         }
 
         select option {
             background: #0a1c2e;
+            color: #ffffff;
         }
+
+        /* BOTÃO */
 
         button {
             width: 100%;
+
             border: 0;
             border-radius: 12px;
+
             padding: 15px;
+
             cursor: pointer;
+
             color: #00121c;
+
             font-size: 15px;
             font-weight: 800;
-            background: linear-gradient(90deg, #00d9ff, #1e8fff);
-            box-shadow: 0 10px 30px rgba(0, 174, 255, 0.22);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00d9ff,
+                    #1e8fff
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 174, 255, 0.22);
+
             transition: 0.2s;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(0, 174, 255, 0.32);
+
+            box-shadow:
+                0 14px 35px
+                rgba(0, 174, 255, 0.32);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .privacy {
             text-align: center;
+
             color: #718ba2;
+
             font-size: 11px;
+
             margin-top: 14px;
         }
 
+        /* RODAPÉ */
+
         footer {
             margin-top: 60px;
+
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
             text-align: center;
+
             color: #627b92;
+
             font-size: 12px;
         }
 
+        /* RESPONSIVO */
+
         @media (max-width: 850px) {
+
             .main {
                 grid-template-columns: 1fr;
             }
@@ -254,6 +383,7 @@
         }
 
         @media (max-width: 550px) {
+
             .page {
                 padding: 22px 16px 35px;
             }
@@ -278,18 +408,25 @@
     </style>
 </head>
 
+
 <body>
 
 <div class="page">
 
+    <!-- CABEÇALHO -->
+
     <header class="header">
 
         <div class="logo">
-            <div class="logo-icon">M</div>
+
+            <div class="logo-icon">
+                M
+            </div>
 
             <div class="logo-name">
                 MDS<span>_TI</span>
             </div>
+
         </div>
 
         <div class="security">
@@ -298,7 +435,12 @@
 
     </header>
 
+
+    <!-- PRINCIPAL -->
+
     <main class="main">
+
+        <!-- APRESENTAÇÃO -->
 
         <section class="hero">
 
@@ -312,30 +454,57 @@
             </h1>
 
             <p>
-                Preencha os dados da solicitação para registrar as
-                informações necessárias para análise e contato.
+                Preencha os dados da solicitação para registrar
+                as informações necessárias para análise e contato.
             </p>
+
 
             <div class="benefits">
 
                 <div class="benefit">
-                    <div class="check">✓</div>
-                    Formulário simples e organizado
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <div>
+                        Formulário simples e organizado
+                    </div>
+
                 </div>
 
-                <div class="benefit">
-                    <div class="check">✓</div>
-                    Solicitação centralizada
-                </div>
 
                 <div class="benefit">
-                    <div class="check">✓</div>
-                    Retorno através dos dados informados
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <div>
+                        Solicitação centralizada
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <div>
+                        Retorno através dos dados informados
+                    </div>
+
                 </div>
 
             </div>
 
         </section>
+
+
+        <!-- FORMULÁRIO -->
 
         <section class="card">
 
@@ -347,67 +516,112 @@
                 Preencha os campos abaixo para enviar sua solicitação.
             </p>
 
+
             {% if sucesso %}
+
                 <div class="success">
-                    ✓ Obrigado, {{ nome }}. Sua solicitação foi registrada com sucesso.
+                    ✓ Obrigado, {{ nome }}.
+                    Sua solicitação foi registrada com sucesso.
                 </div>
+
             {% endif %}
 
-            <form action="/solicitar" method="POST">
+
+            /solicitar
+
+                <!-- NOME / EMPRESA -->
 
                 <div class="row">
 
                     <div class="field">
-                        <label>Nome *</label>
+
+                        <label for="nome">
+                            Nome *
+                        </label>
+
                         <input
+                            id="nome"
                             type="text"
-me="nome"
+                            name="nome"
                             placeholder="Seu nome"
                             required
                         >
+
                     </div>
 
+
                     <div class="field">
-                        <label>Empresa</label>
+
+                        <label for="empresa">
+                            Empresa
+                        </label>
+
                         <input
+                            id="empresa"
                             type="text"
                             name="empresa"
                             placeholder="Nome da empresa"
                         >
+
                     </div>
 
                 </div>
 
+
+                <!-- EMAIL / WHATSAPP -->
+
                 <div class="row">
 
                     <div class="field">
-                        <label>E-mail *</label>
+
+                        <label for="email">
+                            E-mail *
+                        </label>
+
                         <input
+                            id="email"
                             type="email"
                             name="email"
                             placeholder="email@empresa.com"
                             required
                         >
+
                     </div>
 
+
                     <div class="field">
-                        <label>WhatsApp</label>
+
+                        <label for="whatsapp">
+                            WhatsApp
+                        </label>
+
                         <input
+                            id="whatsapp"
                             type="tel"
                             name="whatsapp"
                             placeholder="(11) 99999-9999"
                         >
+
                     </div>
 
                 </div>
+
+
+                <!-- TIPO / DATA -->
 
                 <div class="row">
 
                     <div class="field">
 
-                        <label>Tipo de teste *</label>
+                        <label for="tipo_teste">
+                            Tipo de teste *
+                        </label>
 
-                        <select name="tipo_teste" required>
+                        <select
+                            id="tipo_teste"
+                            name="tipo_teste"
+                            required
+                        >
 
                             <option value="">
                                 Selecione
@@ -433,11 +647,15 @@ me="nome"
 
                     </div>
 
+
                     <div class="field">
 
-                        <label>Data desejada</label>
+                        <label for="data">
+                            Data desejada
+                        </label>
 
                         <input
+                            id="data"
                             type="date"
                             name="data"
                         >
@@ -446,11 +664,17 @@ me="nome"
 
                 </div>
 
+
+                <!-- EQUIPAMENTO -->
+
                 <div class="field">
 
-                    <label>Equipamento / Produto *</label>
+                    <label for="equipamento">
+                        Equipamento / Produto *
+                    </label>
 
                     <input
+                        id="equipamento"
                         type="text"
                         name="equipamento"
                         placeholder="Informe o equipamento ou produto"
@@ -459,11 +683,17 @@ me="nome"
 
                 </div>
 
+
+                <!-- DESCRIÇÃO -->
+
                 <div class="field">
 
-                    <label>Descrição da solicitação *</label>
+                    <label for="descricao">
+                        Descrição da solicitação *
+                    </label>
 
                     <textarea
+                        id="descricao"
                         name="descricao"
                         placeholder="Descreva o teste necessário e outras informações importantes..."
                         required
@@ -471,12 +701,17 @@ me="nome"
 
                 </div>
 
+
+                <!-- BOTÃO -->
+
                 <button type="submit">
                     ENVIAR SOLICITAÇÃO →
                 </button>
 
+
                 <div class="privacy">
-                    Os dados informados serão utilizados para atendimento da solicitação.
+                    Os dados informados serão utilizados
+                    para atendimento da solicitação.
                 </div>
 
             </form>
@@ -484,6 +719,9 @@ me="nome"
         </section>
 
     </main>
+
+
+    <!-- RODAPÉ -->
 
     <footer>
         MDS_TI • Tecnologia e Soluções
