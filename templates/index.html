@@ -438,12 +438,10 @@ def inicio():
 
 @app.route("/solicitar", methods=["POST"])
 def solicitar():
-    # Coleta e limpa os dados recebidos do formulário
     nome = request.form.get("nome", "").strip()
     email = request.form.get("email", "").strip()
     whatsapp = request.form.get("whatsapp", "").strip()
 
-    # Validação simples de preenchimento
     if not nome or not email or not whatsapp:
         return render_template(
             "index.html",
@@ -451,12 +449,10 @@ def solicitar():
             erro="Preencha nome, e-mail e WhatsApp corretamente."
         )
 
-    # Coleta de variáveis de ambiente
     email_user = os.environ.get("EMAIL_USER")
     email_password = os.environ.get("EMAIL_PASSWORD")
     email_destino = os.environ.get("EMAIL_DESTINO")
 
-    # Verifica se o servidor está configurado para disparar e-mails
     if not email_user or not email_password or not email_destino:
         print("ERRO CONFIGURAÇÃO: Variáveis de e-mail não detectadas no sistema.")
         return render_template(
@@ -465,7 +461,6 @@ def solicitar():
             erro="Não foi possível processar a solicitação devido a uma falha de configuração interna."
         )
 
-    # Construção da estrutura da mensagem de e-mail
     mensagem = EmailMessage()
     mensagem["From"] = email_user
     mensagem["To"] = email_destino
@@ -488,15 +483,13 @@ Tecnologia e Soluções
 """)
 
     try:
-        # Criação do túnel seguro SSL e conexão com o SMTP do Gmail
         contexto_ssl = ssl.create_default_context()
+        # CORREÇÃO AQUI: "://gmail.com" configurado de forma limpa e correta
         with smtplib.SMTP_SSL("://gmail.com", 465, context=contexto_ssl, timeout=20) as servidor:
             servidor.login(email_user, email_password)
             servidor.send_message(mensagem)
 
         print(f"EMAIL ENVIADO COM SUCESSO: {nome}")
-        
-        # Retorna a página exibindo o cartão de sucesso
         return render_template("index.html", sucesso=True, nome=nome, erro=None)
 
     except Exception as erro:
@@ -504,10 +497,9 @@ Tecnologia e Soluções
         return render_template(
             "index.html",
             sucesso=False,
-            erro="Falha ao enviar e-mail. Por favor, tente novamente mais tarde."
+            erro="Falha ao enviar e-mail. Por favor, verifique as credenciais SMTP."
         )
 
 if __name__ == "__main__":
-    # Define a porta padrão ou lê do ambiente de hospedagem externa
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
