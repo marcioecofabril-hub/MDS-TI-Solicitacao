@@ -1,36 +1,1049 @@
-import os
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-from flask import Flask, render_template
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MDS_TI | Solicitação de Testes</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0, 207, 255, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(0, 119, 255, 0.14),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #06111f,
+                    #0a1d32 50%,
+                    #071522
+                );
+
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 35px 25px 50px;
+        }
+
+        /* CABEÇALHO */
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 45px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 23px;
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d4ff,
+                    #0077ff
+                );
+
+            box-shadow:
+                0 0 28px
+                rgba(0, 200, 255, 0.28);
+        }
+
+        .logo-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-name span {
+            color: #00d4ff;
+        }
+
+        .security {
+            color: #9eb3c8;
+            font-size: 13px;
+        }
+
+        /* CONTEÚDO */
+
+        .main {
+            display: grid;
+
+            grid-template-columns:
+                0.9fr
+                1.1fr;
+
+            gap: 55px;
+
+            align-items: center;
+        }
+
+        /* APRESENTAÇÃO */
+
+        .hero-tag {
+            display: inline-block;
+
+            color: #00d4ff;
+
+            background:
+                rgba(0, 212, 255, 0.09);
+
+            border:
+                1px solid
+                rgba(0, 212, 255, 0.23);
+
+            padding: 8px 14px;
+
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #00d4ff;
+        }
+
+        .hero p {
+            max-width: 480px;
+
+            color: #a9bbcc;
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .benefits {
+            display: grid;
+
+            gap: 14px;
+
+            margin-top: 32px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            color: #dbe8f3;
+        }
+
+        .check {
+            width: 27px;
+            height: 27px;
+            min-width: 27px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color: #00d4ff;
+
+            background:
+                rgba(0, 212, 255, 0.10);
+        }
+
+        /* CARD */
+
+        .card {
+            padding: 32px;
+
+            background:
+                rgba(10, 28, 48, 0.92);
+
+            border:
+                1px solid
+                rgba(136, 180, 218, 0.16);
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.32);
+        }
+
+        .card-title {
+            font-size: 25px;
+
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            color: #91a8bd;
+
+            font-size: 14px;
+            line-height: 1.5;
+
+            margin-bottom: 27px;
+        }
+
+        /* FORMULÁRIO */
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+
+            color: #c8d7e5;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px;
+
+            border:
+                1px solid #25435e;
+
+            border-radius: 11px;
+
+            background: #0a1c2e;
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #668199;
+        }
+
+        input:focus {
+            border-color: #00cfff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 207, 255, 0.09);
+        }
+
+        /* BOTÃO */
+
+        button {
+            width: 100%;
+
+            padding: 16px;
+
+            border: 0;
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            color: #00121c;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00d9ff,
+                    #1e8fff
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 174, 255, 0.22);
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(0, 174, 255, 0.32);
+        }
+
+        button:disabled {
+            opacity: 0.65;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+        .privacy {
+            color: #718ba2;
+
+            font-size: 11px;
+            line-height: 1.5;
+
+            text-align: center;
+
+            margin-top: 14px;
+        }
+
+        /* ERRO */
+
+        .error {
+            display: none;
+
+            padding: 14px;
+
+            margin-bottom: 20px;
+
+            border:
+                1px solid
+                rgba(255, 75, 75, 0.4);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255, 75, 75, 0.10);
+
+            color: #ffadad;
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* SUCESSO */
+
+        .success {
+            display: none;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(27, 209, 126, 0.4);
+
+            border-radius: 20px;
+
+            background:
+                rgba(27, 209, 126, 0.10);
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(27, 209, 126, 0.17);
+
+            color: #58f2ad;
+
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .success-title {
+            color: #78efb7;
+
+            font-size: 26px;
+            font-weight: 800;
+
+            margin-bottom: 15px;
+        }
+
+        .success-text {
+            color: #c6ded3;
+
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .wait-message {
+            color: #ffffff;
+
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.5;
+
+            margin-top: 22px;
+        }
+
+        /* RODAPÉ */
+
+        footer {
+            color: #627b92;
+
+            font-size: 12px;
+
+            text-align: center;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            margin-top: 60px;
+
+            padding-top: 20px;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 850px) {
+
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .page {
+                padding: 22px 20px 35px;
+            }
+
+            .header {
+                margin-bottom: 55px;
+            }
+
+            .security {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .main {
+                gap: 50px;
+            }
+
+            .card {
+                padding: 26px 20px;
+            }
+
+            input {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+
+</head>
 
 
-app = Flask(__name__)
+<body>
 
 
-@app.route("/", methods=["GET"])
-def inicio():
-
-    web3forms_access_key = os.environ.get(
-        "WEB3FORMS_ACCESS_KEY",
-        ""
-    ).strip()
-
-    return render_template(
-        "index.html",
-        web3forms_access_key=web3forms_access_key
-    )
+<div class="page">
 
 
-if __name__ == "__main__":
+    <!-- CABEÇALHO -->
 
-    port = int(
-        os.environ.get(
-            "PORT",
-            5000
-        )
-    )
+    <header class="header">
 
-    app.run(
-        host="0.0.0.0",
-        port=port,
-        debug=False
-    )
+        <div class="logo">
+
+            <div class="logo-icon">
+                M
+            </div>
+
+            <div class="logo-name">
+                MDS<span>_TI</span>
+            </div>
+
+        </div>
+
+        <div class="security">
+            ● Ambiente de solicitação
+        </div>
+
+    </header>
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="main">
+
+
+        <!-- APRESENTAÇÃO -->
+
+        <section class="hero">
+
+            <div class="hero-tag">
+                SOLICITAÇÃO DE TESTES
+            </div>
+
+            <h1>
+
+                Solicite seu teste de forma
+
+                <span>
+                    simples e rápida.
+                </span>
+
+            </h1>
+
+            <p>
+
+                Informe seus dados de contato.
+
+                Entraremos em contato pelo WhatsApp
+
+                para entender sua necessidade e
+
+                concluir a solicitação do teste.
+
+            </p>
+
+            <div class="benefits">
+
+                <div class="benefit">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    Solicitação rápida e simples
+
+                </div>
+
+                <div class="benefit">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    Atendimento personalizado
+
+                </div>
+
+                <div class="benefit">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    Retorno pelo WhatsApp
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FORMULÁRIO -->
+
+        <section class="card">
+
+
+            <div
+                id="mensagemErro"
+                class="error"
+            ></div>
+
+
+            <div
+                id="conteudoFormulario"
+            >
+
+                <h2 class="card-title">
+                    Solicitar teste
+                </h2>
+
+                <p class="card-subtitle">
+                    Informe seu nome, e-mail e WhatsApp.
+                </p>
+
+
+                <form id="formSolicitacao">
+
+
+                    <input
+                        type="hidden"
+                        id="accessKey"
+                        value="{{ web3forms_access_key }}"
+                    >
+
+
+                    <div class="field">
+
+                        <label for="nome">
+                            Nome *
+                        </label>
+
+                        <input
+                            id="nome"
+                            name="name"
+                            type="text"
+                            placeholder="Digite seu nome"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="email">
+                            E-mail *
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Digite seu e-mail"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="whatsapp">
+                            WhatsApp *
+                        </label>
+
+                        <input
+                            id="whatsapp"
+                            name="whatsapp"
+                            type="tel"
+                            placeholder="(11) 99999-9999"
+                            autocomplete="tel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Proteção simples contra robôs -->
+
+                    <input
+                        type="checkbox"
+                        name="botcheck"
+                        style="display: none;"
+                    >
+
+
+                    <button
+                        id="botaoEnviar"
+                        type="submit"
+                    >
+                        SOLICITAR TESTE →
+                    </button>
+
+
+                    <div class="privacy">
+
+                        Seus dados serão utilizados
+
+                        exclusivamente para contato referente
+
+                        à solicitação do teste.
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+            <!-- MENSAGEM DE SUCESSO -->
+
+            <div
+                id="mensagemSucesso"
+                class="success"
+            >
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <div class="success-title">
+                    Solicitação enviada!
+                </div>
+
+                <div class="success-text">
+
+                    Obrigado,
+                    <strong id="nomeConfirmacao"></strong>.
+
+                    <br><br>
+
+                    Recebemos sua solicitação de teste
+                    com sucesso.
+
+                </div>
+
+                <div class="wait-message">
+
+                    Aguarde, entraremos em contato
+                    pelo WhatsApp informado.
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        MDS_TI • Tecnologia e Soluções
+    </footer>
+
+
+</div>
+
+
+<script>
+
+    const formulario =
+        document.getElementById(
+            "formSolicitacao"
+        );
+
+    const botaoEnviar =
+        document.getElementById(
+            "botaoEnviar"
+        );
+
+    const conteudoFormulario =
+        document.getElementById(
+            "conteudoFormulario"
+        );
+
+    const mensagemSucesso =
+        document.getElementById(
+            "mensagemSucesso"
+        );
+
+    const mensagemErro =
+        document.getElementById(
+            "mensagemErro"
+        );
+
+    const nomeConfirmacao =
+        document.getElementById(
+            "nomeConfirmacao"
+        );
+
+    const campoWhatsApp =
+        document.getElementById(
+            "whatsapp"
+        );
+
+
+    /* MÁSCARA DO WHATSAPP */
+
+    campoWhatsApp.addEventListener(
+        "input",
+        function () {
+
+            let numeros =
+                campoWhatsApp.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+            numeros =
+                numeros.substring(
+                    0,
+                    11
+                );
+
+            if (numeros.length > 6) {
+
+                campoWhatsApp.value =
+                    "(" +
+                    numeros.substring(0, 2) +
+                    ") " +
+                    numeros.substring(2, 7) +
+                    "-" +
+                    numeros.substring(7);
+
+            } else if (numeros.length > 2) {
+
+                campoWhatsApp.value =
+                    "(" +
+                    numeros.substring(0, 2) +
+                    ") " +
+                    numeros.substring(2);
+
+            } else {
+
+                campoWhatsApp.value =
+                    numeros;
+
+            }
+
+        }
+    );
+
+
+    /* ENVIO DO FORMULÁRIO */
+
+    formulario.addEventListener(
+        "submit",
+        async function (evento) {
+
+            evento.preventDefault();
+
+
+            mensagemErro.style.display =
+                "none";
+
+
+            const accessKey =
+                document.getElementById(
+                    "accessKey"
+                ).value.trim();
+
+
+            const nome =
+                document.getElementById(
+                    "nome"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+            const whatsapp =
+                document.getElementById(
+                    "whatsapp"
+                ).value.trim();
+
+
+            if (
+                !accessKey ||
+                !nome ||
+                !email ||
+                !whatsapp
+            ) {
+
+                mensagemErro.textContent =
+                    "Preencha todos os campos obrigatórios.";
+
+                mensagemErro.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            botaoEnviar.disabled =
+                true;
+
+            botaoEnviar.textContent =
+                "ENVIANDO...";
+
+
+            const dados = {
+
+                access_key: accessKey,
+
+                subject:
+                    "Nova Solicitação de Teste | " +
+                    nome,
+
+                from_name:
+                    "MDS_TI - Solicitação de Testes",
+
+                name:
+                    nome,
+
+                email:
+                    email,
+
+                WhatsApp:
+                    whatsapp,
+
+                message:
+                    "NOVA SOLICITAÇÃO DE TESTE - MDS_TI\n\n" +
+                    "Nome: " +
+                    nome +
+                    "\n" +
+                    "E-mail: " +
+                    email +
+                    "\n" +
+                    "WhatsApp: " +
+                    whatsapp +
+                    "\n\n" +
+                    "Entrar em contato pelo WhatsApp " +
+                    "para concluir os detalhes do teste."
+
+            };
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "https://api.web3forms.com/submit",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    dados
+                                )
+                        }
+                    );
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                if (
+                    resposta.ok &&
+                    resultado.success === true
+                ) {
+
+                    nomeConfirmacao.textContent =
+                        nome;
+
+                    conteudoFormulario.style.display =
+                        "none";
+
+                    mensagemErro.style.display =
+                        "none";
+
+                    mensagemSucesso.style.display =
+                        "block";
+
+                    formulario.reset();
+
+                } else {
+
+                    throw new Error(
+                        resultado.message ||
+                        "O serviço recusou a solicitação."
+                    );
+
+                }
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao enviar:",
+                    erro
+                );
+
+                mensagemErro.textContent =
+                    "Não foi possível enviar a solicitação. " +
+                    "Por favor, tente novamente.";
+
+                mensagemErro.style.display =
+                    "block";
+
+                botaoEnviar.disabled =
+                    false;
+
+                botaoEnviar.textContent =
+                    "SOLICITAR TESTE →";
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
