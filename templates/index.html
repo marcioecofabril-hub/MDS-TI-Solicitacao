@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>MDS_TI | Solicitação de Testes</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,7 +15,6 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-
             background:
                 radial-gradient(
                     circle at 10% 20%,
@@ -51,9 +43,7 @@
             padding: 35px 25px 50px;
         }
 
-        /* =========================
-           CABEÇALHO
-        ========================== */
+        /* CABEÇALHO */
 
         .header {
             display: flex;
@@ -107,9 +97,7 @@
             font-size: 13px;
         }
 
-        /* =========================
-           CONTEÚDO PRINCIPAL
-        ========================== */
+        /* CONTEÚDO */
 
         .main {
             display: grid;
@@ -118,9 +106,7 @@
             align-items: center;
         }
 
-        /* =========================
-           APRESENTAÇÃO
-        ========================== */
+        /* LADO ESQUERDO */
 
         .hero-tag {
             display: inline-block;
@@ -191,9 +177,7 @@
                 rgba(0, 212, 255, 0.10);
         }
 
-        /* =========================
-           FORMULÁRIO
-        ========================== */
+        /* CARD */
 
         .card {
             background:
@@ -204,7 +188,6 @@
                 rgba(136, 180, 218, 0.16);
 
             border-radius: 24px;
-
             padding: 32px;
 
             box-shadow:
@@ -226,9 +209,7 @@
             margin-bottom: 27px;
         }
 
-        /* =========================
-           CAMPOS
-        ========================== */
+        /* CAMPOS */
 
         .field {
             margin-bottom: 19px;
@@ -236,7 +217,6 @@
 
         label {
             display: block;
-
             margin-bottom: 8px;
 
             color: #c8d7e5;
@@ -248,9 +228,7 @@
         input {
             width: 100%;
 
-            border:
-                1px solid #25435e;
-
+            border: 1px solid #25435e;
             border-radius: 11px;
 
             background: #0a1c2e;
@@ -277,9 +255,7 @@
                 rgba(0, 207, 255, 0.09);
         }
 
-        /* =========================
-           BOTÃO
-        ========================== */
+        /* BOTÃO */
 
         button {
             width: 100%;
@@ -318,12 +294,8 @@
                 rgba(0, 174, 255, 0.32);
         }
 
-        button:active {
-            transform: translateY(0);
-        }
-
         button:disabled {
-            opacity: 0.7;
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
         }
@@ -336,22 +308,19 @@
             margin-top: 14px;
         }
 
-        /* =========================
-           MENSAGEM DE ERRO
-        ========================== */
+        /* ERRO */
 
         .error {
             background:
-                rgba(255, 75, 75, 0.10);
+                rgba(255, 70, 70, 0.12);
 
             border:
                 1px solid
-                rgba(255, 75, 75, 0.35);
+                rgba(255, 70, 70, 0.40);
 
-            color: #ffaaaa;
+            color: #ffb2b2;
 
             border-radius: 12px;
-
             padding: 14px;
 
             margin-bottom: 20px;
@@ -360,9 +329,7 @@
             line-height: 1.5;
         }
 
-        /* =========================
-           SUCESSO
-        ========================== */
+        /* SUCESSO */
 
         .success {
             text-align: center;
@@ -375,16 +342,14 @@
                 rgba(27, 209, 126, 0.35);
 
             border-radius: 18px;
-
-            padding: 32px 22px;
+            padding: 34px 24px;
         }
 
         .success-icon {
-            width: 64px;
-            height: 64px;
+            width: 65px;
+            height: 65px;
 
-            margin:
-                0 auto 18px;
+            margin: 0 auto 18px;
 
             border-radius: 50%;
 
@@ -413,29 +378,24 @@
         .success-text {
             color: #c0d8ce;
 
-            line-height: 1.7;
-
             font-size: 15px;
+            line-height: 1.7;
         }
 
         .wait-message {
             color: #ffffff;
 
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 700;
-
-            margin-top: 18px;
-
             line-height: 1.5;
+
+            margin-top: 22px;
         }
 
-        /* =========================
-           RODAPÉ
-        ========================== */
+        /* RODAPÉ */
 
         footer {
             margin-top: 60px;
-
             padding-top: 20px;
 
             border-top:
@@ -449,12 +409,9 @@
             font-size: 12px;
         }
 
-        /* =========================
-           TABLET
-        ========================== */
+        /* RESPONSIVO */
 
         @media (max-width: 850px) {
-
             .main {
                 grid-template-columns: 1fr;
             }
@@ -464,22 +421,13 @@
             }
         }
 
-        /* =========================
-           CELULAR
-        ========================== */
-
         @media (max-width: 550px) {
-
             .page {
                 padding: 22px 26px 35px;
             }
 
             .header {
                 margin-bottom: 75px;
-            }
-
-            .hero-tag {
-                font-size: 11px;
             }
 
             .hero h1 {
@@ -489,11 +437,6 @@
 
             .hero p {
                 font-size: 16px;
-                line-height: 1.65;
-            }
-
-            .benefits {
-                margin-top: 30px;
             }
 
             .main {
@@ -507,15 +450,6 @@
 
             .security {
                 display: none;
-            }
-
-            .logo-icon {
-                width: 48px;
-                height: 48px;
-            }
-
-            .logo-name {
-                font-size: 25px;
             }
 
             input {
@@ -533,67 +467,50 @@
 
 </head>
 
-
 <body>
 
-
 <div class="page">
-
 
     <!-- CABEÇALHO -->
 
     <header class="header">
 
-
         <div class="logo">
-
 
             <div class="logo-icon">
                 M
             </div>
 
-
             <div class="logo-name">
                 MDS<span>_TI</span>
             </div>
 
-
         </div>
-
 
         <div class="security">
             ● Ambiente de solicitação
         </div>
 
-
     </header>
 
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO -->
 
     <main class="main">
 
 
-        <!-- APRESENTAÇÃO -->
+        <!-- LADO ESQUERDO -->
 
         <section class="hero">
-
 
             <div class="hero-tag">
                 SOLICITAÇÃO DE TESTES
             </div>
 
-
             <h1>
-
                 Solicite seu teste de forma
-
-                <span>
-                    simples e rápida.
-                </span>
-
+                <span>simples e rápida.</span>
             </h1>
-
 
             <p>
                 Informe seus dados de contato.
@@ -602,77 +519,55 @@
                 concluir a solicitação do teste.
             </p>
 
-
             <div class="benefits">
 
-
                 <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
+                    <div class="check">✓</div>
 
                     <div>
                         Solicitação rápida e simples
                     </div>
-
                 </div>
 
-
                 <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
+                    <div class="check">✓</div>
 
                     <div>
                         Atendimento personalizado
                     </div>
-
                 </div>
 
-
                 <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
+                    <div class="check">✓</div>
 
                     <div>
                         Retorno pelo WhatsApp
                     </div>
-
                 </div>
 
-
             </div>
-
 
         </section>
 
 
-        <!-- FORMULÁRIO -->
+        <!-- LADO DIREITO -->
 
         <section class="card">
 
 
             {% if sucesso %}
 
-
-                <!-- TELA APÓS O ENVIO -->
+                <!-- SUCESSO -->
 
                 <div class="success">
-
 
                     <div class="success-icon">
                         ✓
                     </div>
 
-
                     <div class="success-title">
-                        Solicitação recebida!
+                        Solicitação enviada!
                     </div>
-
 
                     <div class="success-text">
 
@@ -681,25 +576,19 @@
 
                         <br><br>
 
-                        Sua solicitação de teste foi enviada
-                        com sucesso.
+                        Recebemos sua solicitação de teste.
 
                     </div>
-
 
                     <div class="wait-message">
-
                         Aguarde, entraremos em contato
                         pelo WhatsApp informado.
-
                     </div>
-
 
                 </div>
 
 
             {% else %}
-
 
                 <!-- FORMULÁRIO -->
 
@@ -707,10 +596,8 @@
                     Solicitar teste
                 </h2>
 
-
                 <p class="card-subtitle">
-                    Preencha seus dados e entraremos
-                    em contato pelo WhatsApp.
+                    Informe seu nome, e-mail e WhatsApp.
                 </p>
 
 
@@ -725,16 +612,13 @@
 
                 /solicitar
 
-
                     <!-- NOME -->
 
                     <div class="field">
 
-
                         <label for="nome">
                             Nome *
                         </label>
-
 
                         <input
                             id="nome"
@@ -745,19 +629,16 @@
                             required
                         >
 
-
                     </div>
 
 
-                    <!-- EMAIL -->
+                    <!-- E-MAIL -->
 
                     <div class="field">
-
 
                         <label for="email">
                             E-mail *
                         </label>
-
 
                         <input
                             id="email"
@@ -768,7 +649,6 @@
                             required
                         >
 
-
                     </div>
 
 
@@ -776,11 +656,9 @@
 
                     <div class="field">
 
-
                         <label for="whatsapp">
                             WhatsApp *
                         </label>
-
 
                         <input
                             id="whatsapp"
@@ -790,7 +668,6 @@
                             autocomplete="tel"
                             required
                         >
-
 
                     </div>
 
@@ -806,13 +683,10 @@
 
 
                     <div class="privacy">
-
                         Seus dados serão utilizados
-                        para contato referente à
-                        solicitação do teste.
-
+                        exclusivamente para contato
+                        referente à solicitação do teste.
                     </div>
-
 
                 </form>
 
@@ -822,16 +696,12 @@
 
         </section>
 
-
     </main>
 
-
-    <!-- RODAPÉ -->
 
     <footer>
         MDS_TI • Tecnologia e Soluções
     </footer>
-
 
 </div>
 
@@ -863,7 +733,5 @@
 
 </script>
 
-
 </body>
-
 </html>
