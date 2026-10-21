@@ -2,18 +2,11 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MDS_TI | Solicitação de Testes</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,7 +15,6 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-
             background:
                 radial-gradient(
                     circle at 10% 20%,
@@ -40,7 +32,6 @@
                     #0a1d32 50%,
                     #071522
                 );
-
             color: #ffffff;
             min-height: 100vh;
         }
@@ -68,26 +59,14 @@
         .logo-icon {
             width: 52px;
             height: 52px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 15px;
-
             font-size: 23px;
             font-weight: 800;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #00d4ff,
-                    #0077ff
-                );
-
-            box-shadow:
-                0 0 28px
-                rgba(0, 200, 255, 0.28);
+            background: linear-gradient(135deg, #00d4ff, #0077ff);
+            box-shadow: 0 0 28px rgba(0, 200, 255, 0.28);
         }
 
         .logo-name {
@@ -108,39 +87,26 @@
         .main {
             display: grid;
             grid-template-columns: 0.9fr 1.1fr;
-
             gap: 55px;
-
             align-items: center;
         }
 
         .hero-tag {
             display: inline-block;
-
             color: #00d4ff;
-
-            background:
-                rgba(0, 212, 255, 0.09);
-
-            border:
-                1px solid
-                rgba(0, 212, 255, 0.23);
-
+            background: rgba(0, 212, 255, 0.09);
+            border: 1px solid rgba(0, 212, 255, 0.23);
             padding: 8px 14px;
-
             border-radius: 30px;
-
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 1px;
-
             margin-bottom: 22px;
         }
 
         .hero h1 {
             font-size: 52px;
             line-height: 1.05;
-
             margin-bottom: 20px;
         }
 
@@ -150,27 +116,21 @@
 
         .hero p {
             max-width: 480px;
-
             color: #a9bbcc;
-
             font-size: 17px;
             line-height: 1.7;
         }
 
         .benefits {
             display: grid;
-
             gap: 14px;
-
             margin-top: 32px;
         }
 
         .benefit {
             display: flex;
             align-items: center;
-
             gap: 12px;
-
             color: #dbe8f3;
         }
 
@@ -178,48 +138,31 @@
             width: 27px;
             height: 27px;
             min-width: 27px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 50%;
-
             color: #00d4ff;
-
-            background:
-                rgba(0, 212, 255, 0.10);
+            background: rgba(0, 212, 255, 0.10);
         }
 
         .card {
             padding: 32px;
-
-            background:
-                rgba(10, 28, 48, 0.92);
-
-            border:
-                1px solid
-                rgba(136, 180, 218, 0.16);
-
+            background: rgba(10, 28, 48, 0.92);
+            border: 1px solid rgba(136, 180, 218, 0.16);
             border-radius: 24px;
-
-            box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, 0.32);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.32);
         }
 
         .card-title {
             font-size: 25px;
-
             margin-bottom: 6px;
         }
 
         .card-subtitle {
             color: #91a8bd;
-
             font-size: 14px;
             line-height: 1.5;
-
             margin-bottom: 27px;
         }
 
@@ -229,31 +172,20 @@
 
         label {
             display: block;
-
             margin-bottom: 8px;
-
             color: #c8d7e5;
-
             font-size: 13px;
             font-weight: 600;
         }
 
         input {
             width: 100%;
-
             padding: 14px;
-
-            border:
-                1px solid #25435e;
-
+            border: 1px solid #25435e;
             border-radius: 11px;
-
             background: #0a1c2e;
-
             color: #ffffff;
-
             font-size: 15px;
-
             outline: none;
         }
 
@@ -263,37 +195,21 @@
 
         input:focus {
             border-color: #00cfff;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(0, 207, 255, 0.09);
+            box-shadow: 0 0 0 3px rgba(0, 207, 255, 0.09);
         }
 
         button {
             width: 100%;
-
             padding: 16px;
-
             border: 0;
             border-radius: 12px;
-
             cursor: pointer;
-
             color: #00121c;
-
             font-size: 15px;
             font-weight: 800;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #00d9ff,
-                    #1e8fff
-                );
-
-            box-shadow:
-                0 10px 30px
-                rgba(0, 174, 255, 0.22);
+            background: linear-gradient(90deg, #00d9ff, #1e8fff);
+            box-shadow: 0 10px 30px rgba(0, 174, 255, 0.22);
+            transition: all 0.2s ease;
         }
 
         button:hover {
@@ -302,435 +218,159 @@
 
         .privacy {
             margin-top: 14px;
-
             color: #718ba2;
-
             font-size: 11px;
             line-height: 1.5;
-
             text-align: center;
         }
 
         .error {
             padding: 14px;
-
             margin-bottom: 20px;
-
-            border:
-                1px solid
-                rgba(255, 75, 75, 0.4);
-
+            border: 1px solid rgba(255, 75, 75, 0.4);
             border-radius: 12px;
-
-            background:
-                rgba(255, 75, 75, 0.10);
-
+            background: rgba(255, 75, 75, 0.10);
             color: #ffadad;
-
             font-size: 14px;
         }
 
         .success {
             padding: 35px 25px;
-
             text-align: center;
-
-            border:
-                1px solid
-                rgba(27, 209, 126, 0.4);
-
+            border: 1px solid rgba(27, 209, 126, 0.4);
             border-radius: 20px;
-
-            background:
-                rgba(27, 209, 126, 0.10);
+            background: rgba(27, 209, 126, 0.10);
         }
 
         .success-icon {
             width: 70px;
             height: 70px;
-
             margin: 0 auto 20px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 50%;
-
-            background:
-                rgba(27, 209, 126, 0.17);
-
+            background: rgba(27, 209, 126, 0.17);
             color: #58f2ad;
-
             font-size: 35px;
             font-weight: bold;
         }
 
         .success-title {
             color: #78efb7;
-
             font-size: 26px;
             font-weight: 800;
-
             margin-bottom: 15px;
         }
 
         .success-text {
             color: #c6ded3;
-
             font-size: 16px;
             line-height: 1.7;
         }
 
         .wait-message {
             margin-top: 22px;
-
             color: #ffffff;
-
             font-size: 20px;
             font-weight: 800;
-
             line-height: 1.5;
         }
 
         footer {
             margin-top: 60px;
-
             padding-top: 20px;
-
-            border-top:
-                1px solid
-                rgba(255, 255, 255, 0.08);
-
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: #627b92;
-
             font-size: 12px;
-
             text-align: center;
         }
 
         @media (max-width: 850px) {
-
             .main {
                 grid-template-columns: 1fr;
             }
-
             .hero h1 {
                 font-size: 42px;
             }
-
         }
 
         @media (max-width: 550px) {
-
             .page {
                 padding: 22px 20px 35px;
             }
-
             .header {
                 margin-bottom: 55px;
             }
-
             .security {
                 display: none;
             }
-
             .hero h1 {
                 font-size: 36px;
             }
-
             .main {
                 gap: 50px;
             }
-
             .card {
                 padding: 26px 20px;
             }
-
             input {
                 font-size: 16px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <div class="page">
 
-<div class="page">
-
-
-    <header class="header">
-
-        <div class="logo">
-
-            <div class="logo-icon">
-                M
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <div class="logo-name">MDS<span>_TI</span></div>
             </div>
+            <div class="security">● Ambiente de solicitação</div>
+        </header>
 
-            <div class="logo-name">
-                MDS<span>_TI</span>
-            </div>
+        <main class="main">
 
-        </div>
+            <section class="hero">
+                <div class="hero-tag">SOLICITAÇÃO DE TESTES</div>
+                <h1>Solicite seu teste de forma <span>simples e rápida.</span></h1>
+                <p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p>
 
-
-        <div class="security">
-            ● Ambiente de solicitação
-        </div>
-
-    </header>
-
-
-    <main class="main">
-
-
-        <section class="hero">
-
-
-            <div class="hero-tag">
-                SOLICITAÇÃO DE TESTES
-            </div>
-
-
-            <h1>
-
-                Solicite seu teste de forma
-
-                <span>
-                    simples e rápida.
-                </span>
-
-            </h1>
-
-
-            <p>
-
-                Informe seus dados de contato.
-
-                Entraremos em contato pelo WhatsApp
-
-                para entender sua necessidade e
-
-                concluir a solicitação do teste.
-
-            </p>
-
-
-            <div class="benefits">
-
-
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
-
-                    Solicitação rápida e simples
-
+                <div class="benefits">
+                    <div class="benefit"><div class="check">✓</div> Solicitação rápida e simples</div>
+                    <div class="benefit"><div class="check">✓</div> Atendimento personalizado</div>
+                    <div class="benefit"><div class="check">✓</div> Retorno pelo WhatsApp</div>
                 </div>
+            </section>
 
+            <section class="card">
 
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
+                {% if sucesso %}
+                    <!-- MENSAGEM CONFIGURADA EXATAMENTE COMO VOCÊ PEDIU -->
+                    <div class="success">
+                        <div class="success-icon">✓</div>
+                        <div class="success-title">Solicitação enviada!</div>
+                        <div class="success-text">
+                            Obrigado, <strong>{{ nome }}</strong>.
+                        </div>
+                        <div class="wait-message">
+                            Aguarde o contato pelo WhatsApp informado.
+                        </div>
                     </div>
+                {% else %}
 
-                    Atendimento personalizado
+                    <h2 class="card-title">Solicitar teste</h2>
+                    <p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
 
-                </div>
+                    {% if erro %}
+                        <div class="error">{{ erro }}</div>
+                    {% endif %}
 
+                    <!-- CORREÇÃO AQUI: ADICIONADA A TAG DE ABERTURA DO FORMULÁRIO -->
+                    <form id="formSolicitacao" action="/solicitar" method="POST">
 
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
-
-                    Retorno pelo WhatsApp
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-        <section class="card">
-
-
-            {% if sucesso %}
-
-
-                <div class="success">
-
-
-                    <div class="success-icon">
-                        ✓
-                    </div>
-
-
-                    <div class="success-title">
-
-                        Solicitação enviada!
-
-                    </div>
-
-
-                    <div class="success-text">
-
-                        Obrigado,
-                        <strong>{{ nome }}</strong>.
-
-                        <br><br>
-
-                        Recebemos sua solicitação de teste
-                        com sucesso.
-
-                    </div>
-
-
-                    <div class="wait-message">
-
-                        Aguarde, entraremos em contato
-                        pelo WhatsApp informado.
-
-                    </div>
-
-
-                </div>
-
-
-            {% else %}
-
-
-                <h2 class="card-title">
-
-                    Solicitar teste
-
-                </h2>
-
-
-                <p class="card-subtitle">
-
-                    Informe seu nome, e-mail e WhatsApp.
-
-                </p>
-
-
-                {% if erro %}
-
-                    <div class="error">
-
-                        {{ erro }}
-
-                    </div>
-
-                {% endif %}
-
-
-                /solicitar
-
-
-                    <div class="field">
-
-                        <label for="nome">
-                            Nome *
-                        </label>
-
-                        <input
-                            id="nome"
-                            name="nome"
-                            type="text"
-                            placeholder="Digite seu nome"
-                            autocomplete="name"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="email">
-                            E-mail *
-                        </label>
-
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="Digite seu e-mail"
-                            autocomplete="email"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label for="whatsapp">
-                            WhatsApp *
-                        </label>
-
-                        <input
-                            id="whatsapp"
-                            name="whatsapp"
-                            type="tel"
-                            placeholder="(11) 99999-9999"
-                            autocomplete="tel"
-                            required
-                        >
-
-                    </div>
-
-
-                    <button type="submit">
-
-                        SOLICITAR TESTE →
-
-                    </button>
-
-
-                    <div class="privacy">
-
-                        Seus dados serão utilizados
-                        exclusivamente para contato referente
-                        à solicitação do teste.
-
-                    </div>
-
-
-                </form>
-
-
-            {% endif %}
-
-
-        </section>
-
-
-    </main>
-
-
-    <footer>
-
-        MDS_TI • Tecnologia e Soluções
-
-    </footer>
-
-
-</div>
-
-
-</body>
-
-</html>
+                        <div class="field">
