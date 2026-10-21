@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
+
             background:
                 radial-gradient(
                     circle at 10% 20%,
@@ -38,12 +40,15 @@
         }
 
         .page {
+            width: 100%;
             max-width: 1200px;
-            margin: auto;
+            margin: 0 auto;
             padding: 35px 25px 50px;
         }
 
-        /* CABEÇALHO */
+        /* =========================
+           CABEÇALHO
+        ========================= */
 
         .header {
             display: flex;
@@ -61,6 +66,7 @@
         .logo-icon {
             width: 52px;
             height: 52px;
+
             border-radius: 15px;
 
             display: flex;
@@ -97,7 +103,9 @@
             font-size: 13px;
         }
 
-        /* CONTEÚDO */
+        /* =========================
+           CONTEÚDO
+        ========================= */
 
         .main {
             display: grid;
@@ -106,7 +114,9 @@
             align-items: center;
         }
 
-        /* LADO ESQUERDO */
+        /* =========================
+           APRESENTAÇÃO
+        ========================= */
 
         .hero-tag {
             display: inline-block;
@@ -157,6 +167,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+
             color: #dbe8f3;
         }
 
@@ -177,7 +188,9 @@
                 rgba(0, 212, 255, 0.10);
         }
 
-        /* CARD */
+        /* =========================
+           CARD
+        ========================= */
 
         .card {
             background:
@@ -188,13 +201,12 @@
                 rgba(136, 180, 218, 0.16);
 
             border-radius: 24px;
+
             padding: 32px;
 
             box-shadow:
                 0 25px 70px
                 rgba(0, 0, 0, 0.32);
-
-            backdrop-filter: blur(15px);
         }
 
         .card-title {
@@ -204,12 +216,16 @@
 
         .card-subtitle {
             color: #91a8bd;
+
             font-size: 14px;
             line-height: 1.5;
+
             margin-bottom: 27px;
         }
 
-        /* CAMPOS */
+        /* =========================
+           FORMULÁRIO
+        ========================= */
 
         .field {
             margin-bottom: 19px;
@@ -217,12 +233,13 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
 
             color: #c8d7e5;
 
             font-size: 13px;
             font-weight: 600;
+
+            margin-bottom: 8px;
         }
 
         input {
@@ -255,12 +272,14 @@
                 rgba(0, 207, 255, 0.09);
         }
 
-        /* BOTÃO */
+        /* =========================
+           BOTÃO
+        ========================= */
 
         button {
             width: 100%;
 
-            border: 0;
+            border: none;
             border-radius: 12px;
 
             padding: 16px;
@@ -296,19 +315,24 @@
 
         button:disabled {
             opacity: 0.65;
-            cursor: not-allowed;
+            cursor: wait;
             transform: none;
         }
 
         .privacy {
-            text-align: center;
             color: #718ba2;
+
             font-size: 11px;
             line-height: 1.5;
+
+            text-align: center;
+
             margin-top: 14px;
         }
 
-        /* ERRO */
+        /* =========================
+           ERRO
+        ========================= */
 
         .error {
             background:
@@ -321,6 +345,7 @@
             color: #ffb2b2;
 
             border-radius: 12px;
+
             padding: 14px;
 
             margin-bottom: 20px;
@@ -329,7 +354,9 @@
             line-height: 1.5;
         }
 
-        /* SUCESSO */
+        /* =========================
+           SUCESSO
+        ========================= */
 
         .success {
             text-align: center;
@@ -342,6 +369,7 @@
                 rgba(27, 209, 126, 0.35);
 
             border-radius: 18px;
+
             padding: 34px 24px;
         }
 
@@ -392,7 +420,9 @@
             margin-top: 22px;
         }
 
-        /* RODAPÉ */
+        /* =========================
+           RODAPÉ
+        ========================= */
 
         footer {
             margin-top: 60px;
@@ -402,16 +432,19 @@
                 1px solid
                 rgba(255, 255, 255, 0.08);
 
-            text-align: center;
-
             color: #627b92;
 
             font-size: 12px;
+
+            text-align: center;
         }
 
-        /* RESPONSIVO */
+        /* =========================
+           RESPONSIVO
+        ========================= */
 
         @media (max-width: 850px) {
+
             .main {
                 grid-template-columns: 1fr;
             }
@@ -422,44 +455,33 @@
         }
 
         @media (max-width: 550px) {
+
             .page {
                 padding: 22px 26px 35px;
             }
 
             .header {
-                margin-bottom: 75px;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-                line-height: 1.08;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .main {
-                gap: 65px;
-            }
-
-            .card {
-                padding: 27px 22px;
-                border-radius: 20px;
+                margin-bottom: 70px;
             }
 
             .security {
                 display: none;
             }
 
-            input {
-                font-size: 16px;
-                padding: 15px;
+            .hero h1 {
+                font-size: 36px;
             }
 
-            button {
-                font-size: 15px;
-                padding: 17px;
+            .main {
+                gap: 60px;
+            }
+
+            .card {
+                padding: 27px 22px;
+            }
+
+            input {
+                font-size: 16px;
             }
         }
 
@@ -494,12 +516,10 @@
     </header>
 
 
-    <!-- CONTEÚDO -->
-
     <main class="main">
 
 
-        <!-- LADO ESQUERDO -->
+        <!-- APRESENTAÇÃO -->
 
         <section class="hero">
 
@@ -519,30 +539,45 @@
                 concluir a solicitação do teste.
             </p>
 
+
             <div class="benefits">
 
                 <div class="benefit">
-                    <div class="check">✓</div>
+
+                    <div class="check">
+                        ✓
+                    </div>
 
                     <div>
                         Solicitação rápida e simples
                     </div>
+
                 </div>
 
+
                 <div class="benefit">
-                    <div class="check">✓</div>
+
+                    <div class="check">
+                        ✓
+                    </div>
 
                     <div>
                         Atendimento personalizado
                     </div>
+
                 </div>
 
+
                 <div class="benefit">
-                    <div class="check">✓</div>
+
+                    <div class="check">
+                        ✓
+                    </div>
 
                     <div>
                         Retorno pelo WhatsApp
                     </div>
+
                 </div>
 
             </div>
@@ -550,14 +585,15 @@
         </section>
 
 
-        <!-- LADO DIREITO -->
+        <!-- CARD -->
 
         <section class="card">
 
 
             {% if sucesso %}
 
-                <!-- SUCESSO -->
+
+                <!-- CONFIRMAÇÃO -->
 
                 <div class="success">
 
@@ -580,9 +616,12 @@
 
                     </div>
 
+
                     <div class="wait-message">
+
                         Aguarde, entraremos em contato
                         pelo WhatsApp informado.
+
                     </div>
 
                 </div>
@@ -590,11 +629,13 @@
 
             {% else %}
 
+
                 <!-- FORMULÁRIO -->
 
                 <h2 class="card-title">
                     Solicitar teste
                 </h2>
+
 
                 <p class="card-subtitle">
                     Informe seu nome, e-mail e WhatsApp.
@@ -611,6 +652,7 @@
 
 
                 /solicitar
+
 
                     <!-- NOME -->
 
@@ -632,7 +674,7 @@
                     </div>
 
 
-                    <!-- E-MAIL -->
+                    <!-- EMAIL -->
 
                     <div class="field">
 
@@ -683,10 +725,13 @@
 
 
                     <div class="privacy">
+
                         Seus dados serão utilizados
                         exclusivamente para contato
                         referente à solicitação do teste.
+
                     </div>
+
 
                 </form>
 
@@ -695,6 +740,7 @@
 
 
         </section>
+
 
     </main>
 
@@ -734,4 +780,5 @@
 </script>
 
 </body>
+
 </html>
