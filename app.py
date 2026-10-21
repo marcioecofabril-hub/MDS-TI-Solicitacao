@@ -29,20 +29,27 @@ def solicitar():
         return render_template(
             "index.html",
             sucesso=False,
-            erro="Preencha nome, e-mail e WhatsApp."
+            erro="Preencha nome, e-mail e WhatsApp corretamente."
         )
 
-    email_user = os.environ.get("EMAIL_USER")
-    email_password = os.environ.get("EMAIL_PASSWORD")
-    email_destino = os.environ.get("EMAIL_DESTINO")
+    email_user = os.environ.get("EMAIL_USER", "").strip()
+    email_password = os.environ.get("EMAIL_PASSWORD", "").replace(" ", "")
+    email_destino = os.environ.get("EMAIL_DESTINO", "").strip()
 
     if not email_user or not email_password or not email_destino:
-        print("ERRO: Variáveis de e-mail não configuradas.")
+
+        print(
+            "ERRO DE CONFIGURAÇÃO: "
+            "EMAIL_USER, EMAIL_PASSWORD ou EMAIL_DESTINO não configurado."
+        )
 
         return render_template(
             "index.html",
             sucesso=False,
-            erro="Não foi possível enviar a solicitação."
+            erro=(
+                "Não foi possível processar a solicitação. "
+                "A configuração de e-mail não está completa."
+            )
         )
 
     mensagem = EmailMessage()
@@ -50,10 +57,7 @@ def solicitar():
     mensagem["From"] = email_user
     mensagem["To"] = email_destino
     mensagem["Reply-To"] = email
-
-    mensagem["Subject"] = (
-        f"Nova Solicitação de Teste | {nome}"
-    )
+    mensagem["Subject"] = f"Nova Solicitação de Teste | {nome}"
 
     mensagem.set_content(
         f"""
@@ -64,7 +68,8 @@ E-mail: {email}
 WhatsApp: {whatsapp}
 
 Entre em contato com o solicitante pelo WhatsApp
-para concluir os detalhes do teste.
+para entender a necessidade e concluir os detalhes
+da solicitação do teste.
 
 ----------------------------------------
 MDS_TI
@@ -77,10 +82,10 @@ Tecnologia e Soluções
         contexto_ssl = ssl.create_default_context()
 
         with smtplib.SMTP_SSL(
-            "smtp.gmail.com",
-            465,
+            host="smtp.gmail.com",
+            port=465,
             context=contexto_ssl,
-            timeout=20
+            timeout=30
         ) as servidor:
 
             servidor.login(
@@ -93,7 +98,8 @@ Tecnologia e Soluções
             )
 
         print(
-            f"EMAIL ENVIADO COM SUCESSO: {nome}"
+            "EMAIL ENVIADO COM SUCESSO: "
+            f"{nome} | {email} | {whatsapp}"
         )
 
         return render_template(
@@ -103,17 +109,52 @@ Tecnologia e Soluções
             erro=None
         )
 
-    except Exception as erro:
+    except smtplib.SMTPAuthenticationError as erro:
 
         print(
-            "ERRO AO ENVIAR EMAIL:",
+            "ERRO DE AUTENTICAÇÃO DO GMAIL:",
             repr(erro)
         )
 
         return render_template(
             "index.html",
             sucesso=False,
-            erro="Não foi possível enviar a solicitação. Tente novamente."
+            erro=(
+                "Não foi possível autenticar no Gmail. "
+                "Verifique a senha de aplicativo configurada no Render."
+            )
+        )
+
+    except smtplib.SMTPException as erro:
+
+        print(
+            "ERRO SMTP:",
+            repr(erro)
+        )
+
+        return render_template(
+            "index.html",
+            sucesso=False,
+            erro=(
+                "O Gmail não conseguiu enviar a solicitação. "
+                "Por favor, tente novamente."
+            )
+        )
+
+    except Exception as erro:
+
+        print(
+            "ERRO INESPERADO AO ENVIAR E-MAIL:",
+            repr(erro)
+        )
+
+        return render_template(
+            "index.html",
+            sucesso=False,
+            erro=(
+                "Não foi possível enviar a solicitação. "
+                "Por favor, tente novamente."
+            )
         )
 
 
