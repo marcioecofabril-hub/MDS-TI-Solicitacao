@@ -9,95 +9,68 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def inicio():
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        sucesso=False,
+        erro=None
+    )
 
 
 @app.route("/solicitar", methods=["POST"])
 def solicitar():
 
-    # =========================
-    # DADOS DO FORMULÁRIO
-    # =========================
-
     nome = request.form.get("nome", "").strip()
     email = request.form.get("email", "").strip()
     whatsapp = request.form.get("whatsapp", "").strip()
 
-    # Validação básica
     if not nome or not email or not whatsapp:
         return render_template(
             "index.html",
+            sucesso=False,
             erro="Preencha nome, e-mail e WhatsApp."
         )
 
+    email_user = os.environ.get("EMAIL_USER")
+    email_password = os.environ.get("EMAIL_PASSWORD")
+    email_destino = os.environ.get("EMAIL_DESTINO")
 
-    # =========================
-    # CONFIGURAÇÃO DO E-MAIL
-    # =========================
-
-    remetente = os.environ.get("EMAIL_USER")
-    senha_app = os.environ.get("EMAIL_PASSWORD")
-    destinatario = os.environ.get("EMAIL_DESTINO")
-
-
-    # Verifica se as variáveis existem
-    if not remetente or not senha_app or not destinatario:
-
-        print(
-            "ERRO: Variáveis de e-mail não configuradas no Render."
-        )
+    if not email_user or not email_password or not email_destino:
+        print("ERRO: Variáveis de e-mail não configuradas.")
 
         return render_template(
             "index.html",
-            erro="Não foi possível enviar a solicitação. Tente novamente."
+            sucesso=False,
+            erro="Não foi possível enviar a solicitação."
         )
-
-
-    # =========================
-    # CRIAÇÃO DA MENSAGEM
-    # =========================
 
     mensagem = EmailMessage()
 
-    mensagem["From"] = remetente
-    mensagem["To"] = destinatario
+    mensagem["From"] = email_user
+    mensagem["To"] = email_destino
+    mensagem["Reply-To"] = email
 
     mensagem["Subject"] = (
-        "Nova Solicitação de Teste | MDS_TI"
+        f"Nova Solicitação de Teste | {nome}"
     )
 
     mensagem.set_content(
         f"""
 NOVA SOLICITAÇÃO DE TESTE - MDS_TI
 
+Nome: {nome}
+E-mail: {email}
+WhatsApp: {whatsapp}
 
-Nome:
-{nome}
-
-E-mail:
-{email}
-
-WhatsApp:
-{whatsapp}
-
-
-Entrar em contato com o solicitante pelo WhatsApp
-para entender a necessidade e concluir os detalhes
-da solicitação do teste.
-
+Entre em contato com o solicitante pelo WhatsApp
+para concluir os detalhes do teste.
 
 ----------------------------------------
 MDS_TI
 Tecnologia e Soluções
-        """
+"""
     )
-
-
-    # =========================
-    # ENVIO PELO GMAIL
-    # =========================
 
     try:
 
@@ -111,31 +84,24 @@ Tecnologia e Soluções
         ) as servidor:
 
             servidor.login(
-                remetente,
-                senha_app
+                email_user,
+                email_password
             )
 
             servidor.send_message(
                 mensagem
             )
 
-
         print(
-            f"SOLICITACAO ENVIADA COM SUCESSO: "
-            f"{nome} | {email} | {whatsapp}"
+            f"EMAIL ENVIADO COM SUCESSO: {nome}"
         )
-
-
-        # =========================
-        # CONFIRMAÇÃO NA TELA
-        # =========================
 
         return render_template(
             "index.html",
             sucesso=True,
-            nome=nome
+            nome=nome,
+            erro=None
         )
-
 
     except Exception as erro:
 
@@ -146,10 +112,8 @@ Tecnologia e Soluções
 
         return render_template(
             "index.html",
-            erro=(
-                "Não foi possível enviar sua solicitação. "
-                "Por favor, tente novamente."
-            )
+            sucesso=False,
+            erro="Não foi possível enviar a solicitação. Tente novamente."
         )
 
 
