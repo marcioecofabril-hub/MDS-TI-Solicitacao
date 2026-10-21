@@ -320,7 +320,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="page">
@@ -350,7 +349,6 @@
             <section class="card">
 
                 {% if sucesso %}
-                    <!-- MENSAGEM CONFIGURADA EXATAMENTE COMO VOCÊ PEDIU -->
                     <div class="success">
                         <div class="success-icon">✓</div>
                         <div class="success-title">Solicitação enviada!</div>
@@ -370,7 +368,146 @@
                         <div class="error">{{ erro }}</div>
                     {% endif %}
 
-                    <!-- CORREÇÃO AQUI: ADICIONADA A TAG DE ABERTURA DO FORMULÁRIO -->
                     <form id="formSolicitacao" action="/solicitar" method="POST">
 
                         <div class="field">
+                            <label for="nome">Nome *</label>
+                            <input id="nome" name="nome" type="text" placeholder="Digite seu nome" autocomplete="name" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="email">E-mail *</label>
+                            <input id="email" name="email" type="email" placeholder="Digite seu e-mail" autocomplete="email" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="whatsapp">WhatsApp *</label>
+                            <input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" required>
+                        </div>
+
+                        <button type="submit">SOLICITAR TESTE →</button>
+
+                        <div class="privacy">
+                            Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.
+                        </div>
+
+                    </form>
+
+                {% endif %}
+
+            </section>
+
+        </main>
+
+        <footer>
+            MDS_TI • Tecnologia e Soluções
+        </footer>
+
+    </div>
+
+    <script>
+        const handlePhone = (event) => {
+            let input = event.target
+            input.value = phoneMask(input.value)
+        }
+
+        const phoneMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            value = value.replace(/(\d{5})(\d)/, "$1-$2")
+            return value.substring(0, 15)
+        }
+
+        document.getElementById('whatsapp').addEventListener('input', handlePhone)
+    </script>
+
+</body>
+</html>
+import os
+import smtplib
+import ssl
+from email.message import EmailMessage
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route("/", methods=["GET"])
+def inicio():
+    return render_template("index.html", sucesso=False, erro=None)
+
+@app.route("/solicitar", methods=["POST"])
+def solicitar():
+    # Coleta e limpa os dados recebidos do formulário
+    nome = request.form.get("nome", "").strip()
+    email = request.form.get("email", "").strip()
+    whatsapp = request.form.get("whatsapp", "").strip()
+
+    # Validação simples de preenchimento
+    if not nome or not email or not whatsapp:
+        return render_template(
+            "index.html",
+            sucesso=False,
+            erro="Preencha nome, e-mail e WhatsApp corretamente."
+        )
+
+    # Coleta de variáveis de ambiente
+    email_user = os.environ.get("EMAIL_USER")
+    email_password = os.environ.get("EMAIL_PASSWORD")
+    email_destino = os.environ.get("EMAIL_DESTINO")
+
+    # Verifica se o servidor está configurado para disparar e-mails
+    if not email_user or not email_password or not email_destino:
+        print("ERRO CONFIGURAÇÃO: Variáveis de e-mail não detectadas no sistema.")
+        return render_template(
+            "index.html",
+            sucesso=False,
+            erro="Não foi possível processar a solicitação devido a uma falha de configuração interna."
+        )
+
+    # Construção da estrutura da mensagem de e-mail
+    mensagem = EmailMessage()
+    mensagem["From"] = email_user
+    mensagem["To"] = email_destino
+    mensagem["Reply-To"] = email
+    mensagem["Subject"] = f"Nova Solicitação de Teste | {nome}"
+    
+    mensagem.set_content(f"""
+NOVA SOLICITAÇÃO DE TESTE - MDS_TI
+
+Nome: {nome}
+E-mail: {email}
+WhatsApp: {whatsapp}
+
+Entre em contato com o solicitante pelo WhatsApp
+para concluir os detalhes do teste.
+
+----------------------------------------
+MDS_TI
+Tecnologia e Soluções
+""")
+
+    try:
+        # Criação do túnel seguro SSL e conexão com o SMTP do Gmail
+        contexto_ssl = ssl.create_default_context()
+        with smtplib.SMTP_SSL("://gmail.com", 465, context=contexto_ssl, timeout=20) as servidor:
+            servidor.login(email_user, email_password)
+            servidor.send_message(mensagem)
+
+        print(f"EMAIL ENVIADO COM SUCESSO: {nome}")
+        
+        # Retorna a página exibindo o cartão de sucesso
+        return render_template("index.html", sucesso=True, nome=nome, erro=None)
+
+    except Exception as erro:
+        print("ERRO CRÍTICO AO ENVIAR EMAIL:", repr(erro))
+        return render_template(
+            "index.html",
+            sucesso=False,
+            erro="Falha ao enviar e-mail. Por favor, tente novamente mais tarde."
+        )
+
+if __name__ == "__main__":
+    # Define a porta padrão ou lê do ambiente de hospedagem externa
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
