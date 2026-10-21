@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDS_TI | Solicitação de Testes</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 207, 255, 0.16), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(0, 119, 255, 0.14), transparent 35%),
+                linear-gradient(135deg, #06111f, #0a1d32 50%, #071522);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 25px 50px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 45px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #0077ff);
+            box-shadow: 0 0 28px rgba(0, 200, 255, 0.28);
+        }
+
+        .logo-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-name span {
+            color: #00d4ff;
+        }
+
+        .security {
+            color: #9eb3c8;
+            font-size: 13px;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.09);
+            border: 1px solid rgba(0, 212, 255, 0.23);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #00d4ff;
+        }
+
+        .hero p {
+            color: #a9bbcc;
+            line-height: 1.7;
+            font-size: 17px;
+            max-width: 480px;
+        }
+
+        .benefits {
+            margin-top: 32px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #dbe8f3;
+        }
+
+        .check {
+            width: 27px;
+            height: 27px;
+            min-width: 27px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .card {
+            background: rgba(10, 28, 48, 0.90);
+            border: 1px solid rgba(136, 180, 218, 0.16);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.32);
+            backdrop-filter: blur(15px);
+        }
+
+        .card-title {
+            font-size: 25px;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            color: #91a8bd;
+            font-size: 14px;
+            margin-bottom: 27px;
+        }
+
+        .success {
+            background: rgba(27, 209, 126, 0.12);
+            border: 1px solid rgba(27, 209, 126, 0.42);
+            color: #7ff0bb;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #c8d7e5;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #25435e;
+            border-radius: 11px;
+            background: #0a1c2e;
+            color: #ffffff;
+            padding: 13px 14px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #00cfff;
+            box-shadow: 0 0 0 3px rgba(0, 207, 255, 0.09);
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        select option {
+            background: #0a1c2e;
+        }
+
+        button {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            color: #00121c;
+            font-size: 15px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00d9ff, #1e8fff);
+            box-shadow: 0 10px 30px rgba(0, 174, 255, 0.22);
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px rgba(0, 174, 255, 0.32);
+        }
+
+        .privacy {
+            text-align: center;
+            color: #718ba2;
+            font-size: 11px;
+            margin-top: 14px;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            color: #627b92;
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .page {
+                padding: 22px 16px 35px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .security {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="header">
+
+        <div class="logo">
+            <div class="logo-icon">M</div>
+
+            <div class="logo-name">
+                MDS<span>_TI</span>
+            </div>
+        </div>
+
+        <div class="security">
+            ● Ambiente de solicitação
+        </div>
+
+    </header>
+
+    <main class="main">
+
+        <section class="hero">
+
+            <div class="hero-tag">
+                SOLICITAÇÃO DE TESTES
+            </div>
+
+            <h1>
+                Solicite seu teste de forma
+                <span>simples e rápida.</span>
+            </h1>
+
+            <p>
+                Preencha os dados da solicitação para registrar as
+                informações necessárias para análise e contato.
+            </p>
+
+            <div class="benefits">
+
+                <div class="benefit">
+                    <div class="check">✓</div>
+                    Formulário simples e organizado
+                </div>
+
+                <div class="benefit">
+                    <div class="check">✓</div>
+                    Solicitação centralizada
+                </div>
+
+                <div class="benefit">
+                    <div class="check">✓</div>
+                    Retorno através dos dados informados
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <h2 class="card-title">
+                Nova solicitação
+            </h2>
+
+            <p class="card-subtitle">
+                Preencha os campos abaixo para enviar sua solicitação.
+            </p>
+
+            {% if sucesso %}
+                <div class="success">
+                    ✓ Obrigado, {{ nome }}. Sua solicitação foi registrada com sucesso.
+                </div>
+            {% endif %}
+
+            <form action="/solicitar" method="POST">
+
+                <div class="row">
+
+                    <div class="field">
+                        <label>Nome *</label>
+                        <input
+                            type="text"
+me="nome"
+                            placeholder="Seu nome"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label>Empresa</label>
+                        <input
+                            type="text"
+                            name="empresa"
+                            placeholder="Nome da empresa"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="field">
+                        <label>E-mail *</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="email@empresa.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label>WhatsApp</label>
+                        <input
+                            type="tel"
+                            name="whatsapp"
+                            placeholder="(11) 99999-9999"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="field">
+
+                        <label>Tipo de teste *</label>
+
+                        <select name="tipo_teste" required>
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="Funcional">
+                                Teste funcional
+                            </option>
+
+                            <option value="Eletrico">
+                                Teste elétrico
+                            </option>
+
+                            <option value="Inspecao">
+                                Inspeção
+                            </option>
+
+                            <option value="Outro">
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>Data desejada</label>
+
+                        <input
+                            type="date"
+                            name="data"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="field">
+
+                    <label>Equipamento / Produto *</label>
+
+                    <input
+                        type="text"
+                        name="equipamento"
+                        placeholder="Informe o equipamento ou produto"
+                        required
+                    >
+
+                </div>
+
+                <div class="field">
+
+                    <label>Descrição da solicitação *</label>
+
+                    <textarea
+                        name="descricao"
+                        placeholder="Descreva o teste necessário e outras informações importantes..."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <button type="submit">
+                    ENVIAR SOLICITAÇÃO →
+                </button>
+
+                <div class="privacy">
+                    Os dados informados serão utilizados para atendimento da solicitação.
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        MDS_TI • Tecnologia e Soluções
+    </footer>
+
+</div>
+
+</body>
+</html>
