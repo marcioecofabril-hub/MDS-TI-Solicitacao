@@ -1,37 +1,36 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MDS_TI | Solicitação de Testes</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 10% 20%,rgba(0,207,255,.16),transparent 30%),radial-gradient(circle at 90% 80%,rgba(0,119,255,.14),transparent 35%),linear-gradient(135deg,#06111f,#0a1d32 50%,#071522);color:#fff;min-height:100vh}.page{max-width:1100px;margin:auto;padding:35px 25px}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:55px}.logo{display:flex;align-items:center;gap:14px}.logo-icon{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;background:linear-gradient(135deg,#00d4ff,#0077ff)}.logo-name{font-size:26px;font-weight:800}.logo-name span{color:#00d4ff}.security{color:#9eb3c8;font-size:13px}.main{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.hero-tag{display:inline-block;color:#00d4ff;background:rgba(0,212,255,.09);border:1px solid rgba(0,212,255,.23);padding:8px 14px;border-radius:30px;font-size:12px;font-weight:700;margin-bottom:22px}.hero h1{font-size:50px;line-height:1.05;margin-bottom:20px}.hero h1 span{color:#00d4ff}.hero p{color:#a9bbcc;line-height:1.7;font-size:17px}.benefits{margin-top:28px;display:grid;gap:13px}.benefit{display:flex;gap:10px;align-items:center;color:#dbe8f3}.check{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,212,255,.10);color:#00d4ff}.card{background:rgba(10,28,48,.92);border:1px solid rgba(136,180,218,.16);border-radius:24px;padding:32px;box-shadow:0 25px 70px rgba(0,0,0,.32)}.card-title{font-size:25px;margin-bottom:6px}.card-subtitle{color:#91a8bd;font-size:14px;margin-bottom:26px}.field{margin-bottom:18px}label{display:block;color:#c8d7e5;font-size:13px;font-weight:600;margin-bottom:8px}input{width:100%;border:1px solid #25435e;border-radius:11px;background:#0a1c2e;color:#fff;padding:14px;font-size:15px;outline:none}input:focus{border-color:#00cfff;box-shadow:0 0 0 3px rgba(0,207,255,.09)}button{width:100%;border:0;border-radius:12px;padding:16px;cursor:pointer;color:#00121c;font-size:15px;font-weight:800;background:linear-gradient(90deg,#00d9ff,#1e8fff)}.privacy{text-align:center;color:#718ba2;font-size:11px;margin-top:14px}.error{background:rgba(255,70,70,.12);border:1px solid rgba(255,70,70,.4);color:#ffb2b2;border-radius:12px;padding:14px;margin-bottom:18px}.success{text-align:center;background:rgba(27,209,126,.10);border:1px solid rgba(27,209,126,.35);border-radius:18px;padding:34px 24px}.success-icon{width:65px;height:65px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(27,209,126,.16);color:#52efa8;font-size:32px;font-weight:bold}.success-title{color:#7ff0bb;font-size:24px;font-weight:800;margin-bottom:14px}.success-text{color:#c0d8ce;font-size:15px;line-height:1.7}.wait-message{color:#fff;font-size:19px;font-weight:700;line-height:1.5;margin-top:22px}footer{margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);text-align:center;color:#627b92;font-size:12px}@media(max-width:800px){.main{grid-template-columns:1fr}.hero h1{font-size:38px}.security{display:none}}
-</style>
-</head>
-<body>
-<div class="page">
-<header class="header"><div class="logo"><div class="logo-icon">M</div><div class="logo-name">MDS<span>_TI</span></div></div><div class="security">● Ambiente de solicitação</div></header>
-<main class="main">
-<section class="hero"><div class="hero-tag">SOLICITAÇÃO DE TESTES</div><h1>Solicite seu teste de forma <span>simples e rápida.</span></h1><p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p><div class="benefits"><div class="benefit"><div class="check">✓</div>Solicitação rápida e simples</div><div class="benefit"><div class="check">✓</div>Atendimento personalizado</div><div class="benefit"><div class="check">✓</div>Retorno pelo WhatsApp</div></div></section>
-<section class="card">
-{% if sucesso %}
-<div class="success"><div class="success-icon">✓</div><div class="success-title">Solicitação enviada!</div><div class="success-text">Obrigado, <strong>{{ nome }}</strong>.<br><br>Recebemos sua solicitação de teste com sucesso.</div><div class="wait-message">Aguarde, entraremos em contato pelo WhatsApp informado.</div></div>
-{% else %}
-<h2 class="card-title">Solicitar teste</h2><p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
-{% if erro %}<div class="error">{{ erro }}</div>{% endif %}
-<form id="formSolicitacao" action="/solicitar" method="POST">
-<div class="field"><label for="nome">Nome *</label><input id="nome" name="nome" type="text" placeholder="Digite seu nome" required></div>
-<div class="field"><label for="email">E-mail *</label><input id="email" name="email" type="email" placeholder="Digite seu e-mail" required></div>
-<div class="field"><label for="whatsapp">WhatsApp *</label><input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" required></div>
-<button type="submit">SOLICITAR TESTE →</button><div class="privacy">Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.</div>
-</form>
-{% endif %}
-</section>
-</main>
-<footer>MDS_TI • Tecnologia e Soluções</footer>
-</div>
-<script>
-const w=document.getElementById('whatsapp');if(w){w.addEventListener('input',function(){let v=this.value.replace(/\D/g,'').slice(0,11);if(v.length>6){this.value=`(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`}else if(v.length>2){this.value=`(${v.slice(0,2)}) ${v.slice(2)}`}else{this.value=v}})}
-</script>
-</body>
-</html>
+import os
+
+from flask import Flask, render_template
+
+
+app = Flask(__name__)
+
+
+@app.route("/", methods=["GET"])
+def inicio():
+
+    web3forms_access_key = os.environ.get(
+        "WEB3FORMS_ACCESS_KEY",
+        ""
+    ).strip()
+
+    return render_template(
+        "index.html",
+        web3forms_access_key=web3forms_access_key
+    )
+
+
+if __name__ == "__main__":
+
+    port = int(
+        os.environ.get(
+            "PORT",
+            5000
+        )
+    )
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
