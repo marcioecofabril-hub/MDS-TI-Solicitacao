@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MDS_TI | Solicitação de Testes</title>
 
     <style>
@@ -43,6 +44,10 @@
             padding: 35px 25px 50px;
         }
 
+        /* =========================
+           CABEÇALHO
+        ========================= */
+
         .header {
             display: flex;
             align-items: center;
@@ -59,115 +64,65 @@
         .logo-icon {
             width: 52px;
             height: 52px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
             font-size: 23px;
             font-weight: 800;
             background: linear-gradient(135deg, #00d4ff, #0077ff);
             box-shadow: 0 0 28px rgba(0, 200, 255, 0.28);
         }
 
-        .logo-name {
+        .header h1 {
             font-size: 26px;
             font-weight: 800;
-            letter-spacing: 1px;
         }
 
-        .logo-name span {
-            color: #00d4ff;
-        }
-
-        .security {
+        .header span {
             color: #9eb3c8;
-            font-size: 13px;
+            font-size: 14px;
         }
 
-        .main {
+        /* =========================
+           LAYOUT PRINCIPAL (GRID)
+        ========================= */
+
+        main {
             display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
-            gap: 55px;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
             align-items: center;
+            margin-top: 40px;
         }
 
-        .hero-tag {
-            display: inline-block;
-            color: #00d4ff;
-            background: rgba(0, 212, 255, 0.09);
-            border: 1px solid rgba(0, 212, 255, 0.23);
-            padding: 8px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 22px;
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            line-height: 1.05;
+        .hero h2 {
+            font-size: 42px;
+            line-height: 1.1;
             margin-bottom: 20px;
         }
 
-        .hero h1 span {
+        .hero h2 span {
             color: #00d4ff;
         }
 
         .hero p {
-            max-width: 480px;
             color: #a9bbcc;
-            font-size: 17px;
-            line-height: 1.7;
-        }
-
-        .benefits {
-            display: grid;
-            gap: 14px;
-            margin-top: 32px;
-        }
-
-        .benefit {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #dbe8f3;
-        }
-
-        .check {
-            width: 27px;
-            height: 27px;
-            min-width: 27px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: #00d4ff;
-            background: rgba(0, 212, 255, 0.10);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
 
         .card {
-            padding: 32px;
             background: rgba(10, 28, 48, 0.92);
             border: 1px solid rgba(136, 180, 218, 0.16);
             border-radius: 24px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.32);
-        }
-
-        .card-title {
-            font-size: 25px;
-            margin-bottom: 6px;
-        }
-
-        .card-subtitle {
-            color: #91a8bd;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 27px;
+            padding: 35px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
         }
 
         .field {
-            margin-bottom: 19px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -189,10 +144,6 @@
             outline: none;
         }
 
-        input::placeholder {
-            color: #668199;
-        }
-
         input:focus {
             border-color: #00cfff;
             box-shadow: 0 0 0 3px rgba(0, 207, 255, 0.09);
@@ -208,8 +159,8 @@
             font-size: 15px;
             font-weight: 800;
             background: linear-gradient(90deg, #00d9ff, #1e8fff);
-            box-shadow: 0 10px 30px rgba(0, 174, 255, 0.22);
-            transition: all 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0, 174, 255, 0.2);
+            transition: all 0.2s;
         }
 
         button:hover {
@@ -217,10 +168,10 @@
         }
 
         .privacy {
-            margin-top: 14px;
+            margin-top: 15px;
             color: #718ba2;
             font-size: 11px;
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: center;
         }
 
@@ -229,147 +180,80 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255, 75, 75, 0.4);
             border-radius: 12px;
-            background: rgba(255, 75, 75, 0.10);
+            background: rgba(255, 75, 75, 0.1);
             color: #ffadad;
             font-size: 14px;
         }
 
         .success {
-            padding: 35px 25px;
             text-align: center;
-            border: 1px solid rgba(27, 209, 126, 0.4);
-            border-radius: 20px;
-            background: rgba(27, 209, 126, 0.10);
+            padding: 20px 10px;
         }
 
         .success-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(27, 209, 126, 0.17);
+            font-size: 45px;
             color: #58f2ad;
-            font-size: 35px;
-            font-weight: bold;
-        }
-
-        .success-title {
-            color: #78efb7;
-            font-size: 26px;
-            font-weight: 800;
             margin-bottom: 15px;
         }
 
-        .success-text {
-            color: #c6ded3;
-            font-size: 16px;
-            line-height: 1.7;
+        .success-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #78efb7;
+            margin-bottom: 10px;
         }
 
         .wait-message {
-            margin-top: 22px;
+            font-size: 18px;
+            font-weight: bold;
             color: #ffffff;
-            font-size: 20px;
-            font-weight: 800;
-            line-height: 1.5;
-        }
-
-        footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #627b92;
-            font-size: 12px;
-            text-align: center;
+            margin-top: 15px;
+            line-height: 1.4;
         }
 
         @media (max-width: 850px) {
-            .main {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 42px;
-            }
-        }
-
-        @media (max-width: 550px) {
-            .page {
-                padding: 22px 20px 35px;
-            }
-            .header {
-                margin-bottom: 55px;
-            }
-            .security {
-                display: none;
-            }
-            .hero h1 {
-                font-size: 36px;
-            }
-            .main {
-                gap: 50px;
-            }
-            .card {
-                padding: 26px 20px;
-            }
-            input {
-                font-size: 16px;
-            }
+            main { grid-template-columns: 1fr; gap: 40px; }
+            .hero h2 { font-size: 32px; }
         }
     </style>
 </head>
 <body>
-
     <div class="page">
-
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">M</div>
-                <div class="logo-name">MDS<span>_TI</span></div>
+                <h1>MDS_TI</h1>
             </div>
-            <div class="security">● Ambiente de solicitação</div>
+            <span>Solicitação de Testes</span>
         </header>
 
-        <main class="main">
-
+        <main>
+            <!-- LADO ESQUERDO: TEXTO DE ENGAJAMENTO -->
             <section class="hero">
-                <div class="hero-tag">SOLICITAÇÃO DE TESTES</div>
-                <h1>Solicite seu teste de forma <span>simples e rápida.</span></h1>
-                <p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p>
-
-                <div class="benefits">
-                    <div class="benefit"><div class="check">✓</div> Solicitação rápida e simples</div>
-                    <div class="benefit"><div class="check">✓</div> Atendimento personalizado</div>
-                    <div class="benefit"><div class="check">✓</div> Retorno pelo WhatsApp</div>
-                </div>
+                <h2>Solicite seu teste de forma <span>simples e rápida.</span></h2>
+                <p>Informe seus dados de contato ao lado. Entraremos em contato via WhatsApp para entender toda a sua necessidade e concluir os detalhes da solicitação técnica.</p>
             </section>
 
+            <!-- LADO DIREITO: CARD DE FORMULÁRIO OU SUCESSO -->
             <section class="card">
-
+                
                 {% if sucesso %}
+                    <!-- SE FOR ENVIADO COM SUCESSO, O FORMULÁRIO SOME E EXIBE ESTA MENSAGEM -->
                     <div class="success">
                         <div class="success-icon">✓</div>
                         <div class="success-title">Solicitação enviada!</div>
-                        <div class="success-text">
-                            Obrigado, <strong>{{ nome }}</strong>.
-                        </div>
+                        <p>Obrigado, <strong>{{ nome }}</strong>. Recebemos sua mensagem.</p>
                         <div class="wait-message">
                             Aguarde o contato pelo WhatsApp informado.
                         </div>
                     </div>
                 {% else %}
-
-                    <h2 class="card-title">Solicitar teste</h2>
-                    <p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
-
+                    <!-- SE NÃO FOI ENVIADO AINDA, EXIBE O FORMULÁRIO NORMALMENTE -->
                     {% if erro %}
                         <div class="error">{{ erro }}</div>
                     {% endif %}
 
                     <form id="formSolicitacao" action="/solicitar" method="POST">
-
                         <div class="field">
                             <label for="nome">Nome *</label>
                             <input id="nome" name="nome" type="text" placeholder="Digite seu nome" autocomplete="name" required>
@@ -390,116 +274,29 @@
                         <div class="privacy">
                             Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.
                         </div>
-
                     </form>
-
                 {% endif %}
 
             </section>
-
         </main>
-
-        <footer>
-            MDS_TI • Tecnologia e Soluções
-        </footer>
-
     </div>
-
     <script>
         const handlePhone = (event) => {
-            let input = event.target
-            input.value = phoneMask(input.value)
+            let input = event.target;
+            input.value = phoneMask(input.value);
         }
 
         const phoneMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "($1) $2")
-            value = value.replace(/(\d{5})(\d)/, "$1-$2")
-            return value.substring(0, 15)
+            if (!value) return "";
+            value = value.replace(/\D/g, ''); // Remove tudo o que não for número
+            value = value.replace(/(\d{2})(\d)/, "($1) $2"); // Aplica o DDD com parênteses
+            value = value.replace(/(\d{5})(\d)/, "$1-$2"); // Aplica o hífen no número celular
+            return value.substring(0, 15); // Limita o tamanho ao formato padrão celular
         }
 
-        document.getElementById('whatsapp').addEventListener('input', handlePhone)
+        // Seleciona o campo do WhatsApp e vincula o evento de digitação à máscara
+        document.getElementById('whatsapp')?.addEventListener('input', handlePhone);
     </script>
-
 </body>
+
 </html>
-import os
-import smtplib
-import ssl
-from email.message import EmailMessage
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
-@app.route("/", methods=["GET"])
-def inicio():
-    return render_template("index.html", sucesso=False, erro=None)
-
-@app.route("/solicitar", methods=["POST"])
-def solicitar():
-    nome = request.form.get("nome", "").strip()
-    email = request.form.get("email", "").strip()
-    whatsapp = request.form.get("whatsapp", "").strip()
-
-    if not nome or not email or not whatsapp:
-        return render_template(
-            "index.html",
-            sucesso=False,
-            erro="Preencha nome, e-mail e WhatsApp corretamente."
-        )
-
-    email_user = os.environ.get("EMAIL_USER")
-    email_password = os.environ.get("EMAIL_PASSWORD")
-    email_destino = os.environ.get("EMAIL_DESTINO")
-
-    if not email_user or not email_password or not email_destino:
-        print("ERRO CONFIGURAÇÃO: Variáveis de e-mail não detectadas no sistema.")
-        return render_template(
-            "index.html",
-            sucesso=False,
-            erro="Não foi possível processar a solicitação devido a uma falha de configuração interna."
-        )
-
-    mensagem = EmailMessage()
-    mensagem["From"] = email_user
-    mensagem["To"] = email_destino
-    mensagem["Reply-To"] = email
-    mensagem["Subject"] = f"Nova Solicitação de Teste | {nome}"
-    
-    mensagem.set_content(f"""
-NOVA SOLICITAÇÃO DE TESTE - MDS_TI
-
-Nome: {nome}
-E-mail: {email}
-WhatsApp: {whatsapp}
-
-Entre em contato com o solicitante pelo WhatsApp
-para concluir os detalhes do teste.
-
-----------------------------------------
-MDS_TI
-Tecnologia e Soluções
-""")
-
-    try:
-        contexto_ssl = ssl.create_default_context()
-        # CORREÇÃO AQUI: "://gmail.com" configurado de forma limpa e correta
-        with smtplib.SMTP_SSL("://gmail.com", 465, context=contexto_ssl, timeout=20) as servidor:
-            servidor.login(email_user, email_password)
-            servidor.send_message(mensagem)
-
-        print(f"EMAIL ENVIADO COM SUCESSO: {nome}")
-        return render_template("index.html", sucesso=True, nome=nome, erro=None)
-
-    except Exception as erro:
-        print("ERRO CRÍTICO AO ENVIAR EMAIL:", repr(erro))
-        return render_template(
-            "index.html",
-            sucesso=False,
-            erro="Falha ao enviar e-mail. Por favor, verifique as credenciais SMTP."
-        )
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
