@@ -94,7 +94,6 @@
             border-radius: 10px;
             outline: none;
             font-size: 16px;
-            transition: 0.2s;
         }
 
         input:focus {
@@ -114,28 +113,21 @@
             font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #084f89;
-            transform: translateY(-1px);
         }
 
         button:disabled {
             cursor: not-allowed;
             background: #90a3b8;
-            transform: none;
         }
 
         .mensagem {
             display: none;
             margin-top: 20px;
-            padding: 15px;
+            padding: 17px;
             border-radius: 10px;
-            line-height: 1.5;
             text-align: center;
             font-weight: 700;
+            line-height: 1.5;
         }
 
         .mensagem.sucesso {
@@ -191,7 +183,7 @@
             </h1>
 
             <p class="descricao">
-                Informe seus dados para solicitar o teste.
+                Preencha seus dados para solicitar o teste.
                 É permitida somente uma solicitação por
                 e-mail ou celular.
             </p>
@@ -205,7 +197,6 @@
 
                     <input
                         id="nome"
-                        name="nome"
                         type="text"
                         autocomplete="name"
                         maxlength="100"
@@ -220,7 +211,6 @@
 
                     <input
                         id="email"
-                        name="email"
                         type="email"
                         autocomplete="email"
                         maxlength="150"
@@ -230,12 +220,11 @@
 
                 <div class="campo">
                     <label for="celular">
-                        Celular com DDD
+                        WhatsApp com DDD
                     </label>
 
                     <input
                         id="celular"
-                        name="celular"
                         type="tel"
                         inputmode="tel"
                         autocomplete="tel"
@@ -262,9 +251,8 @@
             ></div>
 
             <p class="aviso">
-                Os dados informados serão utilizados
-                somente para registrar e responder à
-                solicitação de teste.
+                Os dados serão utilizados somente para
+                atendimento da solicitação.
             </p>
 
         </section>
@@ -272,9 +260,6 @@
     </main>
 
     <script>
-        const WEB3FORMS_ACCESS_KEY =
-            {{ web3forms_access_key | tojson }};
-
         const formulario =
             document.getElementById("formulario");
 
@@ -335,27 +320,12 @@
                     return;
                 }
 
-                if (!WEB3FORMS_ACCESS_KEY) {
-                    mostrarMensagem(
-                        "O serviço de envio ainda não " +
-                        "foi configurado.",
-                        "erro"
-                    );
-
-                    return;
-                }
-
                 botaoEnviar.disabled = true;
                 botaoEnviar.textContent =
-                    "Registrando solicitação...";
+                    "Enviando solicitação...";
 
                 try {
-                    /*
-                     * Primeiro registra no servidor.
-                     * O servidor verifica se o e-mail
-                     * ou celular já foi utilizado.
-                     */
-                    const respostaRegistro = await fetch(
+                    const resposta = await fetch(
                         "/registrar",
                         {
                             method: "POST",
@@ -373,90 +343,26 @@
                         }
                     );
 
-                    const resultadoRegistro =
-                        await respostaRegistro.json();
+                    const resultado =
+                        await resposta.json();
 
-                    if (!respostaRegistro.ok) {
+                    if (!resposta.ok) {
                         throw new Error(
-                            resultadoRegistro.message ||
-                            "Não foi possível registrar."
-                        );
-                    }
-
-                    botaoEnviar.textContent =
-                        "Enviando solicitação...";
-
-                    /*
-                     * Depois envia os dados cadastrados
-                     * ao Web3Forms.
-                     */
-                    const respostaEmail = await fetch(
-                        "https://api.web3forms.com/submit",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
-
-                                "Accept":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                access_key:
-                                    WEB3FORMS_ACCESS_KEY,
-
-                                subject:
-                                    "Nova solicitação de teste | " +
-                                    nome,
-
-                                from_name:
-                                    "MDS_TI - Solicitação",
-
-                                name: nome,
-
-                                email: email,
-
-                                celular: celular,
-
-                                message:
-                                    "Nova solicitação de teste\n\n" +
-                                    "Nome: " + nome + "\n" +
-                                    "E-mail: " + email + "\n" +
-                                    "Celular: " + celular
-                            })
-                        }
-                    );
-
-                    const resultadoEmail =
-                        await respostaEmail.json();
-
-                    if (
-                        !respostaEmail.ok ||
-                        !resultadoEmail.success
-                    ) {
-                        throw new Error(
-                            resultadoEmail.message ||
-                            "A solicitação foi registrada, " +
-                            "mas o e-mail não foi enviado."
+                            resultado.message ||
+                            "Não foi possível enviar."
                         );
                     }
 
                     formulario.reset();
-
                     formulario.style.display = "none";
 
                     mostrarMensagem(
                         "Solicitação enviada com sucesso. " +
-                        "Este e-mail e celular já foram " +
-                        "registrados para o teste.",
+                        "Aguarde o contato.",
                         "sucesso"
                     );
 
                 } catch (erro) {
-                    console.error(erro);
-
                     mostrarMensagem(
                         erro.message ||
                         "Não foi possível enviar a " +
