@@ -497,11 +497,8 @@
     </style>
 
 </head>
-<body>
-
+    <body>
 <div class="page">
-
-    <!-- CABEÇALHO -->
     <header class="header">
         <div class="logo">
             <div class="logo-icon">M</div>
@@ -510,63 +507,53 @@
         <div class="security">● Ambiente de solicitação</div>
     </header>
 
-    <!-- CONTEÚDO -->
     <main class="main">
-
-        <!-- APRESENTAÇÃO -->
         <section class="hero">
             <div class="hero-tag">SOLICITAÇÃO DE TESTES</div>
             <h1>Solicite seu teste de forma <span>simples e rápida.</span></h1>
             <p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p>
             <div class="benefits">
-                <div class="benefit"><div class="check">✓</div>Solicitação rápida e simples</div>
-                <div class="benefit"><div class="check">✓</div>Atendimento personalizado</div>
-                <div class="benefit"><div class="check">✓</div>Retorno pelo WhatsApp</div>
+                <div class="benefit"><div class="check">✓</div> Solicitação rápida e simples</div>
+                <div class="benefit"><div class="check">✓</div> Atendimento personalizado</div>
+                <div class="benefit"><div class="check">✓</div> Retorno pelo WhatsApp</div>
             </div>
         </section>
 
-        <!-- CARD DE INTERAÇÃO -->
         <section class="card">
-
-            <!-- Mensagem de erro retornada pelo servidor Flask se aplicável -->
             {% if error %}
                 <div class="error">{{ error }}</div>
             {% endif %}
 
-            <!-- Se o teste ainda não foi enviado, renderiza o formulário tradicional -->
             {% if not sucesso %}
             <div id="conteudoFormulario">
-
                 <h2 class="card-title">Solicitar teste</h2>
                 <p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
-
                 <form id="formSolicitacao" method="POST" action="/">
-
+                    <input type="hidden" id="accessKey" value="{{ web3forms_access_key }}">
                     <div class="field">
                         <label for="nome">Nome *</label>
                         <input id="nome" name="name" type="text" placeholder="Digite seu nome" autocomplete="name" required>
                     </div>
-
                     <div class="field">
                         <label for="email">E-mail *</label>
                         <input id="email" name="email" type="email" placeholder="Digite seu e-mail" autocomplete="email" required>
                     </div>
-
                     <div class="field">
                         <label for="whatsapp">WhatsApp *</label>
                         <input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" required>
                     </div>
-
+                    <input type="checkbox" name="botcheck" style="display: none;">
                     <button id="botaoEnviar" type="submit">SOLICITAR TESTE →</button>
-
-                    <div class="privacy">
-                        Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.
-                    </div>
-
+                    <div class="privacy">Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.</div>
                 </form>
             </div>
-            {% else %}
-            <!-- TELA DE SUCESSO EXIBIDA APÓS O SERVIDOR PYTHON PROCESSAR E CONFIRMAR O ENVIO -->
+            {% endif %}
+        </section>
+    </main>
+</div>
+</body>
+            {% if sucesso %}
+            <!-- TELA DE SUCESSO NATIVA APÓS PROCESSAMENTO DO SERVER PYTHON -->
             <div id="mensagemSucesso" class="success" style="display: block;">
 
                 <div class="success-icon">✓</div>
@@ -585,7 +572,7 @@
                     Recebemos sua solicitação de teste com sucesso.
                     <br><strong>Aqui estão seus dados de acesso:</strong>
 
-                    <!-- Caixa onde os dados de acesso vindos da API são injetados de forma limpa pelo Flask -->
+                    <!-- Caixa onde os dados de acesso são exibidos na tela para cópia imediata -->
                     <div id="credenciaisTela" style="
                         background: #06111f; 
                         border: 1px solid #25435e; 
@@ -612,13 +599,17 @@
 
     </main>
 
+
     <footer>
         MDS_TI • Tecnologia e Soluções
     </footer>
 
+
 </div>
 
+
 <script>
+
     // Gerenciador nativo leve apenas para a máscara de digitação do WhatsApp
     const campoWhatsApp = document.getElementById("whatsapp");
     if (campoWhatsApp) {
@@ -636,7 +627,7 @@
         });
     }
 
-    // Altera o estado do botão no momento do envio tradicional (POST) para dar feedback ao usuário
+    // Trava o botão no clique para dar o feedback correto de carregamento no envio tradicional (POST)
     const formulario = document.getElementById("formSolicitacao");
     if (formulario) {
         formulario.addEventListener("submit", function() {
@@ -645,7 +636,10 @@
             botao.textContent = "ENVIANDO SOLICITAÇÃO...";
         });
     }
+
 </script>
 
 </body>
 </html>
+
+    
