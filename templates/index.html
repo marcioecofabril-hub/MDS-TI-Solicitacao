@@ -349,8 +349,6 @@
         /* ERRO */
 
         .error {
-            display: none;
-
             padding: 14px;
 
             margin-bottom: 20px;
@@ -373,8 +371,6 @@
         /* SUCESSO */
 
         .success {
-            display: none;
-
             padding: 35px 25px;
 
             text-align: center;
@@ -501,253 +497,95 @@
     </style>
 
 </head>
-    <body>
-
+<body>
 
 <div class="page">
 
-
     <!-- CABEÇALHO -->
-
     <header class="header">
-
         <div class="logo">
-
-            <div class="logo-icon">
-                M
-            </div>
-
-            <div class="logo-name">
-                MDS<span>_TI</span>
-            </div>
-
+            <div class="logo-icon">M</div>
+            <div class="logo-name">MDS<span>_TI</span></div>
         </div>
-
-        <div class="security">
-            ● Ambiente de solicitação
-        </div>
-
+        <div class="security">● Ambiente de solicitação</div>
     </header>
 
-
     <!-- CONTEÚDO -->
-
     <main class="main">
 
-
         <!-- APRESENTAÇÃO -->
-
         <section class="hero">
-
-            <div class="hero-tag">
-                SOLICITAÇÃO DE TESTES
-            </div>
-
-            <h1>
-
-                Solicite seu teste de forma
-
-                <span>
-                    simples e rápida.
-                </span>
-
-            </h1>
-
-            <p>
-
-                Informe seus dados de contato.
-
-                Entraremos em contato pelo WhatsApp
-
-                para entender sua necessidade e
-
-                concluir a solicitação do teste.
-
-            </p>
-
+            <div class="hero-tag">SOLICITAÇÃO DE TESTES</div>
+            <h1>Solicite seu teste de forma <span>simples e rápida.</span></h1>
+            <p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p>
             <div class="benefits">
-
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
-
-                    Solicitação rápida e simples
-
-                </div>
-
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
-
-                    Atendimento personalizado
-
-                </div>
-
-                <div class="benefit">
-
-                    <div class="check">
-                        ✓
-                    </div>
-
-                    Retorno pelo WhatsApp
-
-                </div>
-
+                <div class="benefit"><div class="check">✓</div>Solicitação rápida e simples</div>
+                <div class="benefit"><div class="check">✓</div>Atendimento personalizado</div>
+                <div class="benefit"><div class="check">✓</div>Retorno pelo WhatsApp</div>
             </div>
-
         </section>
 
-
-        <!-- FORMULÁRIO -->
-
+        <!-- CARD DE INTERAÇÃO -->
         <section class="card">
 
+            <!-- Mensagem de erro retornada pelo servidor Flask se aplicável -->
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
 
-            <div
-                id="mensagemErro"
-                class="error"
-            ></div>
+            <!-- Se o teste ainda não foi enviado, renderiza o formulário tradicional -->
+            {% if not sucesso %}
+            <div id="conteudoFormulario">
 
+                <h2 class="card-title">Solicitar teste</h2>
+                <p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
 
-            <div
-                id="conteudoFormulario"
-            >
-
-                <h2 class="card-title">
-                    Solicitar teste
-                </h2>
-
-                <p class="card-subtitle">
-                    Informe seu nome, e-mail e WhatsApp.
-                </p>
-
-
-                <form id="formSolicitacao">
-
-
-                    <input
-                        type="hidden"
-                        id="accessKey"
-                        value="{{ web3forms_access_key }}"
-                    >
-
+                <form id="formSolicitacao" method="POST" action="/">
 
                     <div class="field">
-
-                        <label for="nome">
-                            Nome *
-                        </label>
-
-                        <input
-                            id="nome"
-                            name="name"
-                            type="text"
-                            placeholder="Digite seu nome"
-                            autocomplete="name"
-                            required
-                        >
-
+                        <label for="nome">Nome *</label>
+                        <input id="nome" name="name" type="text" placeholder="Digite seu nome" autocomplete="name" required>
                     </div>
-
 
                     <div class="field">
-
-                        <label for="email">
-                            E-mail *
-                        </label>
-
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="Digite seu e-mail"
-                            autocomplete="email"
-                            required
-                        >
-
+                        <label for="email">E-mail *</label>
+                        <input id="email" name="email" type="email" placeholder="Digite seu e-mail" autocomplete="email" required>
                     </div>
-
 
                     <div class="field">
-
-                        <label for="whatsapp">
-                            WhatsApp *
-                        </label>
-
-                        <input
-                            id="whatsapp"
-                            name="whatsapp"
-                            type="tel"
-                            placeholder="(11) 99999-9999"
-                            autocomplete="tel"
-                            required
-                        >
-
+                        <label for="whatsapp">WhatsApp *</label>
+                        <input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" required>
                     </div>
 
-
-                    <!-- Proteção simples contra robôs -->
-
-                    <input
-                        type="checkbox"
-                        name="botcheck"
-                        style="display: none;"
-                    >
-
-
-                    <button
-                        id="botaoEnviar"
-                        type="submit"
-                    >
-                        SOLICITAR TESTE →
-                    </button>
-
+                    <button id="botaoEnviar" type="submit">SOLICITAR TESTE →</button>
 
                     <div class="privacy">
-
-                        Seus dados serão utilizados
-
-                        exclusivamente para contato referente
-
-                        à solicitação do teste.
-
+                        Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.
                     </div>
 
-
                 </form>
-
             </div>
+            {% else %}
+            <!-- TELA DE SUCESSO EXIBIDA APÓS O SERVIDOR PYTHON PROCESSAR E CONFIRMAR O ENVIO -->
+            <div id="mensagemSucesso" class="success" style="display: block;">
 
+                <div class="success-icon">✓</div>
 
-            <!-- MENSAGEM DE SUCESSO -->
-
-            <div
-                id="mensagemSucesso"
-                class="success"
-            >
-
-                <div class="success-icon">
-                    ✓
-                </div>
-                                <div class="success-title">
+                <div class="success-title">
                     Solicitação enviada!
                 </div>
 
                 <div class="success-text">
 
                     Obrigado,
-                    <strong id="nomeConfirmacao"></strong>.
+                    <strong id="nomeConfirmacao">{{ nome_cliente }}</strong>.
 
                     <br><br>
 
-                    Recebemos sua solicitação de teste com sucesso. 
+                    Recebemos sua solicitação de teste com sucesso.
                     <br><strong>Aqui estão seus dados de acesso:</strong>
-                    
-                    <!-- Bloco visual onde os dados decodificados serão mostrados -->
+
+                    <!-- Caixa onde os dados de acesso vindos da API são injetados de forma limpa pelo Flask -->
                     <div id="credenciaisTela" style="
                         background: #06111f; 
                         border: 1px solid #25435e; 
@@ -759,114 +597,32 @@
                         font-family: monospace; 
                         color: #00d4ff;
                         font-size: 14px;
-                    ">Carregando credenciais...</div>
+                    ">{{ dados_acesso }}</div>
 
                 </div>
 
                 <div class="wait-message">
-
-                    Aguarde, entraremos em contato
-                    pelo WhatsApp informado.
-
+                    Aguarde, entraremos em contato pelo WhatsApp informado.
                 </div>
 
             </div>
-
+            {% endif %}
 
         </section>
 
-
     </main>
-
 
     <footer>
         MDS_TI • Tecnologia e Soluções
     </footer>
 
-
 </div>
 
-
 <script>
-
-    const formulario =
-        document.getElementById(
-            "formSolicitacao"
-        );
-
-    const botaoEnviar =
-        document.getElementById(
-            "botaoEnviar"
-        );
-
-    const conteudoFormulario =
-        document.getElementById(
-            "conteudoFormulario"
-        );
-
-    const mensagemSucesso =
-        document.getElementById(
-            "mensagemSucesso"
-        );
-
-    const mensagemErro =
-        document.getElementById(
-            "mensagemErro"
-        );
-
-    const nomeConfirmacao =
-        document.getElementById(
-            "nomeConfirmacao"
-        );
-
-    const campoWhatsApp =
-        document.getElementById(
-            "whatsapp"
-        );
-
-    const blocoCredenciaisTela = 
-        document.getElementById(
-            "credenciaisTela"
-        );
-
-    let templateCredenciaisAPI = "";
-
-    // Reconverte strings brutas unicode ("\u00e3o", "\u2b55") em caracteres acentuados reais e emojis legíveis
-    function decodificarUnicode(texto) {
-        try {
-            return decodeURIComponent(JSON.parse('"' + texto.replace(/"/g, '\\"') + '"'));
-        } catch (e) {
-            return texto;
-        }
-    }
-
-    /* CAPTURA DOS DADOS CONFORME A RESPOSTA DA SUA IMAGEM */
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch("/api/teste")
-            .then(response => {
-                if (!response.ok) throw new Error("Erro na rede.");
-                return response.json();
-            })
-            .then(dados => {
-                // Procura a chave de idioma em português ('pt') exatamente como na foto
-                const encontrado = dados.find(item => item.key === "pt");
-                if (encontrado && encontrado.template) {
-                    // Limpa quebras/traços excessivos e aplica decodificação segura
-                    const textoLimpo = encontrado.template.replace(/_+/g, "").trim();
-                    templateCredenciaisAPI = decodificarUnicode(textoLimpo);
-                }
-            })
-            .catch(erro => {
-                console.warn("Usando credenciais estáticas decodificadas de segurança.");
-                templateCredenciaisAPI = "Royal Platinum ⭕ ( *Servidor Premium*)\n\n✅ Usuário: 8612723\n✅ Senha: 7665256\n🟠 URL: http://royal3.fun";
-            });
-    });
-
-
-    /* MÁSCARA DO WHATSAPP */
-    campoWhatsApp.addEventListener(
-        "input",
-        function () {
+    // Gerenciador nativo leve apenas para a máscara de digitação do WhatsApp
+    const campoWhatsApp = document.getElementById("whatsapp");
+    if (campoWhatsApp) {
+        campoWhatsApp.addEventListener("input", function () {
             let numeros = campoWhatsApp.value.replace(/\D/g, "");
             numeros = numeros.substring(0, 11);
 
@@ -877,92 +633,19 @@
             } else {
                 campoWhatsApp.value = numeros;
             }
-        }
-    );
+        });
+    }
 
-
-    /* ENVIO DO FORMULÁRIO */
-    formulario.addEventListener(
-        "submit",
-        async function (evento) {
-            evento.preventDefault();
-            mensagemErro.style.display = "none";
-
-            const nome = document.getElementById("nome").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const whatsapp = document.getElementById("whatsapp").value.trim();
-            const accessKey = document.getElementById("accessKey").value.trim();
-
-            if (!accessKey || !nome || !email || !whatsapp) {
-                mensagemErro.textContent = "Preencha todos os campos obrigatórios.";
-                mensagemErro.style.display = "block";
-                return;
-            }
-
-            botaoEnviar.disabled = true;
-            botaoEnviar.textContent = "PROCESSANDO...";
-
-            // Montagem linear limpa sem quebra de caracteres especiais para evitar firewalls de spam do Web3Forms
-            const mensagemFormatada = "NOVA SOLICITACAO RECEBIDA\n" +
-                                      "Nome: " + nome + "\n" +
-                                      "WhatsApp: " + whatsapp + "\n" +
-                                      "Email: " + email + "\n\n" +
-                                      "--- DADOS DE ACESSO DO SERVIDOR ---\n" +
-                                      templateCredenciaisAPI;
-
-            const dadosPayload = {
-                access_key: accessKey,
-                to: "marcio.ecofabril@gmail.com",
-                subject: "Teste Gerado com Sucesso | " + nome,
-                from_name: "MDS_TI - Solicitação de Testes",
-                name: nome,
-                email: email,
-                WhatsApp: whatsapp,
-                message: mensagemFormatada
-            };
-
-            try {
-                const resposta = await fetch("https://web3forms.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify(dadosPayload)
-                });
-
-                const resultado = await resposta.json();
-
-                if (resposta.ok && resultado.success === true) {
-                    nomeConfirmacao.textContent = nome;
-                    
-                    // Exibe o texto perfeitamente decodificado com emojis na tela do cliente
-                    blocoCredenciaisTela.textContent = templateCredenciaisAPI;
-
-                    conteudoFormulario.style.display = "none";
-                    mensagemErro.style.display = "none";
-                    mensagemSucesso.style.display = "block";
-                    formulario.reset();
-                } else {
-                    throw new Error(resultado.message || "Erro no envio do e-mail.");
-                }
-
-            } catch (erro) {
-                console.error("Erro:", erro);
-                mensagemErro.textContent = "Não foi possível concluir. Tente novamente.";
-                mensagemErro.style.display = "block";
-                
-                botaoEnviar.disabled = false;
-                botaoEnviar.textContent = "SOLICITAR TESTE →";
-            }
-        }
-    );
-
+    // Altera o estado do botão no momento do envio tradicional (POST) para dar feedback ao usuário
+    const formulario = document.getElementById("formSolicitacao");
+    if (formulario) {
+        formulario.addEventListener("submit", function() {
+            const botao = document.getElementById("botaoEnviar");
+            botao.disabled = true;
+            botao.textContent = "ENVIANDO SOLICITAÇÃO...";
+        });
+    }
 </script>
 
-
 </body>
-
 </html>
-
-
