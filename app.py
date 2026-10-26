@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import re
@@ -5,7 +6,6 @@ import threading
 from datetime import datetime
 from pathlib import Path
 
-import requests
 from flask import Flask, jsonify, render_template, request
 
 
@@ -17,7 +17,9 @@ app = Flask(__name__)
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
+
 ARQUIVO_CLIENTES = BASE_DIR / "clientes.json"
+ARQUIVO_DADOS_API = BASE_DIR / "dados_api.json"
 
 bloqueio_arquivo = threading.Lock()
 
@@ -51,6 +53,26 @@ def celular_valido(celular):
     return 10 <= len(celular) <= 13
 
 
+def formatar_celular(celular):
+    numeros = normalizar_celular(celular)
+
+    if len(numeros) == 11:
+        return (
+            f"({numeros[0:2]}) "
+            f"{numeros[2:7]}-"
+            f"{numeros[7:11]}"
+        )
+
+    if len(numeros) == 10:
+        return (
+            f"({numeros[0:2]}) "
+            f"{numeros[2:6]}-"
+            f"{numeros[6:10]}"
+        )
+
+    return numeros
+
+
 def obter_ip_cliente():
     encaminhado = request.headers.get(
         "X-Forwarded-For",
@@ -62,6 +84,10 @@ def obter_ip_cliente():
 
     return request.remote_addr or ""
 
+
+# ============================================================
+# CLIENTES.JSON
+# ============================================================
 
 def criar_arquivo_clientes():
     if not ARQUIVO_CLIENTES.exists():
@@ -82,19 +108,27 @@ def carregar_clientes():
         if not conteudo:
             return []
 
-        dados = json.loads(
-            conteudo
-        )
+        dados = json.loads(conteudo)
 
         if isinstance(dados, list):
             return dados
 
         return []
 
-    except (
-        json.JSONDecodeError,
-        OSError
-    ):
+    except json.JSONDecodeError as erro:
+        print(
+            "[ERRO clientes.json] "
+            f"{erro}"
+        )
+
+        return []
+
+    except OSError as erro:
+        print(
+            "[ERRO clientes.json] "
+            f"{erro}"
+        )
+
         return []
 
 
@@ -118,110 +152,84 @@ def salvar_clientes(clientes):
 
 
 # ============================================================
-# CONSULTA À API
+# DADOS_API.JSON
 # ============================================================
 
-def consultar_api():
-    api_url = os.environ.get(
-        "API_URL",
-        ""
-    ).strip()
-
-    api_token = os.environ.get(
-        "API_TOKEN",
-        ""
-    ).strip()
-
-    if not api_url:
+def carregar_dados_api():
+    if not ARQUIVO_DADOS_API.exists():
         raise RuntimeError(
-            "A variável API_URL não foi configurada."
+            "O arquivo dados_api.json não foi encontrado."
         )
-
-    cabecalhos = {
-        "Accept": "application/json",
-        "User-Agent": "MDS-TI-Solicitacao/1.0"
-    }
-
-    if api_token:
-        cabecalhos["Authorization"] = (
-            f"Bearer {api_token}"
-        )
-
-    resposta = requests.get(
-        api_url,
-        headers=cabecalhos,
-        timeout=20
-    )
-
-    resposta.raise_for_status()
 
     try:
-        dados_api = resposta.json()
+        conteudo = ARQUIVO_DADOS_API.read_text(
+            encoding="utf-8"
+        ).strip()
 
-    except ValueError as erro:
+        if not conteudo:
+            raise RuntimeError(
+                "O arquivo dados_api.json está vazio."
+            )
+
+        dados_api = json.loads(
+            conteudo
+        )
+
+    except json.JSONDecodeError as erro:
         raise RuntimeError(
-            "A API não devolveu um JSON válido."
+            "O arquivo dados_api.json possui "
+            f"um JSON inválido: {erro}"
         ) from erro
+
+    except OSError as erro:
+        raise RuntimeError(
+            "Não foi possível abrir dados_api.json."
+        ) from erro
+
+    if not isinstance(dados_api, list):
+        raise RuntimeError(
+            "dados_api.json precisa conter uma lista."
+        )
 
     return dados_api
 
 
-def localizar_template_portugues(dados_api):
-    """
-    Procura o objeto com key igual a 'pt'.
+def obter_template_portugues():
+    dados_api = carregar_dados_api()
 
-    Exemplo esperado:
+    for item in dados_api:
+        if not isinstance(item, dict):
+            continue
 
-    [
-        {
-            "key": "pt",
-            "template": "Informações do teste"
-        }
-    ]
-    """
-
-    if isinstance(dados_api, list):
-
-        for item in dados_api:
-
-            if not isinstance(item, dict):
-                continue
-
-            chave = str(
-                item.get("key") or ""
-            ).strip().lower()
-
-            if chave == "pt":
-                template = item.get(
-                    "template"
-                )
-
-                if template:
-                    return str(template)
-
-    if isinstance(dados_api, dict):
-
-        chave = str(
-            dados_api.get("key") or ""
+        idioma = str(
+            item.get("key") or ""
         ).strip().lower()
 
-        if chave == "pt":
-            template = dados_api.get(
-                "template"
+        if idioma != "pt":
+            continue
+
+        template = item.get(
+            "template"
+        )
+
+        if template is None:
+            raise RuntimeError(
+                "O template PT não foi encontrado."
             )
 
-            if template:
-                return str(template)
+        template_texto = html.unescape(
+            str(template)
+        ).strip()
 
-        if dados_api.get("template"):
-            return str(
-                dados_api["template"]
+        if not template_texto:
+            raise RuntimeError(
+                "O template PT está vazio."
             )
 
-    return json.dumps(
-        dados_api,
-        ensure_ascii=False,
-        indent=2
+        return template_texto
+
+    raise RuntimeError(
+        "Não existe key='pt' em dados_api.json."
     )
 
 
@@ -243,35 +251,26 @@ def inicio():
 
 
 # ============================================================
-# ROTA PARA INSPECIONAR A API
+# TESTE DO DADOS_API.JSON
 # ============================================================
 
-@app.route("/api/teste", methods=["GET"])
-def api_teste():
+@app.route("/api/status", methods=["GET"])
+def api_status():
     try:
-        dados_api = consultar_api()
+        template_pt = obter_template_portugues()
 
         return jsonify({
             "success": True,
-            "dados": dados_api
-        }), 200
-
-    except requests.RequestException as erro:
-        print(
-            "[ERRO API] "
-            f"{erro}"
-        )
-
-        return jsonify({
-            "success": False,
-            "message": (
-                "Não foi possível consultar a API."
+            "arquivo": "dados_api.json",
+            "template_pt": True,
+            "quantidade_caracteres": len(
+                template_pt
             )
-        }), 502
+        }), 200
 
     except Exception as erro:
         print(
-            "[ERRO API] "
+            "[ERRO dados_api.json] "
             f"{erro}"
         )
 
@@ -282,7 +281,7 @@ def api_teste():
 
 
 # ============================================================
-# REGISTRO DO CLIENTE E CONSULTA À API
+# REGISTRAR SOLICITAÇÃO
 # ============================================================
 
 @app.route("/registrar", methods=["POST"])
@@ -303,12 +302,14 @@ def registrar():
         dados.get("celular")
     )
 
-    if not nome or not email_cliente or not celular:
+    # --------------------------------------------------------
+    # VALIDAÇÕES
+    # --------------------------------------------------------
+
+    if not nome:
         return jsonify({
             "success": False,
-            "message": (
-                "Preencha nome, e-mail e celular."
-            )
+            "message": "Informe seu nome."
         }), 400
 
     if len(nome) < 2:
@@ -317,25 +318,65 @@ def registrar():
             "message": "Informe um nome válido."
         }), 400
 
+    if not email_cliente:
+        return jsonify({
+            "success": False,
+            "message": "Informe seu e-mail."
+        }), 400
+
     if not email_valido(email_cliente):
         return jsonify({
             "success": False,
             "message": "Informe um e-mail válido."
         }), 400
 
+    if not celular:
+        return jsonify({
+            "success": False,
+            "message": "Informe seu WhatsApp."
+        }), 400
+
     if not celular_valido(celular):
         return jsonify({
             "success": False,
             "message": (
-                "Informe um celular válido com DDD."
+                "Informe um WhatsApp válido com DDD."
             )
         }), 400
+
+    # --------------------------------------------------------
+    # CARREGA O TESTE
+    # --------------------------------------------------------
+
+    try:
+        template_pt = obter_template_portugues()
+
+    except Exception as erro:
+        print(
+            "[ERRO AO CARREGAR TESTE] "
+            f"{erro}"
+        )
+
+        return jsonify({
+            "success": False,
+            "message": (
+                "Não foi possível carregar o teste."
+            )
+        }), 500
 
     data_solicitacao = datetime.now().strftime(
         "%d/%m/%Y às %H:%M:%S"
     )
 
     ip_cliente = obter_ip_cliente()
+
+    celular_formatado = formatar_celular(
+        celular
+    )
+
+    # --------------------------------------------------------
+    # VERIFICA DUPLICIDADE
+    # --------------------------------------------------------
 
     with bloqueio_arquivo:
         clientes = carregar_clientes()
@@ -353,8 +394,7 @@ def registrar():
                 return jsonify({
                     "success": False,
                     "message": (
-                        "Este e-mail já utilizou "
-                        "a solicitação de teste."
+                        "Este e-mail já utilizou o teste."
                     )
                 }), 409
 
@@ -362,56 +402,19 @@ def registrar():
                 return jsonify({
                     "success": False,
                     "message": (
-                        "Este celular já utilizou "
-                        "a solicitação de teste."
+                        "Este WhatsApp já utilizou o teste."
                     )
                 }), 409
 
-        # Consulta a API antes de registrar o cliente
-        try:
-            dados_api = consultar_api()
-
-            template_api = localizar_template_portugues(
-                dados_api
-            )
-
-        except requests.Timeout:
-            return jsonify({
-                "success": False,
-                "message": (
-                    "A API demorou muito para responder."
-                )
-            }), 504
-
-        except requests.RequestException as erro:
-            print(
-                "[ERRO NA CONSULTA À API] "
-                f"{erro}"
-            )
-
-            return jsonify({
-                "success": False,
-                "message": (
-                    "Não foi possível obter os dados "
-                    "da API."
-                )
-            }), 502
-
-        except Exception as erro:
-            print(
-                "[ERRO NA CONSULTA À API] "
-                f"{erro}"
-            )
-
-            return jsonify({
-                "success": False,
-                "message": str(erro)
-            }), 500
+        # ----------------------------------------------------
+        # REGISTRA O CLIENTE
+        # ----------------------------------------------------
 
         novo_cliente = {
             "nome": nome,
             "email": email_cliente,
             "celular": celular,
+            "celular_formatado": celular_formatado,
             "data_solicitacao": data_solicitacao,
             "ip": ip_cliente
         }
@@ -439,19 +442,26 @@ def registrar():
                 )
             }), 500
 
+    # --------------------------------------------------------
+    # RETORNO PARA A TELA
+    # --------------------------------------------------------
+
     return jsonify({
         "success": True,
+
         "message": (
-            "Solicitação enviada com sucesso. "
-            "Aguarde o contato."
+            "Teste liberado com sucesso."
         ),
+
         "cliente": {
             "nome": nome,
             "email": email_cliente,
-            "celular": celular,
+            "celular": celular_formatado,
             "data_solicitacao": data_solicitacao
         },
-        "dados_api": template_api
+
+        "template": template_pt
+
     }), 201
 
 
