@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,10 +8,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>MDS_TI | Solicitação de Testes</title>
+    <title>Solicitação de Teste | MDS_TI</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -21,625 +18,459 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at 10% 20%,
-                    rgba(0, 207, 255, 0.16),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 90% 80%,
-                    rgba(0, 119, 255, 0.14),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    135deg,
-                    #06111f,
-                    #0a1d32 50%,
-                    #071522
-                );
-
-            color: #ffffff;
             min-height: 100vh;
-        }
-
-        .page {
-            width: 100%;
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            padding: 35px 25px 50px;
-        }
-
-        /* CABEÇALHO */
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            margin-bottom: 45px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-
-            gap: 14px;
-        }
-
-        .logo-icon {
-            width: 52px;
-            height: 52px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            border-radius: 15px;
-
-            font-size: 23px;
-            font-weight: 800;
-
+            padding: 24px;
+            font-family: Arial, Helvetica, sans-serif;
             background:
                 linear-gradient(
                     135deg,
-                    #00d4ff,
-                    #0077ff
+                    #08162d 0%,
+                    #102d55 50%,
+                    #075985 100%
                 );
-
-            box-shadow:
-                0 0 28px
-                rgba(0, 200, 255, 0.28);
+            color: #172033;
         }
 
-        .logo-name {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .container {
+            width: 100%;
+            max-width: 520px;
         }
-
-        .logo-name span {
-            color: #00d4ff;
-        }
-
-        .security {
-            color: #9eb3c8;
-            font-size: 13px;
-        }
-
-        /* CONTEÚDO */
-
-        .main {
-            display: grid;
-
-            grid-template-columns:
-                0.9fr
-                1.1fr;
-
-            gap: 55px;
-
-            align-items: center;
-        }
-
-        /* APRESENTAÇÃO */
-
-        .hero-tag {
-            display: inline-block;
-
-            color: #00d4ff;
-
-            background:
-                rgba(0, 212, 255, 0.09);
-
-            border:
-                1px solid
-                rgba(0, 212, 255, 0.23);
-
-            padding: 8px 14px;
-
-            border-radius: 30px;
-
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-
-            margin-bottom: 22px;
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            line-height: 1.05;
-
-            margin-bottom: 20px;
-        }
-
-        .hero h1 span {
-            color: #00d4ff;
-        }
-
-        .hero p {
-            max-width: 480px;
-
-            color: #a9bbcc;
-
-            font-size: 17px;
-            line-height: 1.7;
-        }
-
-        .benefits {
-            display: grid;
-
-            gap: 14px;
-
-            margin-top: 32px;
-        }
-
-        .benefit {
-            display: flex;
-            align-items: center;
-
-            gap: 12px;
-
-            color: #dbe8f3;
-        }
-
-        .check {
-            width: 27px;
-            height: 27px;
-            min-width: 27px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            color: #00d4ff;
-
-            background:
-                rgba(0, 212, 255, 0.10);
-        }
-
-        /* CARD */
 
         .card {
-            padding: 32px;
-
-            background:
-                rgba(10, 28, 48, 0.92);
-
-            border:
-                1px solid
-                rgba(136, 180, 218, 0.16);
-
-            border-radius: 24px;
-
+            padding: 36px;
+            border-radius: 22px;
+            background: #ffffff;
             box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, 0.32);
+                0 24px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .card-title {
-            font-size: 25px;
-
-            margin-bottom: 6px;
+        .marca {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 92px;
+            height: 38px;
+            margin-bottom: 22px;
+            border-radius: 10px;
+            color: #ffffff;
+            background: #0b67b2;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
-        .card-subtitle {
-            color: #91a8bd;
-
-            font-size: 14px;
-            line-height: 1.5;
-
-            margin-bottom: 27px;
+        h1 {
+            margin-bottom: 10px;
+            font-size: 30px;
+            line-height: 1.15;
+            color: #10233f;
         }
 
-        /* FORMULÁRIO */
+        .descricao {
+            margin-bottom: 28px;
+            color: #5e6b7e;
+            line-height: 1.6;
+        }
 
-        .field {
-            margin-bottom: 19px;
+        .campo {
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-
-            color: #c8d7e5;
-
-            font-size: 13px;
-            font-weight: 600;
-
-            margin-bottom: 8px;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #28384f;
         }
 
         input {
             width: 100%;
-
-            padding: 14px;
-
-            border:
-                1px solid #25435e;
-
-            border-radius: 11px;
-
-            background: #0a1c2e;
-
-            color: #ffffff;
-
-            font-size: 15px;
-
+            height: 50px;
+            padding: 0 15px;
+            border: 1px solid #ccd5e1;
+            border-radius: 10px;
             outline: none;
-
+            font-size: 16px;
             transition: 0.2s;
         }
 
-        input::placeholder {
-            color: #668199;
-        }
-
         input:focus {
-            border-color: #00cfff;
-
+            border-color: #0b67b2;
             box-shadow:
-                0 0 0 3px
-                rgba(0, 207, 255, 0.09);
+                0 0 0 4px rgba(11, 103, 178, 0.12);
         }
-
-        /* BOTÃO */
 
         button {
             width: 100%;
-
-            padding: 16px;
-
+            height: 52px;
+            margin-top: 8px;
             border: 0;
-            border-radius: 12px;
-
-            cursor: pointer;
-
-            color: #00121c;
-
-            font-size: 15px;
+            border-radius: 11px;
+            background: #0b67b2;
+            color: #ffffff;
+            font-size: 16px;
             font-weight: 800;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #00d9ff,
-                    #1e8fff
-                );
-
-            box-shadow:
-                0 10px 30px
-                rgba(0, 174, 255, 0.22);
-
+            cursor: pointer;
             transition: 0.2s;
         }
 
         button:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 14px 35px
-                rgba(0, 174, 255, 0.32);
+            background: #084f89;
+            transform: translateY(-1px);
         }
 
         button:disabled {
-            opacity: 0.65;
-
-            cursor: wait;
-
+            cursor: not-allowed;
+            background: #90a3b8;
             transform: none;
         }
 
-        .privacy {
-            color: #718ba2;
-
-            font-size: 11px;
+        .mensagem {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
             line-height: 1.5;
-
             text-align: center;
-
-            margin-top: 14px;
+            font-weight: 700;
         }
 
-        /* ERRO */
-
-        .error {
-            padding: 14px;
-
-            margin-bottom: 20px;
-
-            border:
-                1px solid
-                rgba(255, 75, 75, 0.4);
-
-            border-radius: 12px;
-
-            background:
-                rgba(255, 75, 75, 0.10);
-
-            color: #ffadad;
-
-            font-size: 14px;
-            line-height: 1.5;
+        .mensagem.sucesso {
+            display: block;
+            border: 1px solid #86d3a0;
+            background: #e9f9ef;
+            color: #186735;
         }
 
-        /* SUCESSO */
-
-        .success {
-            padding: 35px 25px;
-
-            text-align: center;
-
-            border:
-                1px solid
-                rgba(27, 209, 126, 0.4);
-
-            border-radius: 20px;
-
-            background:
-                rgba(27, 209, 126, 0.10);
+        .mensagem.erro {
+            display: block;
+            border: 1px solid #f0a3a3;
+            background: #fff0f0;
+            color: #a22222;
         }
 
-        .success-icon {
-            width: 70px;
-            height: 70px;
-
-            margin: 0 auto 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background:
-                rgba(27, 209, 126, 0.17);
-
-            color: #58f2ad;
-
-            font-size: 35px;
-            font-weight: bold;
-        }
-
-        .success-title {
-            color: #78efb7;
-
-            font-size: 26px;
-            font-weight: 800;
-
-            margin-bottom: 15px;
-        }
-
-        .success-text {
-            color: #c6ded3;
-
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .wait-message {
-            color: #ffffff;
-
-            font-size: 20px;
-            font-weight: 800;
-            line-height: 1.5;
-
+        .aviso {
             margin-top: 22px;
-        }
-
-        /* RODAPÉ */
-
-        footer {
-            color: #627b92;
-
+            color: #738095;
             font-size: 12px;
-
+            line-height: 1.5;
             text-align: center;
-
-            border-top:
-                1px solid
-                rgba(255, 255, 255, 0.08);
-
-            margin-top: 60px;
-
-            padding-top: 20px;
         }
 
-        /* CELULAR */
-
-        @media (max-width: 850px) {
-
-            .main {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 42px;
-            }
-        }
-
-        @media (max-width: 550px) {
-
-            .page {
-                padding: 22px 20px 35px;
-            }
-
-            .header {
-                margin-bottom: 55px;
-            }
-
-            .security {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .main {
-                gap: 50px;
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
             }
 
             .card {
-                padding: 26px 20px;
+                padding: 27px 21px;
             }
 
-            input {
-                font-size: 16px;
+            h1 {
+                font-size: 25px;
             }
         }
-
     </style>
-
 </head>
-    <body>
-<div class="page">
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">M</div>
-            <div class="logo-name">MDS<span>_TI</span></div>
-        </div>
-        <div class="security">● Ambiente de solicitação</div>
-    </header>
 
-    <main class="main">
-        <section class="hero">
-            <div class="hero-tag">SOLICITAÇÃO DE TESTES</div>
-            <h1>Solicite seu teste de forma <span>simples e rápida.</span></h1>
-            <p>Informe seus dados de contato. Entraremos em contato pelo WhatsApp para entender sua necessidade e concluir a solicitação do teste.</p>
-            <div class="benefits">
-                <div class="benefit"><div class="check">✓</div> Solicitação rápida e simples</div>
-                <div class="benefit"><div class="check">✓</div> Atendimento personalizado</div>
-                <div class="benefit"><div class="check">✓</div> Retorno pelo WhatsApp</div>
-            </div>
-        </section>
+<body>
+
+    <main class="container">
 
         <section class="card">
-            {% if error %}
-                <div class="error">{{ error }}</div>
-            {% endif %}
 
-            {% if not sucesso %}
-            <div id="conteudoFormulario">
-                <h2 class="card-title">Solicitar teste</h2>
-                <p class="card-subtitle">Informe seu nome, e-mail e WhatsApp.</p>
-                <form id="formSolicitacao" method="POST" action="/">
-                    <input type="hidden" id="accessKey" value="{{ web3forms_access_key }}">
-                    <div class="field">
-                        <label for="nome">Nome *</label>
-                        <input id="nome" name="name" type="text" placeholder="Digite seu nome" autocomplete="name" required>
-                    </div>
-                    <div class="field">
-                        <label for="email">E-mail *</label>
-                        <input id="email" name="email" type="email" placeholder="Digite seu e-mail" autocomplete="email" required>
-                    </div>
-                    <div class="field">
-                        <label for="whatsapp">WhatsApp *</label>
-                        <input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" required>
-                    </div>
-                    <input type="checkbox" name="botcheck" style="display: none;">
-                    <button id="botaoEnviar" type="submit">SOLICITAR TESTE →</button>
-                    <div class="privacy">Seus dados serão utilizados exclusivamente para contato referente à solicitação do teste.</div>
-                </form>
+            <div class="marca">
+                MDS_TI
             </div>
-            {% endif %}
+
+            <h1>
+                Solicitação de teste
+            </h1>
+
+            <p class="descricao">
+                Informe seus dados para solicitar o teste.
+                É permitida somente uma solicitação por
+                e-mail ou celular.
+            </p>
+
+            <form id="formulario">
+
+                <div class="campo">
+                    <label for="nome">
+                        Nome completo
+                    </label>
+
+                    <input
+                        id="nome"
+                        name="nome"
+                        type="text"
+                        autocomplete="name"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        maxlength="150"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="celular">
+                        Celular com DDD
+                    </label>
+
+                    <input
+                        id="celular"
+                        name="celular"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        maxlength="20"
+                        placeholder="(11) 99999-9999"
+                        required
+                    >
+                </div>
+
+                <button
+                    id="botaoEnviar"
+                    type="submit"
+                >
+                    Solicitar teste
+                </button>
+
+            </form>
+
+            <div
+                id="mensagem"
+                class="mensagem"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+            <p class="aviso">
+                Os dados informados serão utilizados
+                somente para registrar e responder à
+                solicitação de teste.
+            </p>
+
         </section>
-    </main>
-</div>
-</body>
-            {% if sucesso %}
-            <!-- TELA DE SUCESSO NATIVA APÓS PROCESSAMENTO DO SERVER PYTHON -->
-            <div id="mensagemSucesso" class="success" style="display: block;">
-
-                <div class="success-icon">✓</div>
-
-                <div class="success-title">
-                    Solicitação enviada!
-                </div>
-
-                <div class="success-text">
-
-                    Obrigado,
-                    <strong id="nomeConfirmacao">{{ nome_cliente }}</strong>.
-
-                    <br><br>
-
-                    Recebemos sua solicitação de teste com sucesso.
-                    <br><strong>Aqui estão seus dados de acesso:</strong>
-
-                    <!-- Caixa onde os dados de acesso são exibidos na tela para cópia imediata -->
-                    <div id="credenciaisTela" style="
-                        background: #06111f; 
-                        border: 1px solid #25435e; 
-                        padding: 15px; 
-                        border-radius: 12px; 
-                        margin-top: 15px; 
-                        text-align: left; 
-                        white-space: pre-wrap; 
-                        font-family: monospace; 
-                        color: #00d4ff;
-                        font-size: 14px;
-                    ">{{ dados_acesso }}</div>
-
-                </div>
-
-                <div class="wait-message">
-                    Aguarde, entraremos em contato pelo WhatsApp informado.
-                </div>
-
-            </div>
-            {% endif %}
-
-        </section>
 
     </main>
 
+    <script>
+        const WEB3FORMS_ACCESS_KEY =
+            {{ web3forms_access_key | tojson }};
 
-    <footer>
-        MDS_TI • Tecnologia e Soluções
-    </footer>
+        const formulario =
+            document.getElementById("formulario");
+
+        const botaoEnviar =
+            document.getElementById("botaoEnviar");
+
+        const mensagem =
+            document.getElementById("mensagem");
 
 
-</div>
+        function mostrarMensagem(texto, tipo) {
+            mensagem.textContent = texto;
+            mensagem.className =
+                "mensagem " + tipo;
+        }
 
 
-<script>
+        function limparCelular(valor) {
+            return valor.replace(/\D/g, "");
+        }
 
-    // Gerenciador nativo leve apenas para a máscara de digitação do WhatsApp
-    const campoWhatsApp = document.getElementById("whatsapp");
-    if (campoWhatsApp) {
-        campoWhatsApp.addEventListener("input", function () {
-            let numeros = campoWhatsApp.value.replace(/\D/g, "");
-            numeros = numeros.substring(0, 11);
 
-            if (numeros.length > 6) {
-                campoWhatsApp.value = "(" + numeros.substring(0, 2) + ") " + numeros.substring(2, 7) + "-" + numeros.substring(7);
-            } else if (numeros.length > 2) {
-                campoWhatsApp.value = "(" + numeros.substring(0, 2) + ") " + numeros.substring(2);
-            } else {
-                campoWhatsApp.value = numeros;
+        formulario.addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+                mensagem.className = "mensagem";
+                mensagem.textContent = "";
+
+                const nome =
+                    document
+                        .getElementById("nome")
+                        .value
+                        .trim();
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+                const celular =
+                    limparCelular(
+                        document
+                            .getElementById("celular")
+                            .value
+                    );
+
+                if (!nome || !email || !celular) {
+                    mostrarMensagem(
+                        "Preencha todos os campos.",
+                        "erro"
+                    );
+
+                    return;
+                }
+
+                if (!WEB3FORMS_ACCESS_KEY) {
+                    mostrarMensagem(
+                        "O serviço de envio ainda não " +
+                        "foi configurado.",
+                        "erro"
+                    );
+
+                    return;
+                }
+
+                botaoEnviar.disabled = true;
+                botaoEnviar.textContent =
+                    "Registrando solicitação...";
+
+                try {
+                    /*
+                     * Primeiro registra no servidor.
+                     * O servidor verifica se o e-mail
+                     * ou celular já foi utilizado.
+                     */
+                    const respostaRegistro = await fetch(
+                        "/registrar",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                nome: nome,
+                                email: email,
+                                celular: celular
+                            })
+                        }
+                    );
+
+                    const resultadoRegistro =
+                        await respostaRegistro.json();
+
+                    if (!respostaRegistro.ok) {
+                        throw new Error(
+                            resultadoRegistro.message ||
+                            "Não foi possível registrar."
+                        );
+                    }
+
+                    botaoEnviar.textContent =
+                        "Enviando solicitação...";
+
+                    /*
+                     * Depois envia os dados cadastrados
+                     * ao Web3Forms.
+                     */
+                    const respostaEmail = await fetch(
+                        "https://api.web3forms.com/submit",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                access_key:
+                                    WEB3FORMS_ACCESS_KEY,
+
+                                subject:
+                                    "Nova solicitação de teste | " +
+                                    nome,
+
+                                from_name:
+                                    "MDS_TI - Solicitação",
+
+                                name: nome,
+
+                                email: email,
+
+                                celular: celular,
+
+                                message:
+                                    "Nova solicitação de teste\n\n" +
+                                    "Nome: " + nome + "\n" +
+                                    "E-mail: " + email + "\n" +
+                                    "Celular: " + celular
+                            })
+                        }
+                    );
+
+                    const resultadoEmail =
+                        await respostaEmail.json();
+
+                    if (
+                        !respostaEmail.ok ||
+                        !resultadoEmail.success
+                    ) {
+                        throw new Error(
+                            resultadoEmail.message ||
+                            "A solicitação foi registrada, " +
+                            "mas o e-mail não foi enviado."
+                        );
+                    }
+
+                    formulario.reset();
+
+                    formulario.style.display = "none";
+
+                    mostrarMensagem(
+                        "Solicitação enviada com sucesso. " +
+                        "Este e-mail e celular já foram " +
+                        "registrados para o teste.",
+                        "sucesso"
+                    );
+
+                } catch (erro) {
+                    console.error(erro);
+
+                    mostrarMensagem(
+                        erro.message ||
+                        "Não foi possível enviar a " +
+                        "solicitação.",
+                        "erro"
+                    );
+
+                    botaoEnviar.disabled = false;
+                    botaoEnviar.textContent =
+                        "Solicitar teste";
+                }
             }
-        });
-    }
-
-    // Trava o botão no clique para dar o feedback correto de carregamento no envio tradicional (POST)
-    const formulario = document.getElementById("formSolicitacao");
-    if (formulario) {
-        formulario.addEventListener("submit", function() {
-            const botao = document.getElementById("botaoEnviar");
-            botao.disabled = true;
-            botao.textContent = "ENVIANDO SOLICITAÇÃO...";
-        });
-    }
-
-</script>
+        );
+    </script>
 
 </body>
 </html>
-
-    
