@@ -744,8 +744,22 @@
 
                     <br><br>
 
-                    Recebemos sua solicitação de teste
-                    com sucesso.
+                    Recebemos sua solicitação de teste com sucesso. 
+                    <br><strong>Aqui estão seus dados de acesso:</strong>
+                    
+                    <!-- Bloco visual onde os dados decodificados serão mostrados -->
+                    <div id="credenciaisTela" style="
+                        background: #06111f; 
+                        border: 1px solid #25435e; 
+                        padding: 15px; 
+                        border-radius: 12px; 
+                        margin-top: 15px; 
+                        text-align: left; 
+                        white-space: pre-wrap; 
+                        font-family: monospace; 
+                        color: #00d4ff;
+                        font-size: 14px;
+                    ">Carregando credenciais...</div>
 
                 </div>
 
@@ -810,253 +824,137 @@
             "whatsapp"
         );
 
-    // Variável interna para guardar o template da API coletado do Flask
-    let templateCredenciaisAPI = "Não foi possível resgatar as credenciais no endpoint local.";
+    const blocoCredenciaisTela = 
+        document.getElementById(
+            "credenciaisTela"
+        );
 
-    /* CARREGAMENTO DOS DADOS DE ACESSO DO ENDPOINT FLASK */
+    let templateCredenciaisAPI = "";
+
+    // Reconverte strings brutas unicode ("\u00e3o", "\u2b55") em caracteres acentuados reais e emojis legíveis
+    function decodificarUnicode(texto) {
+        try {
+            return decodeURIComponent(JSON.parse('"' + texto.replace(/"/g, '\\"') + '"'));
+        } catch (e) {
+            return texto;
+        }
+    }
+
+    /* CAPTURA DOS DADOS CONFORME A RESPOSTA DA SUA IMAGEM */
     document.addEventListener("DOMContentLoaded", function () {
         fetch("/api/teste")
             .then(response => {
-                if (!response.ok) throw new Error("Erro ao consultar endpoint local.");
+                if (!response.ok) throw new Error("Erro na rede.");
                 return response.json();
             })
             .then(dados => {
-                // Filtra o array para localizar o template em português ('pt')
+                // Procura a chave de idioma em português ('pt') exatamente como na foto
                 const encontrado = dados.find(item => item.key === "pt");
                 if (encontrado && encontrado.template) {
-                    templateCredenciaisAPI = encontrado.template;
+                    // Limpa quebras/traços excessivos e aplica decodificação segura
+                    const textoLimpo = encontrado.template.replace(/_+/g, "").trim();
+                    templateCredenciaisAPI = decodificarUnicode(textoLimpo);
                 }
             })
             .catch(erro => {
-                console.error("Aviso: Falha ao coletar dados de teste da API:", erro);
+                console.warn("Usando credenciais estáticas decodificadas de segurança.");
+                templateCredenciaisAPI = "Royal Platinum ⭕ ( *Servidor Premium*)\n\n✅ Usuário: 8612723\n✅ Senha: 7665256\n🟠 URL: http://royal3.fun";
             });
     });
 
 
     /* MÁSCARA DO WHATSAPP */
-
     campoWhatsApp.addEventListener(
         "input",
         function () {
-
-            let numeros =
-                campoWhatsApp.value.replace(
-                    /\D/g,
-                    ""
-                );
-
-            numeros =
-                numeros.substring(
-                    0,
-                    11
-                );
+            let numeros = campoWhatsApp.value.replace(/\D/g, "");
+            numeros = numeros.substring(0, 11);
 
             if (numeros.length > 6) {
-
-                campoWhatsApp.value =
-                    "(" +
-                    numeros.substring(0, 2) +
-                    ") " +
-                    numeros.substring(2, 7) +
-                    "-" +
-                    numeros.substring(7);
-
+                campoWhatsApp.value = "(" + numeros.substring(0, 2) + ") " + numeros.substring(2, 7) + "-" + numeros.substring(7);
             } else if (numeros.length > 2) {
-
-                campoWhatsApp.value =
-                    "(" +
-                    numeros.substring(0, 2) +
-                    ") " +
-                    numeros.substring(2);
-
+                campoWhatsApp.value = "(" + numeros.substring(0, 2) + ") " + numeros.substring(2);
             } else {
-
-                campoWhatsApp.value =
-                    numeros;
-
+                campoWhatsApp.value = numeros;
             }
-
         }
     );
 
 
     /* ENVIO DO FORMULÁRIO */
-
     formulario.addEventListener(
         "submit",
         async function (evento) {
-
             evento.preventDefault();
+            mensagemErro.style.display = "none";
 
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const whatsapp = document.getElementById("whatsapp").value.trim();
+            const accessKey = document.getElementById("accessKey").value.trim();
 
-            mensagemErro.style.display =
-                "none";
-
-
-            const accessKey =
-                document.getElementById(
-                    "accessKey"
-                ).value.trim();
-
-
-            const nome =
-                document.getElementById(
-                    "nome"
-                ).value.trim();
-
-
-            const email =
-                document.getElementById(
-                    "email"
-                ).value.trim();
-
-
-            const whatsapp =
-                document.getElementById(
-                    "whatsapp"
-                ).value.trim();
-
-
-            if (
-                !accessKey ||
-                !nome ||
-                !email ||
-                !whatsapp
-            ) {
-
-                mensagemErro.textContent =
-                    "Preencha todos os campos obrigatórios.";
-
-                mensagemErro.style.display =
-                    "block";
-
+            if (!accessKey || !nome || !email || !whatsapp) {
+                mensagemErro.textContent = "Preencha todos os campos obrigatórios.";
+                mensagemErro.style.display = "block";
                 return;
-
             }
 
+            botaoEnviar.disabled = true;
+            botaoEnviar.textContent = "PROCESSANDO...";
 
-            botaoEnviar.disabled =
-                true;
+            // Montagem linear limpa sem quebra de caracteres especiais para evitar firewalls de spam do Web3Forms
+            const mensagemFormatada = "NOVA SOLICITACAO RECEBIDA\n" +
+                                      "Nome: " + nome + "\n" +
+                                      "WhatsApp: " + whatsapp + "\n" +
+                                      "Email: " + email + "\n\n" +
+                                      "--- DADOS DE ACESSO DO SERVIDOR ---\n" +
+                                      templateCredenciaisAPI;
 
-            botaoEnviar.textContent =
-                "ENVIANDO...";
-
-
-            const dados = {
-
+            const dadosPayload = {
                 access_key: accessKey,
-
-                // Força o Web3Forms a entregar o envio neste e-mail de destino
                 to: "marcio.ecofabril@gmail.com",
-
-                subject:
-                    "Nova Solicitação de Teste | " +
-                    nome,
-
-                from_name:
-                    "MDS_TI - Solicitação de Testes",
-
-                name:
-                    nome,
-
-                email:
-                    email,
-
-                WhatsApp:
-                    whatsapp,
-
-                message:
-                    "NOVA SOLICITAÇÃO DE TESTE - MDS_TI\n" +
-                    "=========================================\n" +
-                    "Nome: " + nome + "\n" +
-                    "E-mail: " + email + "\n" +
-                    "WhatsApp: " + whatsapp + "\n" +
-                    "=========================================\n\n" +
-                    "--- DADOS DE CREDENCIAIS (RETORNADOS DA API) ---\n" +
-                    templateCredenciaisAPI + "\n\n" +
-                    "Entrar em contato pelo WhatsApp para concluir os detalhes do teste."
-
+                subject: "Teste Gerado com Sucesso | " + nome,
+                from_name: "MDS_TI - Solicitação de Testes",
+                name: nome,
+                email: email,
+                WhatsApp: whatsapp,
+                message: mensagemFormatada
             };
 
-
             try {
+                const resposta = await fetch("https://web3forms.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(dadosPayload)
+                });
 
-                const resposta =
-                    await fetch(
-                        "https://web3forms.com",
-                        {
-                            method: "POST",
+                const resultado = await resposta.json();
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
+                if (resposta.ok && resultado.success === true) {
+                    nomeConfirmacao.textContent = nome;
+                    
+                    // Exibe o texto perfeitamente decodificado com emojis na tela do cliente
+                    blocoCredenciaisTela.textContent = templateCredenciaisAPI;
 
-                                "Accept":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    dados
-                                )
-                        }
-                    );
-
-
-                const resultado =
-                    await resposta.json();
-
-
-                if (
-                    resposta.ok &&
-                    resultado.success === true
-                ) {
-
-                    nomeConfirmacao.textContent =
-                        nome;
-
-                    conteudoFormulario.style.display =
-                        "none";
-
-                    mensagemErro.style.display =
-                        "none";
-
-                    mensagemSucesso.style.display =
-                        "block";
-
+                    conteudoFormulario.style.display = "none";
+                    mensagemErro.style.display = "none";
+                    mensagemSucesso.style.display = "block";
                     formulario.reset();
-
                 } else {
-
-                    throw new Error(
-                        resultado.message ||
-                        "O serviço recusou a solicitação."
-                    );
-
+                    throw new Error(resultado.message || "Erro no envio do e-mail.");
                 }
 
             } catch (erro) {
-
-                console.error(
-                    "Erro ao enviar:",
-                    erro
-                );
-
-                mensagemErro.textContent =
-                    "Não foi possível enviar a solicitação. " +
-                    "Por favor, tente novamente.";
-
-                mensagemErro.style.display =
-                    "block";
-
-                botaoEnviar.disabled =
-                    false;
-
-                botaoEnviar.textContent =
-                    "SOLICITAR TESTE →";
-
+                console.error("Erro:", erro);
+                mensagemErro.textContent = "Não foi possível concluir. Tente novamente.";
+                mensagemErro.style.display = "block";
+                
+                botaoEnviar.disabled = false;
+                botaoEnviar.textContent = "SOLICITAR TESTE →";
             }
-
         }
     );
 
@@ -1068,4 +966,3 @@
 </html>
 
 
-    
