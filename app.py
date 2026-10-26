@@ -1,4 +1,3 @@
-import html
 import json
 import os
 import re
@@ -32,12 +31,20 @@ def normalizar_email(email):
 
 
 def normalizar_celular(celular):
-    return re.sub(r"\D", "", str(celular or ""))
+    return re.sub(
+        r"\D",
+        "",
+        str(celular or "")
+    )
 
 
 def email_valido(email):
     padrao = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
-    return re.match(padrao, email) is not None
+
+    return re.match(
+        padrao,
+        email
+    ) is not None
 
 
 def celular_valido(celular):
@@ -75,20 +82,25 @@ def carregar_clientes():
         if not conteudo:
             return []
 
-        dados = json.loads(conteudo)
+        dados = json.loads(
+            conteudo
+        )
 
         if isinstance(dados, list):
             return dados
 
         return []
 
-    except (json.JSONDecodeError, OSError):
+    except (
+        json.JSONDecodeError,
+        OSError
+    ):
         return []
 
 
 def salvar_clientes(clientes):
-    arquivo_temporario = ARQUIVO_CLIENTES.with_suffix(
-        ".tmp"
+    arquivo_temporario = (
+        ARQUIVO_CLIENTES.with_suffix(".tmp")
     )
 
     arquivo_temporario.write_text(
@@ -105,161 +117,112 @@ def salvar_clientes(clientes):
     )
 
 
-def enviar_email_teste(
-    nome,
-    email_cliente,
-    celular,
-    data_solicitacao,
-    ip_cliente
-):
-    resend_api_key = os.environ.get(
-        "RESEND_API_KEY",
+# ============================================================
+# CONSULTA À API
+# ============================================================
+
+def consultar_api():
+    api_url = os.environ.get(
+        "API_URL",
         ""
     ).strip()
 
-    email_destino = os.environ.get(
-        "EMAIL_DESTINO",
+    api_token = os.environ.get(
+        "API_TOKEN",
         ""
     ).strip()
 
-    remetente_email = os.environ.get(
-        "RESEND_FROM_EMAIL",
-        "MDS_TI <onboarding@resend.dev>"
-    ).strip()
-
-    dados_teste = os.environ.get(
-        "DADOS_COMPLETOS_TESTE",
-        ""
-    ).strip()
-
-    if not resend_api_key:
+    if not api_url:
         raise RuntimeError(
-            "A variável RESEND_API_KEY não foi configurada."
+            "A variável API_URL não foi configurada."
         )
 
-    if not email_destino:
-        raise RuntimeError(
-            "A variável EMAIL_DESTINO não foi configurada."
+    cabecalhos = {
+        "Accept": "application/json",
+        "User-Agent": "MDS-TI-Solicitacao/1.0"
+    }
+
+    if api_token:
+        cabecalhos["Authorization"] = (
+            f"Bearer {api_token}"
         )
 
-    if not dados_teste:
-        raise RuntimeError(
-            "A variável DADOS_COMPLETOS_TESTE não foi configurada."
-        )
-
-    nome_seguro = html.escape(nome)
-    email_seguro = html.escape(email_cliente)
-    celular_seguro = html.escape(celular)
-    data_segura = html.escape(data_solicitacao)
-    ip_seguro = html.escape(ip_cliente)
-    teste_seguro = html.escape(dados_teste)
-
-    teste_formatado = teste_seguro.replace(
-        "\n",
-        "<br>"
-    )
-
-    corpo_email = f"""
-    <div style="
-        font-family: Arial, Helvetica, sans-serif;
-        max-width: 700px;
-        margin: auto;
-        color: #172033;
-    ">
-        <div style="
-            background: #0b67b2;
-            color: white;
-            padding: 22px;
-            border-radius: 12px 12px 0 0;
-        ">
-            <h1 style="margin: 0; font-size: 24px;">
-                Nova solicitação de teste
-            </h1>
-        </div>
-
-        <div style="
-            padding: 24px;
-            border: 1px solid #d7e0ea;
-            border-top: 0;
-        ">
-            <h2 style="color: #10233f;">
-                Dados do cliente
-            </h2>
-
-            <p>
-                <strong>Nome:</strong>
-                {nome_seguro}
-            </p>
-
-            <p>
-                <strong>E-mail:</strong>
-                {email_seguro}
-            </p>
-
-            <p>
-                <strong>WhatsApp:</strong>
-                {celular_seguro}
-            </p>
-
-            <p>
-                <strong>Data da solicitação:</strong>
-                {data_segura}
-            </p>
-
-            <p>
-                <strong>IP:</strong>
-                {ip_seguro}
-            </p>
-
-            <hr style="
-                border: 0;
-                border-top: 1px solid #d7e0ea;
-                margin: 25px 0;
-            ">
-
-            <h2 style="color: #10233f;">
-                Informações completas do teste
-            </h2>
-
-            <div style="
-                padding: 18px;
-                border-radius: 10px;
-                background: #f3f6fa;
-                line-height: 1.7;
-                white-space: normal;
-            ">
-                {teste_formatado}
-            </div>
-        </div>
-    </div>
-    """
-
-    resposta = requests.post(
-        "https://api.resend.com/emails",
-        headers={
-            "Authorization": f"Bearer {resend_api_key}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "from": remetente_email,
-            "to": [email_destino],
-            "subject": (
-                f"Nova solicitação de teste | {nome}"
-            ),
-            "html": corpo_email,
-            "reply_to": email_cliente
-        },
+    resposta = requests.get(
+        api_url,
+        headers=cabecalhos,
         timeout=20
     )
 
-    if resposta.status_code not in (200, 201):
-        raise RuntimeError(
-            "Falha no envio do e-mail. "
-            f"Status: {resposta.status_code}. "
-            f"Resposta: {resposta.text}"
-        )
+    resposta.raise_for_status()
 
-    return resposta.json()
+    try:
+        dados_api = resposta.json()
+
+    except ValueError as erro:
+        raise RuntimeError(
+            "A API não devolveu um JSON válido."
+        ) from erro
+
+    return dados_api
+
+
+def localizar_template_portugues(dados_api):
+    """
+    Procura o objeto com key igual a 'pt'.
+
+    Exemplo esperado:
+
+    [
+        {
+            "key": "pt",
+            "template": "Informações do teste"
+        }
+    ]
+    """
+
+    if isinstance(dados_api, list):
+
+        for item in dados_api:
+
+            if not isinstance(item, dict):
+                continue
+
+            chave = str(
+                item.get("key") or ""
+            ).strip().lower()
+
+            if chave == "pt":
+                template = item.get(
+                    "template"
+                )
+
+                if template:
+                    return str(template)
+
+    if isinstance(dados_api, dict):
+
+        chave = str(
+            dados_api.get("key") or ""
+        ).strip().lower()
+
+        if chave == "pt":
+            template = dados_api.get(
+                "template"
+            )
+
+            if template:
+                return str(template)
+
+        if dados_api.get("template"):
+            return str(
+                dados_api["template"]
+            )
+
+    return json.dumps(
+        dados_api,
+        ensure_ascii=False,
+        indent=2
+    )
 
 
 # ============================================================
@@ -268,13 +231,58 @@ def enviar_email_teste(
 
 @app.route("/", methods=["GET"])
 def inicio():
+    web3forms_access_key = os.environ.get(
+        "WEB3FORMS_ACCESS_KEY",
+        ""
+    ).strip()
+
     return render_template(
-        "index.html"
+        "index.html",
+        web3forms_access_key=web3forms_access_key
     )
 
 
 # ============================================================
-# REGISTRO E ENVIO
+# ROTA PARA INSPECIONAR A API
+# ============================================================
+
+@app.route("/api/teste", methods=["GET"])
+def api_teste():
+    try:
+        dados_api = consultar_api()
+
+        return jsonify({
+            "success": True,
+            "dados": dados_api
+        }), 200
+
+    except requests.RequestException as erro:
+        print(
+            "[ERRO API] "
+            f"{erro}"
+        )
+
+        return jsonify({
+            "success": False,
+            "message": (
+                "Não foi possível consultar a API."
+            )
+        }), 502
+
+    except Exception as erro:
+        print(
+            "[ERRO API] "
+            f"{erro}"
+        )
+
+        return jsonify({
+            "success": False,
+            "message": str(erro)
+        }), 500
+
+
+# ============================================================
+# REGISTRO DO CLIENTE E CONSULTA À API
 # ============================================================
 
 @app.route("/registrar", methods=["POST"])
@@ -359,32 +367,45 @@ def registrar():
                     )
                 }), 409
 
+        # Consulta a API antes de registrar o cliente
         try:
-            resultado_email = enviar_email_teste(
-                nome=nome,
-                email_cliente=email_cliente,
-                celular=celular,
-                data_solicitacao=data_solicitacao,
-                ip_cliente=ip_cliente
+            dados_api = consultar_api()
+
+            template_api = localizar_template_portugues(
+                dados_api
             )
 
-            print(
-                "[EMAIL ENVIADO] "
-                f"Resultado: {resultado_email}"
-            )
+        except requests.Timeout:
+            return jsonify({
+                "success": False,
+                "message": (
+                    "A API demorou muito para responder."
+                )
+            }), 504
 
-        except Exception as erro:
+        except requests.RequestException as erro:
             print(
-                "[ERRO DE ENVIO] "
+                "[ERRO NA CONSULTA À API] "
                 f"{erro}"
             )
 
             return jsonify({
                 "success": False,
                 "message": (
-                    "Não foi possível enviar a solicitação. "
-                    "Tente novamente."
+                    "Não foi possível obter os dados "
+                    "da API."
                 )
+            }), 502
+
+        except Exception as erro:
+            print(
+                "[ERRO NA CONSULTA À API] "
+                f"{erro}"
+            )
+
+            return jsonify({
+                "success": False,
+                "message": str(erro)
             }), 500
 
         novo_cliente = {
@@ -413,8 +434,8 @@ def registrar():
             return jsonify({
                 "success": False,
                 "message": (
-                    "O e-mail foi enviado, mas não foi "
-                    "possível registrar a solicitação."
+                    "Não foi possível registrar "
+                    "a solicitação."
                 )
             }), 500
 
@@ -423,7 +444,14 @@ def registrar():
         "message": (
             "Solicitação enviada com sucesso. "
             "Aguarde o contato."
-        )
+        ),
+        "cliente": {
+            "nome": nome,
+            "email": email_cliente,
+            "celular": celular,
+            "data_solicitacao": data_solicitacao
+        },
+        "dados_api": template_api
     }), 201
 
 
