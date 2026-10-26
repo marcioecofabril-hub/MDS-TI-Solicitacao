@@ -115,6 +115,10 @@
             cursor: pointer;
         }
 
+        button:hover {
+            background: #095996;
+        }
+
         button:disabled {
             cursor: not-allowed;
             background: #90a3b8;
@@ -259,7 +263,12 @@
 
     </main>
 
+
     <script>
+        const WEB3FORMS_ACCESS_KEY =
+            {{ web3forms_access_key | tojson }};
+
+
         const formulario =
             document.getElementById("formulario");
 
@@ -271,19 +280,26 @@
 
 
         function mostrarMensagem(texto, tipo) {
+
             mensagem.textContent = texto;
+
             mensagem.className =
                 "mensagem " + tipo;
         }
 
 
         function limparCelular(valor) {
-            return valor.replace(/\D/g, "");
+
+            return valor.replace(
+                /\D/g,
+                ""
+            );
         }
 
 
         formulario.addEventListener(
             "submit",
+
             async function (evento) {
 
                 evento.preventDefault();
@@ -291,11 +307,13 @@
                 mensagem.className = "mensagem";
                 mensagem.textContent = "";
 
+
                 const nome =
                     document
                         .getElementById("nome")
                         .value
                         .trim();
+
 
                 const email =
                     document
@@ -304,6 +322,7 @@
                         .trim()
                         .toLowerCase();
 
+
                 const celular =
                     limparCelular(
                         document
@@ -311,7 +330,9 @@
                             .value
                     );
 
+
                 if (!nome || !email || !celular) {
+
                     mostrarMensagem(
                         "Preencha todos os campos.",
                         "erro"
@@ -320,41 +341,202 @@
                     return;
                 }
 
-                botaoEnviar.disabled = true;
-                botaoEnviar.textContent =
-                    "Enviando solicitação...";
 
-                try {
-                    const resposta = await fetch(
-                        "/registrar",
-                        {
-                            method: "POST",
+                if (!WEB3FORMS_ACCESS_KEY) {
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                nome: nome,
-                                email: email,
-                                celular: celular
-                            })
-                        }
+                    mostrarMensagem(
+                        "Serviço de envio não configurado.",
+                        "erro"
                     );
 
-                    const resultado =
-                        await resposta.json();
+                    return;
+                }
 
-                    if (!resposta.ok) {
+
+                botaoEnviar.disabled = true;
+
+                botaoEnviar.textContent =
+                    "Processando solicitação...";
+
+
+                try {
+
+                    /*
+                    ========================================
+                    PASSO 1
+                    Registra o cliente e consulta a API
+                    ========================================
+                    */
+
+                    const respostaRegistro =
+                        await fetch(
+                            "/registrar",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    nome: nome,
+                                    email: email,
+                                    celular: celular
+                                })
+                            }
+                        );
+
+
+                    const resultado =
+                        await respostaRegistro.json();
+
+
+                    if (!respostaRegistro.ok) {
+
                         throw new Error(
                             resultado.message ||
-                            "Não foi possível enviar."
+                            "Não foi possível processar a solicitação."
                         );
                     }
 
+
+                    /*
+                    ========================================
+                    A RESPOSTA DO APP.PY POSSUI:
+
+                    resultado.cliente
+                    resultado.dados_api
+                    ========================================
+                    */
+
+
+                    const dadosCliente =
+                        resultado.cliente || {};
+
+
+                    const dadosAPI =
+                        resultado.dados_api || "";
+
+
+                    /*
+                    ========================================
+                    MONTA O E-MAIL
+                    ========================================
+                    */
+
+                    const conteudoEmail =
+`
+NOVA SOLICITAÇÃO DE TESTE
+
+=====================================
+DADOS DO CLIENTE
+=====================================
+
+Nome: ${dadosCliente.nome || nome}
+
+E-mail: ${dadosCliente.email || email}
+
+WhatsApp: ${dadosCliente.celular || celular}
+
+Data da solicitação:
+${dadosCliente.data_solicitacao || ""}
+
+
+=====================================
+DADOS RECEBIDOS DA API
+=====================================
+
+${dadosAPI}
+
+=====================================
+
+Solicitação registrada pelo sistema MDS_TI.
+`;
+
+
+                    /*
+                    ========================================
+                    PASSO 2
+                    ENVIA PARA WEB3FORMS
+                    ========================================
+                    */
+
+                    botaoEnviar.textContent =
+                        "Enviando solicitação...";
+
+
+                    const respostaEmail =
+                        await fetch(
+                            "https://api.web3forms.com/submit",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Accept":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    access_key:
+                                        WEB3FORMS_ACCESS_KEY,
+
+                                    subject:
+                                        "Nova solicitação de teste | " +
+                                        nome,
+
+                                    from_name:
+                                        "MDS_TI - Solicitação",
+
+                                    name:
+                                        nome,
+
+                                    email:
+                                        email,
+
+                                    whatsapp:
+                                        celular,
+
+                                    message:
+                                        conteudoEmail
+                                })
+                            }
+                        );
+
+
+                    const resultadoEmail =
+                        await respostaEmail.json();
+
+
+                    if (
+                        !respostaEmail.ok ||
+                        !resultadoEmail.success
+                    ) {
+
+                        throw new Error(
+                            resultadoEmail.message ||
+                            "Não foi possível enviar o e-mail."
+                        );
+                    }
+
+
+                    /*
+                    ========================================
+                    SUCESSO
+
+                    O CLIENTE NÃO VÊ OS DADOS DA API.
+                    ========================================
+                    */
+
                     formulario.reset();
-                    formulario.style.display = "none";
+
+                    formulario.style.display =
+                        "none";
+
 
                     mostrarMensagem(
                         "Solicitação enviada com sucesso. " +
@@ -362,15 +544,27 @@
                         "sucesso"
                     );
 
-                } catch (erro) {
+                }
+
+                catch (erro) {
+
+                    console.error(
+                        "Erro:",
+                        erro
+                    );
+
+
                     mostrarMensagem(
                         erro.message ||
-                        "Não foi possível enviar a " +
-                        "solicitação.",
+                        "Não foi possível enviar a solicitação.",
                         "erro"
                     );
 
-                    botaoEnviar.disabled = false;
+
+                    botaoEnviar.disabled =
+                        false;
+
+
                     botaoEnviar.textContent =
                         "Solicitar teste";
                 }
