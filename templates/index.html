@@ -9,369 +9,864 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="theme-color"
+        content="#071a2f"
+    >
+
     <title>Solicitação de Teste | MDS_TI</title>
 
     <style>
+        :root {
+            --azul-escuro: #071a2f;
+            --azul-medio: #0a3158;
+            --azul: #0875c1;
+            --azul-hover: #0565a8;
+            --azul-claro: #eaf5fc;
+
+            --texto: #17263a;
+            --texto-secundario: #667487;
+
+            --borda: #d7e0e9;
+            --fundo-campo: #f8fafc;
+
+            --verde: #167447;
+            --verde-fundo: #edf9f2;
+            --verde-borda: #a7dfbf;
+
+            --vermelho: #a52a2a;
+            --vermelho-fundo: #fff2f2;
+            --vermelho-borda: #efb1b1;
+
+            --branco: #ffffff;
+        }
+
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+
         body {
             min-height: 100vh;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+
+            padding: 32px 18px;
 
             font-family:
+                Inter,
                 Arial,
                 Helvetica,
                 sans-serif;
 
+            color: var(--texto);
+
             background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(16, 116, 181, 0.30),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 90% 85%,
+                    rgba(0, 154, 199, 0.18),
+                    transparent 38%
+                ),
                 linear-gradient(
-                    135deg,
-                    #08162d 0%,
-                    #102d55 50%,
-                    #075985 100%
+                    145deg,
+                    #061525 0%,
+                    #0a2949 55%,
+                    #064a70 100%
                 );
-
-            color: #172033;
         }
 
-        .container {
+
+        .pagina {
             width: 100%;
-            max-width: 600px;
+            max-width: 580px;
         }
+
 
         .card {
-            padding: 36px;
-            border-radius: 22px;
-            background: #ffffff;
+            position: relative;
+
+            overflow: hidden;
+
+            background: var(--branco);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.45);
+
+            border-radius: 24px;
 
             box-shadow:
-                0 24px 60px
+                0 30px 70px
                 rgba(0, 0, 0, 0.30);
         }
+
+
+        .linha-superior {
+            height: 5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00a7d7,
+                    #0875c1,
+                    #144f91
+                );
+        }
+
+
+        .conteudo {
+            padding: 38px 40px 34px;
+        }
+
+
+        .cabecalho {
+            margin-bottom: 30px;
+        }
+
 
         .marca {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 9px;
 
-            min-width: 92px;
-            height: 38px;
+            margin-bottom: 24px;
 
-            margin-bottom: 22px;
-            padding: 0 15px;
+            padding: 9px 14px;
 
-            border-radius: 10px;
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0875c1,
+                    #075f9d
+                );
 
             color: #ffffff;
-            background: #0b67b2;
 
+            font-size: 16px;
             font-weight: 800;
-            letter-spacing: 1px;
+
+            letter-spacing: 1.4px;
+
+            box-shadow:
+                0 7px 18px
+                rgba(8, 117, 193, 0.20);
         }
+
+
+        .marca-icone {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #70e1ff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(112, 225, 255, 0.18);
+        }
+
 
         h1 {
-            margin-bottom: 10px;
+            margin-bottom: 11px;
 
-            font-size: 30px;
+            color: #10253e;
+
+            font-size: 32px;
+            font-weight: 750;
+
             line-height: 1.15;
 
-            color: #10233f;
+            letter-spacing: -0.7px;
         }
+
 
         .descricao {
-            margin-bottom: 28px;
+            max-width: 470px;
 
-            color: #5e6b7e;
+            color: var(--texto-secundario);
 
-            line-height: 1.6;
+            font-size: 15.5px;
+
+            line-height: 1.65;
         }
+
+
+        .separador {
+            height: 1px;
+
+            margin:
+                0 0 27px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #dbe4ed,
+                    transparent
+                );
+        }
+
 
         .campo {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
+
 
         label {
             display: block;
 
-            margin-bottom: 7px;
+            margin-bottom: 8px;
+
+            color: #263b53;
 
             font-size: 14px;
             font-weight: 700;
-
-            color: #28384f;
         }
+
+
+        .obrigatorio {
+            color: #0875c1;
+        }
+
 
         input {
             width: 100%;
-            height: 50px;
+            height: 54px;
 
-            padding: 0 15px;
+            padding: 0 16px;
 
-            border: 1px solid #ccd5e1;
-            border-radius: 10px;
+            border:
+                1px solid
+                var(--borda);
+
+            border-radius: 11px;
 
             outline: none;
 
+            background:
+                var(--fundo-campo);
+
+            color: #17263a;
+
+            font-family: inherit;
             font-size: 16px;
 
-            background: #ffffff;
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
         }
 
+
+        input::placeholder {
+            color: #99a5b5;
+        }
+
+
+        input:hover {
+            border-color: #b8c6d4;
+        }
+
+
         input:focus {
-            border-color: #0b67b2;
+            border-color: var(--azul);
+
+            background: #ffffff;
 
             box-shadow:
                 0 0 0 4px
-                rgba(11, 103, 178, 0.12);
+                rgba(8, 117, 193, 0.10);
         }
+
 
         button {
             width: 100%;
-            height: 52px;
+            height: 56px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
 
             margin-top: 8px;
 
-            border: 0;
+            border: none;
             border-radius: 11px;
 
-            background: #0b67b2;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0875c1,
+                    #0669ae
+                );
+
             color: #ffffff;
 
+            font-family: inherit;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 750;
 
             cursor: pointer;
 
-            transition: 0.2s;
+            box-shadow:
+                0 9px 22px
+                rgba(8, 117, 193, 0.22);
+
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s,
+                background 0.15s;
         }
 
+
         button:hover {
-            background: #095996;
+            background:
+                linear-gradient(
+                    135deg,
+                    #076cb2,
+                    #055b98
+                );
+
+            box-shadow:
+                0 11px 25px
+                rgba(8, 117, 193, 0.28);
         }
+
+
+        button:active {
+            transform: translateY(1px);
+        }
+
 
         button:disabled {
             cursor: not-allowed;
-            background: #90a3b8;
+
+            background: #9bacbd;
+
+            box-shadow: none;
         }
+
+
+        .spinner {
+            display: none;
+
+            width: 18px;
+            height: 18px;
+
+            border:
+                2px solid
+                rgba(255, 255, 255, 0.35);
+
+            border-top-color: #ffffff;
+
+            border-radius: 50%;
+
+            animation:
+                girar 0.75s
+                linear infinite;
+        }
+
+
+        button.carregando .spinner {
+            display: block;
+        }
+
+
+        @keyframes girar {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
 
         .mensagem {
             display: none;
 
-            margin-top: 20px;
+            margin-top: 22px;
 
-            padding: 17px;
+            padding: 17px 18px;
 
-            border-radius: 10px;
+            border-radius: 12px;
 
-            text-align: center;
+            font-size: 14px;
+            font-weight: 650;
 
-            font-weight: 700;
             line-height: 1.5;
         }
 
+
         .mensagem.sucesso {
-            display: block;
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
 
-            border: 1px solid #86d3a0;
+            border:
+                1px solid
+                var(--verde-borda);
 
-            background: #e9f9ef;
-            color: #186735;
+            background:
+                var(--verde-fundo);
+
+            color:
+                var(--verde);
         }
+
 
         .mensagem.erro {
-            display: block;
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
 
-            border: 1px solid #f0a3a3;
+            border:
+                1px solid
+                var(--vermelho-borda);
 
-            background: #fff0f0;
-            color: #a22222;
+            background:
+                var(--vermelho-fundo);
+
+            color:
+                var(--vermelho);
         }
+
 
         .resultado-teste {
             display: none;
+
             margin-top: 22px;
         }
 
+
         .resultado-teste.ativo {
             display: block;
+
+            animation:
+                aparecer 0.35s ease;
         }
 
-        .resultado-titulo {
-            margin-bottom: 12px;
 
-            color: #10233f;
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .resultado-card {
+            overflow: hidden;
+
+            border:
+                1px solid #d5e2ec;
+
+            border-radius: 14px;
+
+            background: #f8fbfe;
+        }
+
+
+        .resultado-cabecalho {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            padding: 18px 20px;
+
+            border-bottom:
+                1px solid #dce7ef;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef8fd,
+                    #f8fcff
+                );
+        }
+
+
+        .sucesso-icone {
+            width: 38px;
+            height: 38px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #dff5e8;
+            color: #16834c;
 
             font-size: 20px;
+            font-weight: 900;
         }
+
+
+        .resultado-titulo {
+            color: #12304d;
+
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+
+        .resultado-subtitulo {
+            margin-top: 3px;
+
+            color: #718093;
+
+            font-size: 12.5px;
+        }
+
 
         .resultado-conteudo {
             padding: 20px;
 
-            border: 1px solid #d6e1ec;
-            border-radius: 12px;
-
-            background: #f5f8fc;
-            color: #1c293d;
+            color: #33485f;
 
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.65;
 
             white-space: pre-wrap;
             word-break: break-word;
             overflow-wrap: anywhere;
         }
 
-        .aviso {
-            margin-top: 22px;
 
-            color: #738095;
+        .rodape {
+            margin-top: 27px;
 
-            font-size: 12px;
-            line-height: 1.5;
+            padding-top: 20px;
+
+            border-top:
+                1px solid #ebeff3;
 
             text-align: center;
         }
 
+
+        .aviso {
+            color: #8190a2;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        .seguranca {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            margin-top: 9px;
+
+            color: #98a5b3;
+
+            font-size: 11px;
+        }
+
+
+        .seguranca-ponto {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #40a96b;
+        }
+
+
         @media (max-width: 600px) {
 
             body {
-                padding: 15px;
+                display: block;
+
+                min-height: 100vh;
+
+                padding: 18px 14px;
             }
 
-            .card {
-                padding: 27px 21px;
+
+            .pagina {
+                max-width: none;
             }
+
+
+            .card {
+                border-radius: 21px;
+            }
+
+
+            .conteudo {
+                padding:
+                    29px
+                    22px
+                    25px;
+            }
+
+
+            .marca {
+                margin-bottom: 21px;
+            }
+
+
+            h1 {
+                font-size: 28px;
+            }
+
+
+            .descricao {
+                font-size: 15px;
+            }
+
+
+            input {
+                height: 55px;
+            }
+
+
+            button {
+                height: 57px;
+            }
+
+
+            .resultado-conteudo {
+                padding: 17px;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+
+            body {
+                padding:
+                    12px
+                    10px;
+            }
+
+
+            .conteudo {
+                padding:
+                    25px
+                    18px
+                    22px;
+            }
+
 
             h1 {
                 font-size: 25px;
             }
-
-            .resultado-conteudo {
-                padding: 15px;
-            }
         }
+
     </style>
 
 </head>
 
+
 <body>
 
-    <main class="container">
+    <main class="pagina">
 
         <section class="card">
 
-            <div class="marca">
-                MDS_TI
-            </div>
+            <div class="linha-superior"></div>
 
-            <h1>
-                Solicitação de teste
-            </h1>
+            <div class="conteudo">
 
-            <p class="descricao">
-                Preencha seus dados para solicitar o teste.
-                É permitida somente uma solicitação
-                por e-mail ou WhatsApp.
-            </p>
+                <header class="cabecalho">
 
-            <form id="formulario">
+                    <div class="marca">
+                        <span class="marca-icone"></span>
+                        MDS_TI
+                    </div>
 
-                <div class="campo">
+                    <h1>
+                        Solicitação de teste
+                    </h1>
 
-                    <label for="nome">
-                        Nome completo
-                    </label>
+                    <p class="descricao">
+                        Preencha seus dados para solicitar acesso ao teste.
+                        Cada e-mail ou número de WhatsApp poderá realizar
+                        apenas uma solicitação.
+                    </p>
 
-                    <input
-                        id="nome"
-                        name="nome"
-                        type="text"
-                        autocomplete="name"
-                        maxlength="100"
-                        required
-                    >
+                </header>
 
-                </div>
 
-                <div class="campo">
+                <div class="separador"></div>
 
-                    <label for="email">
-                        E-mail
-                    </label>
 
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autocomplete="email"
-                        maxlength="150"
-                        required
-                    >
-
-                </div>
-
-                <div class="campo">
-
-                    <label for="celular">
-                        WhatsApp com DDD
-                    </label>
-
-                    <input
-                        id="celular"
-                        name="celular"
-                        type="tel"
-                        inputmode="numeric"
-                        autocomplete="tel"
-                        maxlength="15"
-                        placeholder="(11) 99999-9999"
-                        required
-                    >
-
-                </div>
-
-                <button
-                    id="botaoEnviar"
-                    type="submit"
+                <form
+                    id="formulario"
+                    novalidate
                 >
-                    Solicitar teste
-                </button>
 
-            </form>
+                    <div class="campo">
 
-            <div
-                id="mensagem"
-                class="mensagem"
-                role="alert"
-                aria-live="polite"
-            ></div>
+                        <label for="nome">
+                            Nome completo
+                            <span class="obrigatorio">*</span>
+                        </label>
 
-            <div
-                id="resultadoTeste"
-                class="resultado-teste"
-            >
+                        <input
+                            id="nome"
+                            name="nome"
+                            type="text"
+                            autocomplete="name"
+                            maxlength="100"
+                            placeholder="Digite seu nome completo"
+                            required
+                        >
 
-                <h2 class="resultado-titulo">
-                    Dados do seu teste
-                </h2>
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="email">
+                            E-mail
+                            <span class="obrigatorio">*</span>
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autocomplete="email"
+                            maxlength="150"
+                            placeholder="seuemail@exemplo.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="celular">
+                            WhatsApp com DDD
+                            <span class="obrigatorio">*</span>
+                        </label>
+
+                        <input
+                            id="celular"
+                            name="celular"
+                            type="tel"
+                            inputmode="numeric"
+                            autocomplete="tel"
+                            maxlength="15"
+                            placeholder="(11) 99999-9999"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="botaoEnviar"
+                        type="submit"
+                    >
+
+                        <span
+                            id="spinner"
+                            class="spinner"
+                        ></span>
+
+                        <span id="textoBotao">
+                            Solicitar teste
+                        </span>
+
+                    </button>
+
+                </form>
+
 
                 <div
-                    id="conteudoTeste"
-                    class="resultado-conteudo"
+                    id="mensagem"
+                    class="mensagem"
+                    role="alert"
+                    aria-live="polite"
                 ></div>
 
-            </div>
 
-            <p class="aviso">
-                Os dados informados serão utilizados
-                somente para atendimento da solicitação.
-            </p>
+                <div
+                    id="resultadoTeste"
+                    class="resultado-teste"
+                >
+
+                    <div class="resultado-card">
+
+                        <div class="resultado-cabecalho">
+
+                            <div class="sucesso-icone">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <div class="resultado-titulo">
+                                    Solicitação concluída
+                                </div>
+
+                                <div class="resultado-subtitulo">
+                                    MDS_TI
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="conteudoTeste"
+                            class="resultado-conteudo"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <footer class="rodape">
+
+                    <p class="aviso">
+                        Os dados informados serão utilizados
+                        exclusivamente para o atendimento
+                        desta solicitação.
+                    </p>
+
+                    <div class="seguranca">
+                        <span class="seguranca-ponto"></span>
+                        Formulário seguro MDS_TI
+                    </div>
+
+                </footer>
+
+            </div>
 
         </section>
 
@@ -380,27 +875,26 @@
 
     <script>
 
-        /*
-        ==================================================
-        CHAVE RECEBIDA DO FLASK
-        ==================================================
-        */
+        /* =====================================================
+           CHAVE WEB3FORMS RECEBIDA DO FLASK
+           ===================================================== */
 
         const WEB3FORMS_ACCESS_KEY =
             {{ web3forms_access_key | default("", true) | tojson }};
 
 
-        /*
-        ==================================================
-        ELEMENTOS
-        ==================================================
-        */
+        /* =====================================================
+           ELEMENTOS
+           ===================================================== */
 
         const formulario =
             document.getElementById("formulario");
 
         const botaoEnviar =
             document.getElementById("botaoEnviar");
+
+        const textoBotao =
+            document.getElementById("textoBotao");
 
         const mensagem =
             document.getElementById("mensagem");
@@ -414,12 +908,16 @@
         const inputCelular =
             document.getElementById("celular");
 
+        const inputNome =
+            document.getElementById("nome");
 
-        /*
-        ==================================================
-        MÁSCARA DO WHATSAPP
-        ==================================================
-        */
+        const inputEmail =
+            document.getElementById("email");
+
+
+        /* =====================================================
+           MÁSCARA WHATSAPP
+           ===================================================== */
 
         inputCelular.addEventListener(
             "input",
@@ -431,7 +929,11 @@
                         ""
                     );
 
-                numeros = numeros.substring(0, 11);
+                numeros =
+                    numeros.substring(
+                        0,
+                        11
+                    );
 
 
                 if (numeros.length <= 2) {
@@ -467,47 +969,107 @@
         );
 
 
-        /*
-        ==================================================
-        MOSTRAR MENSAGEM
-        ==================================================
-        */
+        /* =====================================================
+           FUNÇÕES
+           ===================================================== */
+
+        function limparCelular(valor) {
+
+            return valor.replace(
+                /\D/g,
+                ""
+            );
+
+        }
+
 
         function mostrarMensagem(
             texto,
             tipo
         ) {
 
-            mensagem.textContent =
+            mensagem.innerHTML = "";
+
+            const icone =
+                document.createElement("span");
+
+            icone.textContent =
+                tipo === "sucesso"
+                    ? "✓"
+                    : "!";
+
+            const conteudo =
+                document.createElement("span");
+
+            conteudo.textContent =
                 texto;
+
+            mensagem.appendChild(
+                icone
+            );
+
+            mensagem.appendChild(
+                conteudo
+            );
 
             mensagem.className =
                 "mensagem " + tipo;
+
         }
 
 
-        /*
-        ==================================================
-        LIMPAR CELULAR
-        ==================================================
-        */
+        function limparMensagem() {
 
-        function limparCelular(
-            valor
+            mensagem.innerHTML = "";
+
+            mensagem.className =
+                "mensagem";
+
+        }
+
+
+        function definirCarregando(
+            carregando
         ) {
 
-            return valor.replace(
-                /\D/g,
-                ""
-            );
+            botaoEnviar.disabled =
+                carregando;
+
+            if (carregando) {
+
+                botaoEnviar.classList.add(
+                    "carregando"
+                );
+
+                textoBotao.textContent =
+                    "Enviando solicitação...";
+
+            } else {
+
+                botaoEnviar.classList.remove(
+                    "carregando"
+                );
+
+                textoBotao.textContent =
+                    "Solicitar teste";
+
+            }
+
         }
 
 
-        /*
-        ==================================================
-        ENVIO DO FORMULÁRIO
-        ==================================================
-        */
+        function emailValido(email) {
+
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                email
+            );
+
+        }
+
+
+        /* =====================================================
+           ENVIO DO FORMULÁRIO
+           ===================================================== */
 
         formulario.addEventListener(
             "submit",
@@ -516,35 +1078,23 @@
                 evento.preventDefault();
 
 
-                mensagem.className =
-                    "mensagem";
+                limparMensagem();
 
-                mensagem.textContent =
-                    "";
 
                 resultadoTeste.className =
                     "resultado-teste";
+
 
                 conteudoTeste.textContent =
                     "";
 
 
-                /*
-                ==========================================
-                DADOS
-                ==========================================
-                */
-
                 const nome =
-                    document
-                        .getElementById("nome")
-                        .value
-                        .trim();
+                    inputNome.value.trim();
 
 
                 const email =
-                    document
-                        .getElementById("email")
+                    inputEmail
                         .value
                         .trim()
                         .toLowerCase();
@@ -556,51 +1106,47 @@
                     );
 
 
-                /*
-                ==========================================
-                VALIDAÇÕES
-                ==========================================
-                */
+                /* =============================================
+                   VALIDAÇÕES
+                   ============================================= */
 
-                if (!nome) {
+                if (nome.length < 3) {
 
                     mostrarMensagem(
                         "Informe seu nome completo.",
                         "erro"
                     );
 
+                    inputNome.focus();
+
                     return;
                 }
 
 
-                if (!email) {
+                if (!emailValido(email)) {
 
                     mostrarMensagem(
-                        "Informe seu e-mail.",
+                        "Informe um endereço de e-mail válido.",
                         "erro"
                     );
 
-                    return;
-                }
-
-
-                if (!email.includes("@")) {
-
-                    mostrarMensagem(
-                        "Informe um e-mail válido.",
-                        "erro"
-                    );
+                    inputEmail.focus();
 
                     return;
                 }
 
 
-                if (celular.length < 10) {
+                if (
+                    celular.length !== 10 &&
+                    celular.length !== 11
+                ) {
 
                     mostrarMensagem(
                         "Informe um WhatsApp válido com DDD.",
                         "erro"
                     );
+
+                    inputCelular.focus();
 
                     return;
                 }
@@ -617,27 +1163,27 @@
                 }
 
 
-                /*
-                ==========================================
-                BOTÃO
-                ==========================================
-                */
-
-                botaoEnviar.disabled =
-                    true;
-
-                botaoEnviar.textContent =
-                    "Enviando solicitação...";
+                definirCarregando(
+                    true
+                );
 
 
                 try {
 
 
-                    /*
-                    ======================================
-                    MENSAGEM
-                    ======================================
-                    */
+                    /* =========================================
+                       CONTEÚDO DO E-MAIL
+                       ========================================= */
+
+                    const agora =
+                        new Date();
+
+
+                    const dataSolicitacao =
+                        agora.toLocaleString(
+                            "pt-BR"
+                        );
+
 
                     const conteudoEmail = `
 NOVA SOLICITAÇÃO DE TESTE MDS_TI
@@ -653,7 +1199,7 @@ E-mail: ${email}
 WhatsApp: ${celular}
 
 Data da solicitação:
-${new Date().toLocaleString("pt-BR")}
+${dataSolicitacao}
 
 =====================================
 
@@ -661,11 +1207,9 @@ Solicitação recebida através da página MDS_TI.
 `;
 
 
-                    /*
-                    ======================================
-                    ENVIO DIRETO AO WEB3FORMS
-                    ======================================
-                    */
+                    /* =========================================
+                       ENVIO AO WEB3FORMS
+                       ========================================= */
 
                     const resposta =
                         await fetch(
@@ -708,15 +1252,14 @@ Solicitação recebida através da página MDS_TI.
                                         message:
                                             conteudoEmail
                                     })
+
                             }
                         );
 
 
-                    /*
-                    ======================================
-                    RESPOSTA
-                    ======================================
-                    */
+                    /* =========================================
+                       PROCESSA RESPOSTA
+                       ========================================= */
 
                     const resultado =
                         await resposta.json();
@@ -737,30 +1280,32 @@ Solicitação recebida através da página MDS_TI.
                             resultado.message ||
                             "Não foi possível enviar a solicitação."
                         );
+
                     }
 
 
-                    /*
-                    ======================================
-                    SUCESSO
-                    ======================================
-                    */
+                    /* =========================================
+                       SUCESSO
+                       ========================================= */
 
                     formulario.reset();
+
 
                     formulario.style.display =
                         "none";
 
 
                     mostrarMensagem(
-                        "Solicitação registrada com sucesso!",
+                        "Solicitação enviada com sucesso.",
                         "sucesso"
                     );
 
 
                     conteudoTeste.textContent =
-                        "Seu teste MDS_TI foi liberado!\n\n" +
-                        "A solicitação foi enviada com sucesso.";
+                        "Seu teste MDS_TI foi liberado.\n\n" +
+                        "A solicitação foi registrada com sucesso. " +
+                        "Verifique as informações recebidas e " +
+                        "mantenha seus dados de acesso em local seguro.";
 
 
                     resultadoTeste.className =
@@ -778,17 +1323,15 @@ Solicitação recebida através da página MDS_TI.
 
                     mostrarMensagem(
                         erro.message ||
-                        "Não foi possível enviar a solicitação.",
+                        "Não foi possível enviar a solicitação. Tente novamente.",
                         "erro"
                     );
 
 
-                    botaoEnviar.disabled =
-                        false;
+                    definirCarregando(
+                        false
+                    );
 
-
-                    botaoEnviar.textContent =
-                        "Solicitar teste";
                 }
 
             }
