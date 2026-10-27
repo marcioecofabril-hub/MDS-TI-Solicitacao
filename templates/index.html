@@ -194,7 +194,7 @@
         }
     </style>
 </head>
-    <body>
+<body>
 
     <main class="container">
         <section class="card">
@@ -204,7 +204,7 @@
 
             <p class="descricao">
                 Preencha seus dados para solicitar o teste.
-                É permitida somente uma solicitação por e-mail ou WhatsApp.
+                É permitida somente uma Async solicitação por e-mail ou WhatsApp.
             </p>
 
             <form id="formulario">
@@ -285,42 +285,22 @@
             }
 
             botaoEnviar.disabled = true;
-            botaoEnviar.textContent = "Liberando teste...";
+            botaoEnviar.textContent = "Registrando solicitação...";
 
             try {
                 /* ========================================
-                   PASSO 1: Envia para o backend Flask
+                   ENVIO DIRETO PARA O WEB3FORMS
                    ======================================== */
-                const respostaRegistro = await fetch("/registrar", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nome, email, celular })
-                });
-
-                const resultado = await respostaRegistro.json();
-
-                if (!respostaRegistro.ok || !resultado.success) {
-                    throw new Error(resultado.message || "Não foi possível liberar o teste.");
-                }
-
-                const dadosCliente = resultado.cliente || {};
-                const templateTeste = resultado.template || "";
-
-                /* ========================================
-                   PASSO 2: Envia os dados para o Web3Forms
-                   ======================================== */
-                botaoEnviar.textContent = "Registrando solicitação...";
-
                 const conteudoEmail = `
 NOVA SOLICITAÇÃO DE TESTE
 
 =====================================
 DADOS DO CLIENTE
 =====================================
-Nome: ${dadosCliente.nome || nome}
-E-mail: ${dadosCliente.email || email}
-WhatsApp: ${dadosCliente.celular || celular}
-Data da solicitação: ${dadosCliente.data_solicitacao || new Date().toLocaleString('pt-BR')}
+Nome: ${nome}
+E-mail: ${email}
+WhatsApp: ${celular}
+Data da solicitação: ${new Date().toLocaleString('pt-BR')}
 =====================================
 
 O cliente recebeu o teste pela página MDS_TI.
@@ -338,7 +318,7 @@ O cliente recebeu o teste pela página MDS_TI.
                         from_name: "MDS_TI - Solicitação",
                         name: nome,
                         email: email,
-                        whatsapp: dadosCliente.celular || celular,
+                        whatsapp: celular,
                         message: conteudoEmail
                     })
                 });
@@ -346,17 +326,17 @@ O cliente recebeu o teste pela página MDS_TI.
                 const resultadoEmail = await respostaEmail.json();
 
                 if (!respostaEmail.ok || !resultadoEmail.success) {
-                    throw new Error(resultadoEmail.message || "O teste foi liberado, mas não foi possível registrar a notificação.");
+                    throw new Error(resultadoEmail.message || "Não foi possível registrar a notificação.");
                 }
 
                 /* ========================================
-                   PASSO 3: Exibe o teste gerado na tela
+                   EXIBE MENSAGEM DE SUCESSO NA TELA
                    ======================================== */
                 formulario.reset();
                 formulario.style.display = "none";
                 mostrarMensagem("Teste liberado com sucesso.", "sucesso");
                 
-                conteudoTeste.textContent = templateTeste;
+                conteudoTeste.textContent = "Seu teste MDS_TI foi liberado! Acesse os dados enviados no seu e-mail e WhatsApp.";
                 resultadoTeste.className = "resultado-teste ativo";
 
             } catch (erro) {
@@ -369,4 +349,3 @@ O cliente recebeu o teste pela página MDS_TI.
     </script>
 </body>
 </html>
-
