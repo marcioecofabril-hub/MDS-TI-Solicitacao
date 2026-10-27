@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Solicitação de Teste | MDS_TI</title>
 
     <style>
@@ -20,7 +21,12 @@
             justify-content: center;
             padding: 24px;
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #08162d 0%, #102d55 50%, #075985 100%);
+            background: linear-gradient(
+                135deg,
+                #08162d 0%,
+                #102d55 50%,
+                #075985 100%
+            );
             color: #172033;
         }
 
@@ -159,7 +165,6 @@
             border-radius: 12px;
             background: #f5f8fc;
             color: #1c293d;
-            font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
             line-height: 1.6;
             white-space: pre-wrap;
@@ -187,165 +192,366 @@
             h1 {
                 font-size: 25px;
             }
-
-            .resultado-conteudo {
-                padding: 15px;
-            }
         }
     </style>
 </head>
+
 <body>
 
     <main class="container">
+
         <section class="card">
-            <div class="marca">MDS_TI</div>
+
+            <div class="marca">
+                MDS_TI
+            </div>
 
             <h1>Solicitação de teste</h1>
 
             <p class="descricao">
                 Preencha seus dados para solicitar o teste.
-                É permitida somente uma Async solicitação por e-mail ou WhatsApp.
+                É permitida somente uma solicitação por e-mail ou WhatsApp.
             </p>
 
             <form id="formulario">
+
                 <div class="campo">
                     <label for="nome">Nome completo</label>
-                    <input id="nome" name="nome" type="text" autocomplete="name" maxlength="100" required>
+
+                    <input
+                        id="nome"
+                        name="nome"
+                        type="text"
+                        autocomplete="name"
+                        maxlength="100"
+                        required
+                    >
                 </div>
 
                 <div class="campo">
                     <label for="email">E-mail</label>
-                    <input id="email" name="email" type="email" autocomplete="email" maxlength="150" required>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        maxlength="150"
+                        required
+                    >
                 </div>
 
                 <div class="campo">
                     <label for="celular">WhatsApp com DDD</label>
-                    <input id="celular" name="celular" type="tel" inputmode="tel" autocomplete="tel" maxlength="15" placeholder="(11) 99999-9999" required>
+
+                    <input
+                        id="celular"
+                        name="celular"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        maxlength="15"
+                        placeholder="(11) 99999-9999"
+                        required
+                    >
                 </div>
 
-                <button id="botaoEnviar" type="submit">Solicitar teste</button>
+                <button
+                    id="botaoEnviar"
+                    type="submit"
+                >
+                    Solicitar teste
+                </button>
+
             </form>
 
-            <div id="mensagem" class="mensagem" role="alert" aria-live="polite"></div>
+            <div
+                id="mensagem"
+                class="mensagem"
+                role="alert"
+                aria-live="polite"
+            ></div>
 
-            <div id="resultadoTeste" class="resultado-teste">
-                <h2 class="resultado-titulo">Dados do seu teste</h2>
-                <div id="conteudoTeste" class="resultado-conteudo"></div>
+            <div
+                id="resultadoTeste"
+                class="resultado-teste"
+            >
+                <h2 class="resultado-titulo">
+                    Dados do seu teste
+                </h2>
+
+                <div
+                    id="conteudoTeste"
+                    class="resultado-conteudo"
+                ></div>
             </div>
 
             <p class="aviso">
-                Os dados informados serão utilizados somente para atendimento da solicitação.
+                Os dados informados serão utilizados somente para
+                atendimento da solicitação.
             </p>
+
         </section>
+
     </main>
 
     <script>
-        const WEB3FORMS_ACCESS_KEY = {{ web3forms_access_key | tojson }};
-        const formulario = document.getElementById("formulario");
-        const botaoEnviar = document.getElementById("botaoEnviar");
-        const mensagem = document.getElementById("mensagem");
-        const resultadoTeste = document.getElementById("resultadoTeste");
-        const conteudoTeste = document.getElementById("conteudoTeste");
-        const inputCelular = document.getElementById("celular");
 
-        // Máscara em tempo real para o WhatsApp
-        inputCelular.addEventListener("input", (e) => {
-            let x = e.target.value.replace(/\D/g, "").match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+        const formulario =
+            document.getElementById("formulario");
+
+        const botaoEnviar =
+            document.getElementById("botaoEnviar");
+
+        const mensagem =
+            document.getElementById("mensagem");
+
+        const resultadoTeste =
+            document.getElementById("resultadoTeste");
+
+        const conteudoTeste =
+            document.getElementById("conteudoTeste");
+
+        const inputCelular =
+            document.getElementById("celular");
+
+
+        /*
+        ============================================
+        MÁSCARA DO WHATSAPP
+        ============================================
+        */
+
+        inputCelular.addEventListener("input", function (evento) {
+
+            let numeros =
+                evento.target.value.replace(/\D/g, "");
+
+            numeros = numeros.substring(0, 11);
+
+            if (numeros.length <= 2) {
+
+                evento.target.value = numeros;
+
+            } else if (numeros.length <= 7) {
+
+                evento.target.value =
+                    "(" +
+                    numeros.substring(0, 2) +
+                    ") " +
+                    numeros.substring(2);
+
+            } else {
+
+                evento.target.value =
+                    "(" +
+                    numeros.substring(0, 2) +
+                    ") " +
+                    numeros.substring(2, 7) +
+                    "-" +
+                    numeros.substring(7, 11);
+            }
+
         });
+
 
         function mostrarMensagem(texto, tipo) {
+
             mensagem.textContent = texto;
-            mensagem.className = "mensagem " + tipo;
+
+            mensagem.className =
+                "mensagem " + tipo;
         }
+
 
         function limparCelular(valor) {
+
             return valor.replace(/\D/g, "");
         }
-        formulario.addEventListener("submit", async function (evento) {
-            evento.preventDefault();
 
-            mensagem.className = "mensagem";
-            mensagem.textContent = "";
-            resultadoTeste.className = "resultado-teste";
-            conteudoTeste.textContent = "";
 
-            const nome = document.getElementById("nome").value.trim();
-            const email = document.getElementById("email").value.trim().toLowerCase();
-            const celular = limparCelular(inputCelular.value);
+        /*
+        ============================================
+        ENVIO DO FORMULÁRIO
+        ============================================
+        */
 
-            if (!nome || !email || !celular) {
-                mostrarMensagem("Preencha todos os campos corretamente.", "erro");
-                return;
-            }
+        formulario.addEventListener(
+            "submit",
+            async function (evento) {
 
-            if (!WEB3FORMS_ACCESS_KEY) {
-                mostrarMensagem("O serviço de envio não está configurado.", "erro");
-                return;
-            }
+                evento.preventDefault();
 
-            botaoEnviar.disabled = true;
-            botaoEnviar.textContent = "Registrando solicitação...";
+                mensagem.className = "mensagem";
+                mensagem.textContent = "";
 
-            try {
-                /* ========================================
-                   ENVIO DIRETO PARA O WEB3FORMS
-                   ======================================== */
-                const conteudoEmail = `
-NOVA SOLICITAÇÃO DE TESTE
+                resultadoTeste.className =
+                    "resultado-teste";
 
-=====================================
-DADOS DO CLIENTE
-=====================================
-Nome: ${nome}
-E-mail: ${email}
-WhatsApp: ${celular}
-Data da solicitação: ${new Date().toLocaleString('pt-BR')}
-=====================================
+                conteudoTeste.textContent = "";
 
-O cliente recebeu o teste pela página MDS_TI.
-`;
 
-                const respostaEmail = await fetch("https://web3forms.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        access_key: WEB3FORMS_ACCESS_KEY,
-                        subject: "Nova solicitação de teste | " + nome,
-                        from_name: "MDS_TI - Solicitação",
-                        name: nome,
-                        email: email,
-                        whatsapp: celular,
-                        message: conteudoEmail
-                    })
-                });
+                const nome =
+                    document
+                        .getElementById("nome")
+                        .value
+                        .trim();
 
-                const resultadoEmail = await respostaEmail.json();
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
 
-                if (!respostaEmail.ok || !resultadoEmail.success) {
-                    throw new Error(resultadoEmail.message || "Não foi possível registrar a notificação.");
+                const celular =
+                    limparCelular(
+                        inputCelular.value
+                    );
+
+
+                if (!nome || !email || !celular) {
+
+                    mostrarMensagem(
+                        "Preencha todos os campos corretamente.",
+                        "erro"
+                    );
+
+                    return;
                 }
 
-                /* ========================================
-                   EXIBE MENSAGEM DE SUCESSO NA TELA
-                   ======================================== */
-                formulario.reset();
-                formulario.style.display = "none";
-                mostrarMensagem("Teste liberado com sucesso.", "sucesso");
-                
-                conteudoTeste.textContent = "Seu teste MDS_TI foi liberado! Acesse os dados enviados no seu e-mail e WhatsApp.";
-                resultadoTeste.className = "resultado-teste ativo";
 
-            } catch (erro) {
-                console.error("Erro:", erro);
-                mostrarMensagem(erro.message || "Não foi possível processar a solicitação.", "erro");
-                botaoEnviar.disabled = false;
-                botaoEnviar.textContent = "Solicitar teste";
+                if (celular.length < 10) {
+
+                    mostrarMensagem(
+                        "Informe um WhatsApp válido com DDD.",
+                        "erro"
+                    );
+
+                    return;
+                }
+
+
+                botaoEnviar.disabled = true;
+
+                botaoEnviar.textContent =
+                    "Registrando solicitação...";
+
+
+                try {
+
+                    /*
+                    ====================================
+                    ENVIA PARA O NOSSO FLASK
+                    ====================================
+                    */
+
+                    const resposta = await fetch(
+                        "/registrar",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                nome: nome,
+                                email: email,
+                                celular: celular
+                            })
+                        }
+                    );
+
+
+                    let dados;
+
+                    try {
+
+                        dados = await resposta.json();
+
+                    } catch (erroJSON) {
+
+                        throw new Error(
+                            "O servidor retornou uma resposta inválida."
+                        );
+                    }
+
+
+                    if (!resposta.ok) {
+
+                        throw new Error(
+                            dados.message ||
+                            "Não foi possível processar a solicitação."
+                        );
+                    }
+
+
+                    if (!dados.success) {
+
+                        throw new Error(
+                            dados.message ||
+                            "A solicitação não foi concluída."
+                        );
+                    }
+
+
+                    /*
+                    ====================================
+                    SUCESSO
+                    ====================================
+                    */
+
+                    formulario.reset();
+
+                    formulario.style.display = "none";
+
+
+                    mostrarMensagem(
+                        dados.message ||
+                        "Teste liberado com sucesso.",
+                        "sucesso"
+                    );
+
+
+                    conteudoTeste.textContent =
+                        dados.template ||
+                        "Seu teste MDS_TI foi liberado.";
+
+
+                    resultadoTeste.className =
+                        "resultado-teste ativo";
+
+
+                } catch (erro) {
+
+                    console.error(
+                        "Erro ao enviar:",
+                        erro
+                    );
+
+
+                    mostrarMensagem(
+                        erro.message ||
+                        "Não foi possível processar a solicitação.",
+                        "erro"
+                    );
+
+
+                    botaoEnviar.disabled = false;
+
+                    botaoEnviar.textContent =
+                        "Solicitar teste";
+                }
+
             }
-        });
+        );
+
     </script>
+
 </body>
+
 </html>
