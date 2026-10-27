@@ -2,11 +2,14 @@ import json
 import os
 import re
 import secrets
+import smtplib
 import tempfile
 from datetime import datetime, timezone
+from email.message import EmailMessage
 from pathlib import Path
 
 import fcntl
+import requests
 from flask import Flask, jsonify, render_template, request
 
 
@@ -25,7 +28,17 @@ ARQUIVO_LOCK = BASE_DIR / "clientes.lock"
 
 
 # ============================================================
-# FUNÇÕES AUXILIARES
+# CONFIGURAÇÕES DA API
+# ============================================================
+
+CLUB_INFINITY_API_URL = os.environ.get(
+    "CLUB_INFINITY_API_URL",
+    "https://clubinfinity.info/api"
+).strip().rstrip("/")
+
+
+# ============================================================
+# FUNÇÕES BÁSICAS
 # ============================================================
 
 def agora_iso():
@@ -57,6 +70,13 @@ def email_valido(email):
             email
         )
     )
+
+
+def obter_variavel(nome):
+    return os.environ.get(
+        nome,
+        ""
+    ).strip()
 
 
 # ============================================================
@@ -179,7 +199,7 @@ def salvar_clientes(clientes):
 
 
 # ============================================================
-# BLOQUEIO DE ACESSO AO ARQUIVO
+# BLOQUEIO DO ARQUIVO
 # ============================================================
 
 def executar_com_lock(funcao):
@@ -211,7 +231,7 @@ def executar_com_lock(funcao):
 
 
 # ============================================================
-# LOCALIZAR DUPLICIDADE
+# VERIFICAÇÃO DE DUPLICIDADE
 # ============================================================
 
 def localizar_cliente(
@@ -247,100 +267,13 @@ def localizar_cliente(
     return None, None
 
 
-# ============================================================
-# PÁGINA PRINCIPAL
-# ============================================================
+def reservar_cliente(
+    nome,
+    email,
+    celular
+):
 
-@app.route(
-    "/",
-    methods=["GET"]
-)
-def inicio():
-
-    web3forms_access_key = os.environ.get(
-        "WEB3FORMS_ACCESS_KEY",
-        ""
-    ).strip()
-
-    return render_template(
-        "index.html",
-        web3forms_access_key=web3forms_access_key
-    )
-
-
-# ============================================================
-# HEALTH CHECK
-# ============================================================
-
-@app.route(
-    "/health",
-    methods=["GET"]
-)
-def health():
-
-    return jsonify({
-        "success": True,
-        "status": "online"
-    }), 200
-
-
-# ============================================================
-# VERIFICAR E RESERVAR CLIENTE
-# ============================================================
-
-@app.route(
-    "/verificar-cliente",
-    methods=["POST"]
-)
-def verificar_cliente():
-
-    dados = request.get_json(
-        silent=True
-    ) or {}
-
-    nome = str(
-        dados.get("nome", "")
-    ).strip()
-
-    email = normalizar_email(
-        dados.get("email")
-    )
-
-    celular = normalizar_celular(
-        dados.get("celular")
-    )
-
-
-    if len(nome) < 3:
-
-        return jsonify({
-            "success": False,
-            "message": "Informe seu nome completo."
-        }), 400
-
-
-    if not email_valido(email):
-
-        return jsonify({
-            "success": False,
-            "message": "Informe um e-mail válido."
-        }), 400
-
-
-    if len(celular) not in (
-        10,
-        11
-    ):
-
-        return jsonify({
-            "success": False,
-            "message": (
-                "Informe um WhatsApp válido com DDD."
-            )
-        }), 400
-
-
-    def verificar_e_reservar():
+    def executar():
 
         clientes = carregar_clientes()
 
@@ -367,17 +300,16 @@ def verificar_cliente():
                 )
 
             return {
-                "duplicado": True,
+                "success": False,
+                "duplicate": True,
                 "message": mensagem
             }
-
 
         token_reserva = secrets.token_urlsafe(
             32
         )
 
-
-        novo_cliente = {
+        clientes.append({
             "id": secrets.token_hex(8),
             "token_reserva": token_reserva,
             "nome": nome,
@@ -386,92 +318,28 @@ def verificar_cliente():
             "status": "reservado",
             "criado_em": agora_iso(),
             "confirmado_em": None
-        }
-
-
-        clientes.append(
-            novo_cliente
-        )
-
+        })
 
         salvar_clientes(
             clientes
         )
 
-
         return {
-            "duplicado": False,
+            "success": True,
+            "duplicate": False,
             "token": token_reserva
         }
 
-
-    try:
-
-        resultado = executar_com_lock(
-            verificar_e_reservar
-        )
-
-    except Exception as erro:
-
-        print(
-            "ERRO AO VERIFICAR CLIENTE:",
-            repr(erro)
-        )
-
-        return jsonify({
-            "success": False,
-            "message": (
-                "Não foi possível verificar "
-                "a solicitação."
-            )
-        }), 500
+    return executar_com_lock(
+        executar
+    )
 
 
-    if resultado["duplicado"]:
+def confirmar_cliente(
+    token_reserva
+):
 
-        return jsonify({
-            "success": False,
-            "duplicate": True,
-            "message": resultado["message"]
-        }), 409
-
-
-    return jsonify({
-        "success": True,
-        "duplicate": False,
-        "token": resultado["token"],
-        "message": "Cliente liberado para envio."
-    }), 200
-
-
-# ============================================================
-# CONFIRMAR CLIENTE
-# ============================================================
-
-@app.route(
-    "/confirmar-cliente",
-    methods=["POST"]
-)
-def confirmar_cliente():
-
-    dados = request.get_json(
-        silent=True
-    ) or {}
-
-    token = str(
-        dados.get("token", "")
-    ).strip()
-
-
-    if not token:
-
-        return jsonify({
-            "success": False,
-            "message": "Token de confirmação ausente."
-        }), 400
-
-
-    def confirmar():
+    def executar():
 
         clientes = carregar_clientes()
 
@@ -480,10 +348,7 @@ def confirmar_cliente():
             token_salvo = str(
                 cliente.get(
                     "token_reserva",
-                    cliente.get(
-                        "token",
-                        ""
-                    )
+                    ""
                 )
             )
 
@@ -491,7 +356,7 @@ def confirmar_cliente():
                 token_salvo
                 and secrets.compare_digest(
                     token_salvo,
-                    token
+                    token_reserva
                 )
             ):
 
@@ -504,11 +369,6 @@ def confirmar_cliente():
                     None
                 )
 
-                cliente.pop(
-                    "token",
-                    None
-                )
-
                 salvar_clientes(
                     clientes
                 )
@@ -517,158 +377,626 @@ def confirmar_cliente():
 
         return False
 
-
-    try:
-
-        encontrado = executar_com_lock(
-            confirmar
-        )
-
-    except Exception as erro:
-
-        print(
-            "ERRO AO CONFIRMAR CLIENTE:",
-            repr(erro)
-        )
-
-        return jsonify({
-            "success": False,
-            "message": (
-                "Não foi possível confirmar "
-                "o registro."
-            )
-        }), 500
+    return executar_com_lock(
+        executar
+    )
 
 
-    if not encontrado:
+def cancelar_reserva(
+    token_reserva
+):
 
-        return jsonify({
-            "success": False,
-            "message": (
-                "Registro de reserva não encontrado."
-            )
-        }), 404
-
-
-    return jsonify({
-        "success": True,
-        "message": "Cliente confirmado."
-    }), 200
-
-
-# ============================================================
-# CANCELAR RESERVA
-# ============================================================
-
-@app.route(
-    "/cancelar-reserva",
-    methods=["POST"]
-)
-def cancelar_reserva():
-
-    dados = request.get_json(
-        silent=True
-    ) or {}
-
-    token = str(
-        dados.get("token", "")
-    ).strip()
-
-
-    if not token:
-
-        return jsonify({
-            "success": False,
-            "message": "Token de reserva ausente."
-        }), 400
-
-
-    def cancelar():
+    def executar():
 
         clientes = carregar_clientes()
 
-        clientes_filtrados = []
+        novos_clientes = []
 
         removido = False
-
 
         for cliente in clientes:
 
             token_salvo = str(
                 cliente.get(
                     "token_reserva",
-                    cliente.get(
-                        "token",
-                        ""
-                    )
+                    ""
                 )
             )
 
-            corresponde_ao_token = (
+            corresponde = (
                 token_salvo
                 and secrets.compare_digest(
                     token_salvo,
-                    token
+                    token_reserva
                 )
             )
 
-            esta_reservado = (
+            reservado = (
                 cliente.get("status")
                 == "reservado"
             )
 
-
-            if (
-                corresponde_ao_token
-                and esta_reservado
-            ):
+            if corresponde and reservado:
 
                 removido = True
 
                 continue
 
-
-            clientes_filtrados.append(
+            novos_clientes.append(
                 cliente
             )
-
 
         if removido:
 
             salvar_clientes(
-                clientes_filtrados
+                novos_clientes
             )
-
 
         return removido
 
+    return executar_com_lock(
+        executar
+    )
+
+
+# ============================================================
+# CRIAÇÃO DO TESTE
+# ============================================================
+
+def criar_teste():
+
+    token_api = obter_variavel(
+        "CLUB_INFINITY_TOKEN"
+    )
+
+    server_id = obter_variavel(
+        "CLUB_INFINITY_SERVER_ID"
+    )
+
+    package_id = obter_variavel(
+        "CLUB_INFINITY_PACKAGE_ID"
+    )
+
+    if not token_api:
+
+        raise RuntimeError(
+            "CLUB_INFINITY_TOKEN não configurado."
+        )
+
+    if not server_id:
+
+        raise RuntimeError(
+            "CLUB_INFINITY_SERVER_ID não configurado."
+        )
+
+    if not package_id:
+
+        raise RuntimeError(
+            "CLUB_INFINITY_PACKAGE_ID não configurado."
+        )
+
+    headers = {
+        "Authorization": f"Bearer {token_api}",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-App-Version": "3.96"
+    }
+
+    payload = {
+        "server_id": server_id,
+        "package_id": package_id,
+        "trial_hours": 4,
+        "connections": 1
+    }
+
+    url = (
+        f"{CLUB_INFINITY_API_URL}/customers"
+    )
 
     try:
 
-        removido = executar_com_lock(
-            cancelar
+        resposta = requests.post(
+            url,
+            headers=headers,
+            json=payload,
+            timeout=30
         )
 
-    except Exception as erro:
+    except requests.Timeout as erro:
+
+        raise RuntimeError(
+            "A criação do teste demorou para responder."
+        ) from erro
+
+    except requests.RequestException as erro:
+
+        raise RuntimeError(
+            "Não foi possível conectar ao serviço do teste."
+        ) from erro
+
+    try:
+
+        resultado = resposta.json()
+
+    except ValueError as erro:
 
         print(
-            "ERRO AO CANCELAR RESERVA:",
-            repr(erro)
+            "RESPOSTA NÃO JSON DA API:",
+            resposta.status_code,
+            resposta.text[:500]
         )
+
+        raise RuntimeError(
+            "O serviço do teste retornou uma resposta inválida."
+        ) from erro
+
+    print(
+        "STATUS DA CRIAÇÃO DO TESTE:",
+        resposta.status_code
+    )
+
+    if resposta.status_code in (
+        401,
+        403
+    ):
+
+        raise RuntimeError(
+            "A autorização da API expirou ou foi recusada."
+        )
+
+    if not resposta.ok:
+
+        mensagem_api = str(
+            resultado.get(
+                "message",
+                "A API recusou a criação do teste."
+            )
+        )
+
+        raise RuntimeError(
+            mensagem_api
+        )
+
+    dados_teste = resultado.get(
+        "data"
+    )
+
+    if not isinstance(
+        dados_teste,
+        dict
+    ):
+
+        raise RuntimeError(
+            "A API não retornou os dados do teste."
+        )
+
+    username = str(
+        dados_teste.get(
+            "username",
+            ""
+        )
+    ).strip()
+
+    password = str(
+        dados_teste.get(
+            "password",
+            ""
+        )
+    ).strip()
+
+    if not username or not password:
+
+        raise RuntimeError(
+            "A API não retornou usuário e senha."
+        )
+
+    return {
+        "id": str(
+            dados_teste.get(
+                "id",
+                ""
+            )
+        ).strip(),
+
+        "username": username,
+
+        "password": password,
+
+        "expires_at": str(
+            dados_teste.get(
+                "expires_at_tz",
+                dados_teste.get(
+                    "expires_at",
+                    ""
+                )
+            )
+        ).strip(),
+
+        "status": str(
+            dados_teste.get(
+                "status",
+                ""
+            )
+        ).strip(),
+
+        "server": str(
+            dados_teste.get(
+                "server",
+                ""
+            )
+        ).strip(),
+
+        "package": str(
+            dados_teste.get(
+                "package",
+                ""
+            )
+        ).strip(),
+
+        "connections": dados_teste.get(
+            "connections",
+            1
+        ),
+
+        "m3u_url": str(
+            dados_teste.get(
+                "m3u_url",
+                ""
+            )
+        ).replace(
+            "&amp;",
+            "&"
+        ).strip(),
+
+        "m3u_url_short": str(
+            dados_teste.get(
+                "m3u_url_short",
+                ""
+            )
+        ).replace(
+            "&amp;",
+            "&"
+        ).strip()
+    }
+
+
+# ============================================================
+# ENVIO DE E-MAIL
+# ============================================================
+
+def enviar_email_teste(
+    nome,
+    email_cliente,
+    celular,
+    teste
+):
+
+    email_user = obter_variavel(
+        "EMAIL_USER"
+    )
+
+    email_password = obter_variavel(
+        "EMAIL_PASSWORD"
+    )
+
+    email_destino = obter_variavel(
+        "EMAIL_DESTINO"
+    )
+
+    smtp_host = obter_variavel(
+        "SMTP_HOST"
+    ) or "smtp.office365.com"
+
+    smtp_port_texto = obter_variavel(
+        "SMTP_PORT"
+    ) or "587"
+
+    try:
+
+        smtp_port = int(
+            smtp_port_texto
+        )
+
+    except ValueError:
+
+        smtp_port = 587
+
+    if not email_user:
+
+        raise RuntimeError(
+            "EMAIL_USER não configurado."
+        )
+
+    if not email_password:
+
+        raise RuntimeError(
+            "EMAIL_PASSWORD não configurado."
+        )
+
+    if not email_destino:
+
+        raise RuntimeError(
+            "EMAIL_DESTINO não configurado."
+        )
+
+    mensagem = EmailMessage()
+
+    mensagem["From"] = email_user
+
+    mensagem["To"] = email_destino
+
+    mensagem["Subject"] = (
+        f"Novo teste MDS_TI | {nome}"
+    )
+
+    conteudo = f"""
+NOVO TESTE MDS_TI GERADO
+
+=====================================
+DADOS DO SOLICITANTE
+=====================================
+
+Nome: {nome}
+E-mail: {email_cliente}
+WhatsApp: {celular}
+
+=====================================
+DADOS DO TESTE
+=====================================
+
+ID: {teste.get("id", "")}
+Usuário: {teste.get("username", "")}
+Senha: {teste.get("password", "")}
+Status: {teste.get("status", "")}
+Validade: {teste.get("expires_at", "")}
+Conexões: {teste.get("connections", "")}
+
+Servidor:
+{teste.get("server", "")}
+
+Pacote:
+{teste.get("package", "")}
+
+Link M3U:
+{teste.get("m3u_url", "")}
+
+Link M3U curto:
+{teste.get("m3u_url_short", "")}
+
+=====================================
+
+Os dados acima não foram gravados no clientes.json.
+O clientes.json contém somente os dados necessários
+para impedir solicitações repetidas.
+"""
+
+    mensagem.set_content(
+        conteudo
+    )
+
+    try:
+
+        with smtplib.SMTP(
+            smtp_host,
+            smtp_port,
+            timeout=30
+        ) as servidor:
+
+            servidor.ehlo()
+
+            servidor.starttls()
+
+            servidor.ehlo()
+
+            servidor.login(
+                email_user,
+                email_password
+            )
+
+            servidor.send_message(
+                mensagem
+            )
+
+    except smtplib.SMTPAuthenticationError as erro:
+
+        raise RuntimeError(
+            "O servidor de e-mail recusou "
+            "o usuário ou a senha."
+        ) from erro
+
+    except (
+        smtplib.SMTPException,
+        OSError
+    ) as erro:
+
+        raise RuntimeError(
+            "Não foi possível enviar os dados "
+            "do teste por e-mail."
+        ) from erro
+
+
+# ============================================================
+# PÁGINA PRINCIPAL
+# ============================================================
+
+@app.route(
+    "/",
+    methods=["GET"]
+)
+def inicio():
+
+    return render_template(
+        "index.html"
+    )
+
+
+# ============================================================
+# HEALTH CHECK
+# ============================================================
+
+@app.route(
+    "/health",
+    methods=["GET"]
+)
+def health():
+
+    return jsonify({
+        "success": True,
+        "status": "online"
+    }), 200
+
+
+# ============================================================
+# SOLICITAR TESTE
+# ============================================================
+
+@app.route(
+    "/solicitar-teste",
+    methods=["POST"]
+)
+def solicitar_teste():
+
+    dados = request.get_json(
+        silent=True
+    ) or {}
+
+    nome = str(
+        dados.get(
+            "nome",
+            ""
+        )
+    ).strip()
+
+    email = normalizar_email(
+        dados.get("email")
+    )
+
+    celular = normalizar_celular(
+        dados.get("celular")
+    )
+
+    if len(nome) < 3:
+
+        return jsonify({
+            "success": False,
+            "message": "Informe seu nome completo."
+        }), 400
+
+    if not email_valido(email):
+
+        return jsonify({
+            "success": False,
+            "message": "Informe um e-mail válido."
+        }), 400
+
+    if len(celular) not in (
+        10,
+        11
+    ):
 
         return jsonify({
             "success": False,
             "message": (
-                "Não foi possível cancelar "
-                "a reserva."
+                "Informe um WhatsApp válido com DDD."
+            )
+        }), 400
+
+    token_reserva = ""
+
+    teste_gerado = False
+
+    try:
+
+        resultado_reserva = reservar_cliente(
+            nome,
+            email,
+            celular
+        )
+
+        if not resultado_reserva.get(
+            "success"
+        ):
+
+            return jsonify({
+                "success": False,
+                "duplicate": True,
+                "message": resultado_reserva.get(
+                    "message",
+                    "Solicitação já realizada."
+                )
+            }), 409
+
+        token_reserva = resultado_reserva[
+            "token"
+        ]
+
+        teste = criar_teste()
+
+        teste_gerado = True
+
+        enviar_email_teste(
+            nome=nome,
+            email_cliente=email,
+            celular=celular,
+            teste=teste
+        )
+
+        confirmar_cliente(
+            token_reserva
+        )
+
+        return jsonify({
+            "success": True,
+            "message": (
+                "Solicitação realizada com sucesso."
+            ),
+            "template": (
+                "Seu teste foi gerado com sucesso. "
+                "Aguarde o atendimento para receber "
+                "os dados de acesso."
+            )
+        }), 201
+
+    except Exception as erro:
+
+        print(
+            "ERRO EM /solicitar-teste:",
+            repr(erro)
+        )
+
+        /*
+        Este comentário não deve existir em Python.
+        */
+
+        if token_reserva:
+
+            if teste_gerado:
+
+                /*
+                Se o teste já foi criado, não removemos
+                a reserva. Isso evita gerar outro teste
+                repetido caso somente o e-mail tenha falhado.
+                */
+
+                confirmar_cliente(
+                    token_reserva
+                )
+
+            else:
+
+                cancelar_reserva(
+                    token_reserva
+                )
+
+        return jsonify({
+            "success": False,
+            "message": str(
+                erro
+            ) or (
+                "Não foi possível processar "
+                "a solicitação."
             )
         }), 500
-
-
-    return jsonify({
-        "success": True,
-        "removed": removido
-    }), 200
 
 
 # ============================================================
