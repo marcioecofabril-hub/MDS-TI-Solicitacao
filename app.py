@@ -13,6 +13,10 @@ from flask import Flask, jsonify, render_template, request
 app = Flask(__name__)
 
 
+# ============================================================
+# CONFIGURAÇÕES
+# ============================================================
+
 BASE_DIR = Path(__file__).resolve().parent
 
 ARQUIVO_CLIENTES = BASE_DIR / "clientes.json"
@@ -20,25 +24,36 @@ ARQUIVO_CLIENTES = BASE_DIR / "clientes.json"
 ARQUIVO_LOCK = BASE_DIR / "clientes.lock"
 
 
+# ============================================================
+# FUNÇÕES AUXILIARES
+# ============================================================
+
 def agora_iso():
+
     return datetime.now(
         timezone.utc
     ).isoformat()
 
 
 def normalizar_email(email):
+
     return str(
         email or ""
     ).strip().lower()
 
 
 def normalizar_celular(celular):
+
     return re.sub(
         r"\D",
         "",
         str(celular or "")
     )
 
+
+# ============================================================
+# CARREGAMENTO DOS CLIENTES
+# ============================================================
 
 def carregar_clientes():
 
@@ -71,6 +86,7 @@ def carregar_clientes():
                 list
             )
         ):
+
             return dados["clientes"]
 
         return []
@@ -87,6 +103,10 @@ def carregar_clientes():
 
         return []
 
+
+# ============================================================
+# SALVAMENTO DOS CLIENTES
+# ============================================================
 
 def salvar_clientes(clientes):
 
@@ -140,6 +160,10 @@ def salvar_clientes(clientes):
             )
 
 
+# ============================================================
+# LOCK DO ARQUIVO
+# ============================================================
+
 def executar_com_lock(funcao):
 
     ARQUIVO_LOCK.touch(
@@ -157,6 +181,7 @@ def executar_com_lock(funcao):
         )
 
         try:
+
             return funcao()
 
         finally:
@@ -166,6 +191,10 @@ def executar_com_lock(funcao):
                 fcntl.LOCK_UN
             )
 
+
+# ============================================================
+# LOCALIZAR CLIENTE
+# ============================================================
 
 def localizar_cliente(
     clientes,
@@ -187,16 +216,22 @@ def localizar_cliente(
             email_salvo
             and email_salvo == email
         ):
+
             return cliente, "email"
 
         if (
             celular_salvo
             and celular_salvo == celular
         ):
+
             return cliente, "celular"
 
     return None, None
 
+
+# ============================================================
+# PÁGINA INICIAL
+# ============================================================
 
 @app.route(
     "/",
@@ -204,16 +239,50 @@ def localizar_cliente(
 )
 def inicio():
 
+    return render_template(
+        "index.html"
+    )
+
+
+# ============================================================
+# PÁGINA DE SOLICITAÇÃO DE TESTE
+# ============================================================
+
+@app.route(
+    "/teste",
+    methods=["GET"]
+)
+def teste():
+
     web3forms_access_key = os.environ.get(
         "WEB3FORMS_ACCESS_KEY",
         ""
     ).strip()
 
     return render_template(
-        "index.html",
+        "teste.html",
         web3forms_access_key=web3forms_access_key
     )
 
+
+# ============================================================
+# PÁGINA DE SERVIÇOS
+# ============================================================
+
+@app.route(
+    "/servicos",
+    methods=["GET"]
+)
+def servicos():
+
+    return render_template(
+        "servicos.html"
+    )
+
+
+# ============================================================
+# VERIFICAR CLIENTE
+# ============================================================
 
 @app.route(
     "/verificar-cliente",
@@ -226,16 +295,28 @@ def verificar_cliente():
     ) or {}
 
     nome = str(
-        dados.get("nome", "")
+        dados.get(
+            "nome",
+            ""
+        )
     ).strip()
 
     email = normalizar_email(
-        dados.get("email")
+        dados.get(
+            "email"
+        )
     )
 
     celular = normalizar_celular(
-        dados.get("celular")
+        dados.get(
+            "celular"
+        )
     )
+
+
+    # --------------------------------------------------------
+    # VALIDAÇÕES
+    # --------------------------------------------------------
 
     if len(nome) < 3:
 
@@ -243,6 +324,7 @@ def verificar_cliente():
             "success": False,
             "message": "Informe seu nome completo."
         }), 400
+
 
     if (
         not email
@@ -253,6 +335,7 @@ def verificar_cliente():
             "success": False,
             "message": "Informe um e-mail válido."
         }), 400
+
 
     if len(celular) not in (
         10,
@@ -266,6 +349,11 @@ def verificar_cliente():
             )
         }), 400
 
+
+    # --------------------------------------------------------
+    # VERIFICA E RESERVA
+    # --------------------------------------------------------
+
     def verificar_e_reservar():
 
         clientes = carregar_clientes()
@@ -275,6 +363,7 @@ def verificar_cliente():
             email,
             celular
         )
+
 
         if cliente_existente:
 
@@ -297,33 +386,57 @@ def verificar_cliente():
                 "message": mensagem
             }
 
+
         token = secrets.token_urlsafe(
             32
         )
 
+
         novo_cliente = {
-            "id": secrets.token_hex(8),
-            "token": token,
-            "nome": nome,
-            "email": email,
-            "celular": celular,
-            "status": "reservado",
-            "criado_em": agora_iso(),
-            "confirmado_em": None
+
+            "id":
+                secrets.token_hex(
+                    8
+                ),
+
+            "token":
+                token,
+
+            "nome":
+                nome,
+
+            "email":
+                email,
+
+            "celular":
+                celular,
+
+            "status":
+                "reservado",
+
+            "criado_em":
+                agora_iso(),
+
+            "confirmado_em":
+                None
         }
+
 
         clientes.append(
             novo_cliente
         )
 
+
         salvar_clientes(
             clientes
         )
+
 
         return {
             "duplicado": False,
             "token": token
         }
+
 
     try:
 
@@ -346,6 +459,7 @@ def verificar_cliente():
             )
         }), 500
 
+
     if resultado["duplicado"]:
 
         return jsonify({
@@ -354,6 +468,7 @@ def verificar_cliente():
             "message": resultado["message"]
         }), 409
 
+
     return jsonify({
         "success": True,
         "duplicate": False,
@@ -361,6 +476,10 @@ def verificar_cliente():
         "message": "Cliente liberado para envio."
     }), 200
 
+
+# ============================================================
+# CONFIRMAR CLIENTE
+# ============================================================
 
 @app.route(
     "/confirmar-cliente",
@@ -372,9 +491,14 @@ def confirmar_cliente():
         silent=True
     ) or {}
 
+
     token = str(
-        dados.get("token", "")
+        dados.get(
+            "token",
+            ""
+        )
     ).strip()
+
 
     if not token:
 
@@ -383,20 +507,35 @@ def confirmar_cliente():
             "message": "Token de confirmação ausente."
         }), 400
 
+
+    # --------------------------------------------------------
+    # CONFIRMAR
+    # --------------------------------------------------------
+
     def confirmar():
 
         clientes = carregar_clientes()
 
+
         for cliente in clientes:
 
             if secrets.compare_digest(
-                str(cliente.get("token", "")),
+                str(
+                    cliente.get(
+                        "token",
+                        ""
+                    )
+                ),
                 token
             ):
 
-                cliente["status"] = "confirmado"
+                cliente["status"] = (
+                    "confirmado"
+                )
 
-                cliente["confirmado_em"] = agora_iso()
+                cliente["confirmado_em"] = (
+                    agora_iso()
+                )
 
                 salvar_clientes(
                     clientes
@@ -404,7 +543,9 @@ def confirmar_cliente():
 
                 return True
 
+
         return False
+
 
     try:
 
@@ -427,6 +568,7 @@ def confirmar_cliente():
             )
         }), 500
 
+
     if not encontrado:
 
         return jsonify({
@@ -434,11 +576,16 @@ def confirmar_cliente():
             "message": "Registro não encontrado."
         }), 404
 
+
     return jsonify({
         "success": True,
         "message": "Cliente confirmado."
     }), 200
 
+
+# ============================================================
+# CANCELAR RESERVA
+# ============================================================
 
 @app.route(
     "/cancelar-reserva",
@@ -450,9 +597,14 @@ def cancelar_reserva():
         silent=True
     ) or {}
 
+
     token = str(
-        dados.get("token", "")
+        dados.get(
+            "token",
+            ""
+        )
     ).strip()
+
 
     if not token:
 
@@ -461,37 +613,65 @@ def cancelar_reserva():
             "message": "Token de reserva ausente."
         }), 400
 
+
+    # --------------------------------------------------------
+    # CANCELAMENTO
+    # --------------------------------------------------------
+
     def cancelar():
 
         clientes = carregar_clientes()
+
 
         quantidade_antes = len(
             clientes
         )
 
+
         clientes_filtrados = [
+
             cliente
+
             for cliente in clientes
+
             if not (
+
                 secrets.compare_digest(
-                    str(cliente.get("token", "")),
+
+                    str(
+                        cliente.get(
+                            "token",
+                            ""
+                        )
+                    ),
+
                     token
                 )
-                and cliente.get("status") == "reservado"
+
+                and cliente.get(
+                    "status"
+                ) == "reservado"
             )
         ]
 
+
         if (
-            len(clientes_filtrados)
+            len(
+                clientes_filtrados
+            )
             == quantidade_antes
         ):
+
             return False
+
 
         salvar_clientes(
             clientes_filtrados
         )
 
+
         return True
+
 
     try:
 
@@ -514,11 +694,16 @@ def cancelar_reserva():
             )
         }), 500
 
+
     return jsonify({
         "success": True,
         "removed": removido
     }), 200
 
+
+# ============================================================
+# INICIALIZAÇÃO
+# ============================================================
 
 if __name__ == "__main__":
 
@@ -528,6 +713,7 @@ if __name__ == "__main__":
             5000
         )
     )
+
 
     app.run(
         host="0.0.0.0",
