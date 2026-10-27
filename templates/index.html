@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,30 +9,20 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Solicitação de Teste | MDS_TI
-    </title>
-
+    <title>Solicitação de Teste | MDS_TI</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-
         body {
-
             min-height: 100vh;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             padding: 24px;
 
             font-family:
@@ -52,21 +41,14 @@
             color: #172033;
         }
 
-
         .container {
-
             width: 100%;
-
             max-width: 600px;
         }
 
-
         .card {
-
             padding: 36px;
-
             border-radius: 22px;
-
             background: #ffffff;
 
             box-shadow:
@@ -74,49 +56,36 @@
                 rgba(0, 0, 0, 0.30);
         }
 
-
         .marca {
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
 
             min-width: 92px;
-
             height: 38px;
 
             margin-bottom: 22px;
-
             padding: 0 15px;
 
             border-radius: 10px;
 
             color: #ffffff;
-
             background: #0b67b2;
 
             font-weight: 800;
-
             letter-spacing: 1px;
         }
 
-
         h1 {
-
             margin-bottom: 10px;
 
             font-size: 30px;
-
             line-height: 1.15;
 
             color: #10233f;
         }
 
-
         .descricao {
-
             margin-bottom: 28px;
 
             color: #5e6b7e;
@@ -124,38 +93,28 @@
             line-height: 1.6;
         }
 
-
         .campo {
-
             margin-bottom: 18px;
         }
 
-
         label {
-
             display: block;
 
             margin-bottom: 7px;
 
             font-size: 14px;
-
             font-weight: 700;
 
             color: #28384f;
         }
 
-
         input {
-
             width: 100%;
-
             height: 50px;
 
             padding: 0 15px;
 
-            border:
-                1px solid #ccd5e1;
-
+            border: 1px solid #ccd5e1;
             border-radius: 10px;
 
             outline: none;
@@ -165,9 +124,7 @@
             background: #ffffff;
         }
 
-
         input:focus {
-
             border-color: #0b67b2;
 
             box-shadow:
@@ -175,25 +132,19 @@
                 rgba(11, 103, 178, 0.12);
         }
 
-
         button {
-
             width: 100%;
-
             height: 52px;
 
             margin-top: 8px;
 
             border: 0;
-
             border-radius: 11px;
 
             background: #0b67b2;
-
             color: #ffffff;
 
             font-size: 16px;
-
             font-weight: 800;
 
             cursor: pointer;
@@ -201,23 +152,16 @@
             transition: 0.2s;
         }
 
-
         button:hover {
-
             background: #095996;
         }
 
-
         button:disabled {
-
             cursor: not-allowed;
-
             background: #90a3b8;
         }
 
-
         .mensagem {
-
             display: none;
 
             margin-top: 20px;
@@ -229,53 +173,37 @@
             text-align: center;
 
             font-weight: 700;
-
             line-height: 1.5;
         }
 
-
         .mensagem.sucesso {
-
             display: block;
 
-            border:
-                1px solid #86d3a0;
+            border: 1px solid #86d3a0;
 
             background: #e9f9ef;
-
             color: #186735;
         }
 
-
         .mensagem.erro {
-
             display: block;
 
-            border:
-                1px solid #f0a3a3;
+            border: 1px solid #f0a3a3;
 
             background: #fff0f0;
-
             color: #a22222;
         }
 
-
         .resultado-teste {
-
             display: none;
-
             margin-top: 22px;
         }
 
-
         .resultado-teste.ativo {
-
             display: block;
         }
 
-
         .resultado-titulo {
-
             margin-bottom: 12px;
 
             color: #10233f;
@@ -283,110 +211,77 @@
             font-size: 20px;
         }
 
-
         .resultado-conteudo {
-
             padding: 20px;
 
-            border:
-                1px solid #d6e1ec;
-
+            border: 1px solid #d6e1ec;
             border-radius: 12px;
 
             background: #f5f8fc;
-
             color: #1c293d;
 
             font-size: 14px;
-
             line-height: 1.6;
 
             white-space: pre-wrap;
-
             word-break: break-word;
-
             overflow-wrap: anywhere;
         }
 
-
         .aviso {
-
             margin-top: 22px;
 
             color: #738095;
 
             font-size: 12px;
-
             line-height: 1.5;
 
             text-align: center;
         }
 
-
         @media (max-width: 600px) {
 
             body {
-
                 padding: 15px;
             }
 
-
             .card {
-
-                padding:
-                    27px
-                    21px;
+                padding: 27px 21px;
             }
 
-
             h1 {
-
                 font-size: 25px;
             }
 
-
             .resultado-conteudo {
-
                 padding: 15px;
             }
         }
-
     </style>
 
 </head>
 
-
 <body>
-
 
     <main class="container">
 
-
         <section class="card">
-
 
             <div class="marca">
                 MDS_TI
             </div>
 
-
             <h1>
                 Solicitação de teste
             </h1>
 
-
             <p class="descricao">
-
                 Preencha seus dados para solicitar o teste.
-
                 É permitida somente uma solicitação
                 por e-mail ou WhatsApp.
-
             </p>
 
-
             <form id="formulario">
-
 
                 <div class="campo">
 
@@ -405,7 +300,6 @@
 
                 </div>
 
-
                 <div class="campo">
 
                     <label for="email">
@@ -422,7 +316,6 @@
                     >
 
                 </div>
-
 
                 <div class="campo">
 
@@ -443,7 +336,6 @@
 
                 </div>
 
-
                 <button
                     id="botaoEnviar"
                     type="submit"
@@ -451,9 +343,7 @@
                     Solicitar teste
                 </button>
 
-
             </form>
-
 
             <div
                 id="mensagem"
@@ -461,7 +351,6 @@
                 role="alert"
                 aria-live="polite"
             ></div>
-
 
             <div
                 id="resultadoTeste"
@@ -479,66 +368,58 @@
 
             </div>
 
-
             <p class="aviso">
-
                 Os dados informados serão utilizados
                 somente para atendimento da solicitação.
-
             </p>
 
-
         </section>
-
 
     </main>
 
 
     <script>
 
-        // ==================================================
-        // ELEMENTOS
-        // ==================================================
+        /*
+        ==================================================
+        CHAVE RECEBIDA DO FLASK
+        ==================================================
+        */
+
+        const WEB3FORMS_ACCESS_KEY =
+            {{ web3forms_access_key | default("", true) | tojson }};
+
+
+        /*
+        ==================================================
+        ELEMENTOS
+        ==================================================
+        */
 
         const formulario =
-            document.getElementById(
-                "formulario"
-            );
-
+            document.getElementById("formulario");
 
         const botaoEnviar =
-            document.getElementById(
-                "botaoEnviar"
-            );
-
+            document.getElementById("botaoEnviar");
 
         const mensagem =
-            document.getElementById(
-                "mensagem"
-            );
-
+            document.getElementById("mensagem");
 
         const resultadoTeste =
-            document.getElementById(
-                "resultadoTeste"
-            );
-
+            document.getElementById("resultadoTeste");
 
         const conteudoTeste =
-            document.getElementById(
-                "conteudoTeste"
-            );
-
+            document.getElementById("conteudoTeste");
 
         const inputCelular =
-            document.getElementById(
-                "celular"
-            );
+            document.getElementById("celular");
 
 
-        // ==================================================
-        // MÁSCARA WHATSAPP
-        // ==================================================
+        /*
+        ==================================================
+        MÁSCARA DO WHATSAPP
+        ==================================================
+        */
 
         inputCelular.addEventListener(
             "input",
@@ -550,12 +431,7 @@
                         ""
                     );
 
-
-                numeros =
-                    numeros.substring(
-                        0,
-                        11
-                    );
+                numeros = numeros.substring(0, 11);
 
 
                 if (numeros.length <= 2) {
@@ -571,14 +447,9 @@
 
                     evento.target.value =
                         "(" +
-                        numeros.substring(
-                            0,
-                            2
-                        ) +
+                        numeros.substring(0, 2) +
                         ") " +
-                        numeros.substring(
-                            2
-                        );
+                        numeros.substring(2);
 
                     return;
                 }
@@ -586,28 +457,21 @@
 
                 evento.target.value =
                     "(" +
-                    numeros.substring(
-                        0,
-                        2
-                    ) +
+                    numeros.substring(0, 2) +
                     ") " +
-                    numeros.substring(
-                        2,
-                        7
-                    ) +
+                    numeros.substring(2, 7) +
                     "-" +
-                    numeros.substring(
-                        7,
-                        11
-                    );
+                    numeros.substring(7, 11);
 
             }
         );
 
 
-        // ==================================================
-        // MENSAGEM
-        // ==================================================
+        /*
+        ==================================================
+        MOSTRAR MENSAGEM
+        ==================================================
+        */
 
         function mostrarMensagem(
             texto,
@@ -617,16 +481,16 @@
             mensagem.textContent =
                 texto;
 
-
             mensagem.className =
-                "mensagem " +
-                tipo;
+                "mensagem " + tipo;
         }
 
 
-        // ==================================================
-        // LIMPAR CELULAR
-        // ==================================================
+        /*
+        ==================================================
+        LIMPAR CELULAR
+        ==================================================
+        */
 
         function limparCelular(
             valor
@@ -639,14 +503,15 @@
         }
 
 
-        // ==================================================
-        // ENVIO
-        // ==================================================
+        /*
+        ==================================================
+        ENVIO DO FORMULÁRIO
+        ==================================================
+        */
 
         formulario.addEventListener(
             "submit",
             async function (evento) {
-
 
                 evento.preventDefault();
 
@@ -654,37 +519,32 @@
                 mensagem.className =
                     "mensagem";
 
-
                 mensagem.textContent =
                     "";
 
-
                 resultadoTeste.className =
                     "resultado-teste";
-
 
                 conteudoTeste.textContent =
                     "";
 
 
-                // ------------------------------------------
-                // PEGA OS DADOS
-                // ------------------------------------------
+                /*
+                ==========================================
+                DADOS
+                ==========================================
+                */
 
                 const nome =
                     document
-                        .getElementById(
-                            "nome"
-                        )
+                        .getElementById("nome")
                         .value
                         .trim();
 
 
                 const email =
                     document
-                        .getElementById(
-                            "email"
-                        )
+                        .getElementById("email")
                         .value
                         .trim()
                         .toLowerCase();
@@ -696,9 +556,11 @@
                     );
 
 
-                // ------------------------------------------
-                // VALIDAÇÃO
-                // ------------------------------------------
+                /*
+                ==========================================
+                VALIDAÇÕES
+                ==========================================
+                */
 
                 if (!nome) {
 
@@ -722,9 +584,7 @@
                 }
 
 
-                if (
-                    !email.includes("@")
-                ) {
+                if (!email.includes("@")) {
 
                     mostrarMensagem(
                         "Informe um e-mail válido.",
@@ -735,9 +595,7 @@
                 }
 
 
-                if (
-                    celular.length < 10
-                ) {
+                if (celular.length < 10) {
 
                     mostrarMensagem(
                         "Informe um WhatsApp válido com DDD.",
@@ -748,13 +606,25 @@
                 }
 
 
-                // ------------------------------------------
-                // BLOQUEIA BOTÃO
-                // ------------------------------------------
+                if (!WEB3FORMS_ACCESS_KEY) {
+
+                    mostrarMensagem(
+                        "O serviço de envio não está configurado.",
+                        "erro"
+                    );
+
+                    return;
+                }
+
+
+                /*
+                ==========================================
+                BOTÃO
+                ==========================================
+                */
 
                 botaoEnviar.disabled =
                     true;
-
 
                 botaoEnviar.textContent =
                     "Enviando solicitação...";
@@ -763,17 +633,46 @@
                 try {
 
 
-                    // ======================================
-                    // ENVIA PARA O FLASK
-                    // ======================================
+                    /*
+                    ======================================
+                    MENSAGEM
+                    ======================================
+                    */
+
+                    const conteudoEmail = `
+NOVA SOLICITAÇÃO DE TESTE MDS_TI
+
+=====================================
+DADOS DO CLIENTE
+=====================================
+
+Nome: ${nome}
+
+E-mail: ${email}
+
+WhatsApp: ${celular}
+
+Data da solicitação:
+${new Date().toLocaleString("pt-BR")}
+
+=====================================
+
+Solicitação recebida através da página MDS_TI.
+`;
+
+
+                    /*
+                    ======================================
+                    ENVIO DIRETO AO WEB3FORMS
+                    ======================================
+                    */
 
                     const resposta =
                         await fetch(
-                            "/registrar",
+                            "https://api.web3forms.com/submit",
                             {
 
-                                method:
-                                    "POST",
+                                method: "POST",
 
                                 headers: {
 
@@ -787,97 +686,81 @@
                                 body:
                                     JSON.stringify({
 
-                                        nome:
+                                        access_key:
+                                            WEB3FORMS_ACCESS_KEY,
+
+                                        subject:
+                                            "Nova solicitação de teste | " +
+                                            nome,
+
+                                        from_name:
+                                            "MDS_TI - Solicitação",
+
+                                        name:
                                             nome,
 
                                         email:
                                             email,
 
-                                        celular:
-                                            celular
+                                        whatsapp:
+                                            celular,
+
+                                        message:
+                                            conteudoEmail
                                     })
                             }
                         );
 
 
-                    // ======================================
-                    // LÊ A RESPOSTA
-                    // ======================================
+                    /*
+                    ======================================
+                    RESPOSTA
+                    ======================================
+                    */
 
-                    const textoResposta =
-                        await resposta.text();
+                    const resultado =
+                        await resposta.json();
 
 
-                    let dados;
+                    console.log(
+                        "Resposta Web3Forms:",
+                        resultado
+                    );
 
 
-                    try {
-
-                        dados =
-                            JSON.parse(
-                                textoResposta
-                            );
-
-                    } catch (erroJson) {
-
-                        console.error(
-                            "Resposta recebida:",
-                            textoResposta
-                        );
+                    if (
+                        !resposta.ok ||
+                        !resultado.success
+                    ) {
 
                         throw new Error(
-                            "O servidor retornou uma resposta inválida."
+                            resultado.message ||
+                            "Não foi possível enviar a solicitação."
                         );
                     }
 
 
-                    // ======================================
-                    // VERIFICA ERRO HTTP
-                    // ======================================
-
-                    if (!resposta.ok) {
-
-                        throw new Error(
-                            dados.message ||
-                            "Não foi possível processar a solicitação."
-                        );
-                    }
-
-
-                    // ======================================
-                    // VERIFICA SUCCESS
-                    // ======================================
-
-                    if (!dados.success) {
-
-                        throw new Error(
-                            dados.message ||
-                            "A solicitação não foi concluída."
-                        );
-                    }
-
-
-                    // ======================================
-                    // SUCESSO
-                    // ======================================
+                    /*
+                    ======================================
+                    SUCESSO
+                    ======================================
+                    */
 
                     formulario.reset();
-
 
                     formulario.style.display =
                         "none";
 
 
                     mostrarMensagem(
-                        dados.message ||
                         "Solicitação registrada com sucesso!",
                         "sucesso"
                     );
 
 
                     conteudoTeste.textContent =
-                        dados.template ||
-                        "Seu teste MDS_TI foi liberado!";
+                        "Seu teste MDS_TI foi liberado!\n\n" +
+                        "A solicitação foi enviada com sucesso.";
 
 
                     resultadoTeste.className =
@@ -888,14 +771,14 @@
 
 
                     console.error(
-                        "ERRO:",
+                        "Erro no envio:",
                         erro
                     );
 
 
                     mostrarMensagem(
                         erro.message ||
-                        "Não foi possível processar a solicitação.",
+                        "Não foi possível enviar a solicitação.",
                         "erro"
                     );
 
@@ -906,14 +789,12 @@
 
                     botaoEnviar.textContent =
                         "Solicitar teste";
-
                 }
 
             }
         );
 
     </script>
-
 
 </body>
 
