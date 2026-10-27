@@ -1,14 +1,11 @@
 import os
-
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
 def inicio():
-
     web3forms_access_key = os.environ.get(
         "WEB3FORMS_ACCESS_KEY",
         ""
@@ -20,8 +17,18 @@ def inicio():
     )
 
 
-if __name__ == "__main__":
+# Rota simplificada apenas para dar sinal verde para o formulário enviar o e-mail
+@app.route("/registrar", methods=["POST"])
+@app.route("/api/customers", methods=["POST"])
+def registrar():
+    return jsonify({
+        "success": True,
+        "message": "Processando...",
+        "template": "Seu teste MDS_TI foi liberado! Acesse os dados enviados no seu e-mail."
+    })
 
+
+if __name__ == "__main__":
     port = int(
         os.environ.get(
             "PORT",
