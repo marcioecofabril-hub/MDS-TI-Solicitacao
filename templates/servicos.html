@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#020816"
+    >
+
+    <meta
+        name="description"
+        content="Serviços MDS_TI - Informática, redes, Wi-Fi, receptores e antenas."
+    >
+
+    <title>Serviços | MDS_TI</title>
+
+
+    <style>
+
+        :root {
+
+            --fundo: #020816;
+
+            --azul-profundo: #03142d;
+
+            --azul-card: #052b55;
+
+            --azul: #0875c1;
+
+            --azul-neon: #16b8ff;
+
+            --dourado: #ffc928;
+
+            --dourado-claro: #ffe888;
+
+            --branco: #ffffff;
+
+            --texto-secundario: #bbcce0;
+
+            --borda:
+                rgba(
+                    74,
+                    186,
+                    255,
+                    0.28
+                );
+        }
+
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: var(--branco);
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(0, 132, 255, 0.25),
+                    transparent 37%
+                ),
+
+                radial-gradient(
+                    circle at 90% 60%,
+                    rgba(0, 91, 181, 0.12),
+                    transparent 40%
+                ),
+
+                linear-gradient(
+                    180deg,
+                    #031126,
+                    #020816
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        /*
+        =====================================================
+        BARRA SUPERIOR
+        =====================================================
+        */
+
+
+        .barra {
+
+            position: sticky;
+
+            z-index: 1000;
+
+            top: 0;
+
+            width: 100%;
+
+            padding:
+                14px
+                20px;
+
+            border-bottom:
+                1px solid
+                rgba(
+                    64,
+                    177,
+                    255,
+                    0.20
+                );
+
+            background:
+                rgba(
+                    2,
+                    13,
+                    32,
+                    0.91
+                );
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+                0 8px 30px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.28
+                );
+        }
+
+
+        .barra-conteudo {
+
+            width: 100%;
+
+            max-width: 1180px;
+
+            margin:
+                0
+                auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        /*
+        =====================================================
+        LOGO
+        =====================================================
+        */
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .logo-icone {
+
+            position: relative;
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffe45c,
+                    #ee9d00
+                );
+
+            color: #04162f;
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 0 25px
+                rgba(
+                    255,
+                    193,
+                    0,
+                    0.30
+                );
+        }
+
+
+        .logo-icone::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: -2px;
+
+            bottom: -2px;
+
+            width: 9px;
+
+            height: 9px;
+
+            border:
+                2px solid
+                #041329;
+
+            border-radius: 50%;
+
+            background:
+                #3eff95;
+        }
+
+
+        .logo-texto {
+
+            color: #ffffff;
+
+            font-size: 26px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.7px;
+        }
+
+
+        .logo-texto span {
+
+            color:
+                var(--dourado);
+        }
+
+
+        /*
+        =====================================================
+        MENU
+        =====================================================
+        */
+
+
+        .menu {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+
+        .menu-link {
+
+            min-height: 44px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                0
+                17px;
+
+            border:
+                1px solid
+                rgba(
+                    67,
+                    180,
+                    255,
+                    0.35
+                );
+
+            border-radius: 11px;
+
+            background:
+                rgba(
+                    7,
+                    60,
+                    116,
+                    0.58
+                );
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .menu-link:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--azul-neon);
+
+            background:
+                #075da5;
+
+            box-shadow:
+                0 8px 20px
+                rgba(
+                    0,
+                    144,
+                    255,
+                    0.20
+                );
+        }
+
+
+        .menu-link.pagamento {
+
+            border-color:
+                #eebb24;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd43e,
+                    #e59a00
+                );
+
+            color:
+                #05172d;
+        }
+
+
+        /*
+        =====================================================
+        HERO
+        =====================================================
+        */
+
+
+        .hero {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            margin:
+                0
+                auto;
+
+            padding:
+                80px
+                22px
+                55px;
+
+            text-align: center;
+        }
+
+
+        .selo {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 24px;
+
+            padding:
+                8px
+                15px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    205,
+                    46,
+                    0.40
+                );
+
+            border-radius: 30px;
+
+            background:
+                rgba(
+                    255,
+                    190,
+                    0,
+                    0.08
+                );
+
+            color:
+                var(--dourado-claro);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .hero h1 {
+
+            max-width: 850px;
+
+            margin:
+                0
+                auto;
+
+            color: #ffffff;
+
+            font-size:
+                clamp(
+                    38px,
+                    6vw,
+                    65px
+                );
+
+            line-height: 1.03;
+
+            letter-spacing:
+                -1.7px;
+        }
+
+
+        .hero h1 span {
+
+            color:
+                var(--dourado);
+        }
+
+
+        .hero p {
+
+            max-width: 700px;
+
+            margin:
+                24px
+                auto
+                0;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+
+        /*
+        =====================================================
+        LINHA DECORATIVA
+        =====================================================
+        */
+
+
+        .linha {
+
+            width: 100px;
+
+            height: 4px;
+
+            margin:
+                30px
+                auto
+                0;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--azul-neon),
+                    var(--dourado)
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(
+                    0,
+                    165,
+                    255,
+                    0.40
+                );
+        }
+
+
+        /*
+        =====================================================
+        SERVIÇOS
+        =====================================================
+        */
+
+
+        .servicos {
+
+            width: 100%;
+
+            max-width: 1180px;
+
+            margin:
+                0
+                auto;
+
+            padding:
+                15px
+                22px
+                80px;
+        }
+
+
+        .grade {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 18px;
+        }
+
+
+        .servico {
+
+            position: relative;
+
+            min-height: 260px;
+
+            overflow: hidden;
+
+            padding:
+                28px
+                25px;
+
+            border:
+                1px solid
+                var(--borda);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        7,
+                        48,
+                        94,
+                        0.88
+                    ),
+                    rgba(
+                        2,
+                        20,
+                        45,
+                        0.96
+                    )
+                );
+
+            box-shadow:
+                0 18px 40px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.22
+                );
+
+            transition:
+                transform
+                0.25s ease,
+                border-color
+                0.25s ease,
+                box-shadow
+                0.25s ease;
+        }
+
+
+        .servico::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--azul-neon),
+                    transparent
+                );
+        }
+
+
+        .servico:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(
+                    60,
+                    199,
+                    255,
+                    0.62
+                );
+
+            box-shadow:
+                0 22px 45px
+                rgba(
+                    0,
+                    80,
+                    170,
+                    0.20
+                );
+        }
+
+
+        /*
+        =====================================================
+        ÍCONES DOS SERVIÇOS
+        =====================================================
+        */
+
+
+        .servico-icone {
+
+            width: 59px;
+
+            height: 59px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 22px;
+
+            border:
+                1px solid
+                rgba(
+                    68,
+                    190,
+                    255,
+                    0.42
+                );
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        0,
+                        145,
+                        231,
+                        0.20
+                    ),
+                    rgba(
+                        0,
+                        76,
+                        160,
+                        0.15
+                    )
+                );
+
+            font-size: 28px;
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+        }
+
+
+        .servico h2 {
+
+            margin-bottom: 12px;
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+            line-height: 1.25;
+        }
+
+
+        .servico p {
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+
+        /*
+        =====================================================
+        DESTAQUE
+        =====================================================
+        */
+
+
+        .destaque {
+
+            border-color:
+                rgba(
+                    255,
+                    201,
+                    40,
+                    0.34
+                );
+        }
+
+
+        .destaque::before {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--dourado),
+                    transparent
+                );
+        }
+
+
+        .destaque
+        .servico-icone {
+
+            border-color:
+                rgba(
+                    255,
+                    205,
+                    45,
+                    0.48
+                );
+
+            background:
+                rgba(
+                    255,
+                    185,
+                    0,
+                    0.12
+                );
+        }
+
+
+        /*
+        =====================================================
+        ÁREA FINAL
+        =====================================================
+        */
+
+
+        .chamada {
+
+            width: calc(
+                100% - 44px
+            );
+
+            max-width: 1136px;
+
+            margin:
+                0
+                auto
+                70px;
+
+            overflow: hidden;
+
+            padding:
+                38px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    202,
+                    40,
+                    0.30
+                );
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(
+                        5,
+                        50,
+                        98,
+                        0.96
+                    ),
+                    rgba(
+                        45,
+                        31,
+                        2,
+                        0.94
+                    )
+                );
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 55px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.25
+                );
+        }
+
+
+        .chamada h2 {
+
+            color: #ffffff;
+
+            font-size: 28px;
+        }
+
+
+        .chamada h2 span {
+
+            color:
+                var(--dourado);
+        }
+
+
+        .chamada p {
+
+            max-width: 670px;
+
+            margin:
+                13px
+                auto
+                25px;
+
+            color:
+                var(--texto-secundario);
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+
+        .botoes {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+
+        .botao {
+
+            min-height: 49px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding:
+                0
+                20px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid
+                rgba(
+                    79,
+                    187,
+                    255,
+                    0.44
+                );
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0875c1,
+                    #05508e
+                );
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .botao:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 23px
+                rgba(
+                    0,
+                    122,
+                    255,
+                    0.25
+                );
+        }
+
+
+        .botao.dourado {
+
+            border-color:
+                #ffe174;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffd63e,
+                    #e99b00
+                );
+
+            color:
+                #06172e;
+        }
+
+
+        /*
+        =====================================================
+        RODAPÉ
+        =====================================================
+        */
+
+
+        footer {
+
+            padding:
+                24px
+                20px;
+
+            border-top:
+                1px solid
+                rgba(
+                    60,
+                    170,
+                    255,
+                    0.14
+                );
+
+            color:
+                #7f98b3;
+
+            text-align: center;
+
+            font-size: 11px;
+
+            letter-spacing: 0.8px;
+        }
+
+
+        /*
+        =====================================================
+        TABLET
+        =====================================================
+        */
+
+
+        @media (
+            max-width: 900px
+        ) {
+
+            .grade {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+            }
+        }
+
+
+        /*
+        =====================================================
+        CELULAR
+        =====================================================
+        */
+
+
+        @media (
+            max-width: 650px
+        ) {
+
+            .barra {
+
+                padding:
+                    12px
+                    10px;
+            }
+
+
+            .barra-conteudo {
+
+                flex-direction:
+                    column;
+
+                gap: 10px;
+            }
+
+
+            .logo-icone {
+
+                width: 39px;
+
+                height: 39px;
+
+                font-size: 19px;
+            }
+
+
+            .logo-texto {
+
+                font-size: 22px;
+            }
+
+
+            .menu {
+
+                width: 100%;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(
+                        3,
+                        1fr
+                    );
+
+                gap: 6px;
+            }
+
+
+            .menu-link {
+
+                min-height: 41px;
+
+                padding:
+                    0
+                    6px;
+
+                font-size: 9px;
+            }
+
+
+            .hero {
+
+                padding:
+                    58px
+                    18px
+                    42px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 38px;
+            }
+
+
+            .hero p {
+
+                font-size: 15px;
+            }
+
+
+            .servicos {
+
+                padding:
+                    8px
+                    13px
+                    45px;
+            }
+
+
+            .grade {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 12px;
+            }
+
+
+            .servico {
+
+                min-height: auto;
+
+                padding:
+                    23px
+                    20px;
+            }
+
+
+            .chamada {
+
+                width:
+                    calc(
+                        100% - 26px
+                    );
+
+                margin-bottom:
+                    40px;
+
+                padding:
+                    29px
+                    19px;
+            }
+
+
+            .chamada h2 {
+
+                font-size: 24px;
+            }
+
+
+            .botoes {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .botao {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         CABEÇALHO
+    ====================================================== -->
+
+
+    <header class="barra">
+
+        <div class="barra-conteudo">
+
+
+            <a
+                class="logo"
+                href="/"
+            >
+
+                <span class="logo-icone">
+                    M
+                </span>
+
+                <span class="logo-texto">
+                    MDS<span>_TI</span>
+                </span>
+
+            </a>
+
+
+            <nav class="menu">
+
+
+                <a
+                    class="menu-link"
+                    href="/"
+                >
+                    🏠 INÍCIO
+                </a>
+
+
+                <a
+                    class="menu-link"
+                    href="/teste"
+                >
+                    🧪 TESTE
+                </a>
+
+
+                <a
+                    class="menu-link pagamento"
+                    href="https://pagamento-pix-ti.onrender.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    💳 PAGAMENTO
+                </a>
+
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         APRESENTAÇÃO
+    ====================================================== -->
+
+
+    <section class="hero">
+
+
+        <div class="selo">
+            ⚡ Soluções MDS_TI
+        </div>
+
+
+        <h1>
+
+            Tecnologia que
+
+            <span>
+                resolve.
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Serviços de informática, conectividade,
+            redes e equipamentos para sua casa ou negócio.
+
+            Atendimento focado em configuração,
+            instalação e funcionamento adequado dos
+            seus equipamentos.
+
+        </p>
+
+
+        <div class="linha"></div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SERVIÇOS
+    ====================================================== -->
+
+
+    <section class="servicos">
+
+
+        <div class="grade">
+
+
+            <!-- FORMATAÇÃO PC -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    🖥️
+                </div>
+
+                <h2>
+                    Formatação de PC
+                </h2>
+
+                <p>
+
+                    Formatação e reinstalação do sistema
+                    operacional para computadores desktop,
+                    com organização e configuração inicial
+                    do equipamento.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- NOTEBOOK -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    💻
+                </div>
+
+                <h2>
+                    Formatação de Notebook
+                </h2>
+
+                <p>
+
+                    Formatação de notebooks com
+                    reinstalação e configuração do sistema,
+                    preparando o equipamento para voltar
+                    ao uso.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- RECEPTORES -->
+
+
+            <article class="servico destaque">
+
+                <div class="servico-icone">
+                    🔄
+                </div>
+
+                <h2>
+                    Atualização de Receptores
+                </h2>
+
+                <p>
+
+                    Serviço de atualização e configuração
+                    de receptores compatíveis, verificando
+                    as configurações necessárias para o
+                    funcionamento do equipamento.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- ANTENA -->
+
+
+            <article class="servico destaque">
+
+                <div class="servico-icone">
+                    📡
+                </div>
+
+                <h2>
+                    Apontamento de Antena
+                </h2>
+
+                <p>
+
+                    Ajuste e direcionamento de antenas,
+                    buscando o melhor posicionamento
+                    possível para recepção adequada
+                    do sinal disponível.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- REDE -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    🌐
+                </div>
+
+                <h2>
+                    Distribuição de Rede
+                </h2>
+
+                <p>
+
+                    Organização e distribuição da conexão
+                    de internet entre diferentes ambientes,
+                    equipamentos e pontos de utilização.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- ROTEADOR -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    📶
+                </div>
+
+                <h2>
+                    Configuração de Roteador
+                </h2>
+
+                <p>
+
+                    Configuração de roteadores,
+                    nome da rede Wi-Fi, senha,
+                    parâmetros básicos de conexão
+                    e organização da rede local.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- REPETIDOR -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    📡
+                </div>
+
+                <h2>
+                    Configuração de Repetidor Wi-Fi
+                </h2>
+
+                <p>
+
+                    Instalação e configuração de
+                    repetidores para ampliar a cobertura
+                    da rede Wi-Fi em ambientes com
+                    sinal reduzido.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- SUPORTE -->
+
+
+            <article class="servico">
+
+                <div class="servico-icone">
+                    🔧
+                </div>
+
+                <h2>
+                    Configuração de Equipamentos
+                </h2>
+
+                <p>
+
+                    Suporte para configurações básicas
+                    de equipamentos de tecnologia,
+                    conectividade e dispositivos
+                    compatíveis.
+
+                </p>
+
+            </article>
+
+
+
+            <!-- SOLUÇÕES -->
+
+
+            <article class="servico destaque">
+
+                <div class="servico-icone">
+                    ⚡
+                </div>
+
+                <h2>
+                    Soluções MDS_TI
+                </h2>
+
+                <p>
+
+                    Precisa de ajuda com algum equipamento
+                    ou configuração que não encontrou
+                    nesta lista?
+
+                    Consulte a MDS_TI para verificar
+                    a disponibilidade do serviço.
+
+                </p>
+
+            </article>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CHAMADA FINAL
+    ====================================================== -->
+
+
+    <section class="chamada">
+
+
+        <h2>
+
+            Precisa de uma
+
+            <span>
+                solução?
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            Conheça as opções disponíveis na MDS_TI
+            e acesse rapidamente as áreas de teste,
+            pagamento e serviços.
+
+        </p>
+
+
+        <div class="botoes">
+
+
+            <a
+                class="botao"
+                href="/teste"
+            >
+                🧪 FAÇA SEU TESTE
+            </a>
+
+
+            <a
+                class="botao dourado"
+                href="https://pagamento-pix-ti.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                💳 PAGAMENTO PIX
+            </a>
+
+
+            <a
+                class="botao"
+                href="/"
+            >
+                🏠 VOLTAR AO INÍCIO
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
+
+
+    <footer>
+
+        MDS_TI • TECNOLOGIA • CONECTIVIDADE • SOLUÇÕES
+
+    </footer>
+
+
+</body>
+
+</html>
