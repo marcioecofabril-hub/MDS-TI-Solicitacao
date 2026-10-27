@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -22,28 +21,20 @@
 
     <title>Serviços | MDS_TI</title>
 
-
     <style>
 
         :root {
-
             --fundo: #020816;
-
             --azul-profundo: #03142d;
-
             --azul-card: #052b55;
-
             --azul: #0875c1;
-
             --azul-neon: #16b8ff;
-
             --dourado: #ffc928;
-
             --dourado-claro: #ffe888;
-
             --branco: #ffffff;
-
             --texto-secundario: #bbcce0;
+            --verde-whatsapp: #25D366;
+            --verde-whatsapp-escuro: #128C4A;
 
             --borda:
                 rgba(
@@ -56,23 +47,18 @@
 
 
         * {
-
             box-sizing: border-box;
-
             margin: 0;
-
             padding: 0;
         }
 
 
         html {
-
             scroll-behavior: smooth;
         }
 
 
         body {
-
             min-height: 100vh;
 
             font-family:
@@ -88,13 +74,11 @@
                     rgba(0, 132, 255, 0.25),
                     transparent 37%
                 ),
-
                 radial-gradient(
                     circle at 90% 60%,
                     rgba(0, 91, 181, 0.12),
                     transparent 40%
                 ),
-
                 linear-gradient(
                     180deg,
                     #031126,
@@ -106,9 +90,7 @@
 
 
         a {
-
             color: inherit;
-
             text-decoration: none;
         }
 
@@ -119,9 +101,7 @@
         =====================================================
         */
 
-
         .barra {
-
             position: sticky;
 
             z-index: 1000;
@@ -148,14 +128,11 @@
                     2,
                     13,
                     32,
-                    0.91
+                    0.92
                 );
 
-            backdrop-filter:
-                blur(18px);
-
-            -webkit-backdrop-filter:
-                blur(18px);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
 
             box-shadow:
                 0 8px 30px
@@ -169,9 +146,7 @@
 
 
         .barra-conteudo {
-
             width: 100%;
-
             max-width: 1180px;
 
             margin:
@@ -179,9 +154,7 @@
                 auto;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             gap: 20px;
@@ -190,15 +163,12 @@
 
         /*
         =====================================================
-        LOGO
+        LOGO MDS_TI
         =====================================================
         */
 
-
         .logo {
-
             display: flex;
-
             align-items: center;
 
             gap: 12px;
@@ -206,17 +176,13 @@
 
 
         .logo-icone {
-
             position: relative;
 
             width: 48px;
-
             height: 48px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             border-radius: 14px;
@@ -231,7 +197,6 @@
             color: #04162f;
 
             font-size: 24px;
-
             font-weight: 900;
 
             box-shadow:
@@ -246,17 +211,14 @@
 
 
         .logo-icone::after {
-
             content: "";
 
             position: absolute;
 
             right: -2px;
-
             bottom: -2px;
 
             width: 9px;
-
             height: 9px;
 
             border:
@@ -265,17 +227,20 @@
 
             border-radius: 50%;
 
-            background:
-                #3eff95;
+            background: #3eff95;
+        }
+
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
         }
 
 
         .logo-texto {
-
             color: #ffffff;
 
             font-size: 26px;
-
             font-weight: 900;
 
             letter-spacing: 0.7px;
@@ -283,9 +248,21 @@
 
 
         .logo-texto span {
+            color: var(--dourado);
+        }
 
-            color:
-                var(--dourado);
+
+        .logo-subtitulo {
+            margin-top: 3px;
+
+            color: #819bb7;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
         }
 
 
@@ -295,11 +272,8 @@
         =====================================================
         */
 
-
         .menu {
-
             display: flex;
-
             align-items: center;
 
             gap: 9px;
@@ -307,14 +281,13 @@
 
 
         .menu-link {
-
             min-height: 44px;
 
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
+
+            gap: 7px;
 
             padding:
                 0
@@ -342,24 +315,23 @@
             color: #ffffff;
 
             font-size: 12px;
-
             font-weight: 800;
 
             transition:
-                0.2s ease;
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
 
         .menu-link:hover {
-
-            transform:
-                translateY(-2px);
+            transform: translateY(-2px);
 
             border-color:
                 var(--azul-neon);
 
-            background:
-                #075da5;
+            background: #075da5;
 
             box-shadow:
                 0 8px 20px
@@ -372,20 +344,59 @@
         }
 
 
-        .menu-link.pagamento {
+        /*
+        =====================================================
+        WHATSAPP NO MENU
+        =====================================================
+        */
 
+        .menu-link.whatsapp {
             border-color:
-                #eebb24;
+                rgba(
+                    70,
+                    255,
+                    146,
+                    0.55
+                );
 
             background:
                 linear-gradient(
                     135deg,
-                    #ffd43e,
-                    #e59a00
+                    var(--verde-whatsapp),
+                    var(--verde-whatsapp-escuro)
                 );
 
-            color:
-                #05172d;
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px
+                rgba(
+                    37,
+                    211,
+                    102,
+                    0.18
+                );
+        }
+
+
+        .menu-link.whatsapp:hover {
+            border-color: #8cffb6;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2ee66f,
+                    #139c50
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(
+                    37,
+                    211,
+                    102,
+                    0.28
+                );
         }
 
 
@@ -395,11 +406,8 @@
         =====================================================
         */
 
-
         .hero {
-
             width: 100%;
-
             max-width: 1050px;
 
             margin:
@@ -416,9 +424,7 @@
 
 
         .selo {
-
             display: inline-flex;
-
             align-items: center;
 
             gap: 8px;
@@ -448,11 +454,9 @@
                     0.08
                 );
 
-            color:
-                var(--dourado-claro);
+            color: var(--dourado-claro);
 
             font-size: 11px;
-
             font-weight: 800;
 
             letter-spacing: 1.5px;
@@ -462,7 +466,6 @@
 
 
         .hero h1 {
-
             max-width: 850px;
 
             margin:
@@ -480,20 +483,16 @@
 
             line-height: 1.03;
 
-            letter-spacing:
-                -1.7px;
+            letter-spacing: -1.7px;
         }
 
 
         .hero h1 span {
-
-            color:
-                var(--dourado);
+            color: var(--dourado);
         }
 
 
         .hero p {
-
             max-width: 700px;
 
             margin:
@@ -501,8 +500,7 @@
                 auto
                 0;
 
-            color:
-                var(--texto-secundario);
+            color: var(--texto-secundario);
 
             font-size: 17px;
 
@@ -510,17 +508,8 @@
         }
 
 
-        /*
-        =====================================================
-        LINHA DECORATIVA
-        =====================================================
-        */
-
-
         .linha {
-
             width: 100px;
-
             height: 4px;
 
             margin:
@@ -554,11 +543,8 @@
         =====================================================
         */
 
-
         .servicos {
-
             width: 100%;
-
             max-width: 1180px;
 
             margin:
@@ -573,7 +559,6 @@
 
 
         .grade {
-
             display: grid;
 
             grid-template-columns:
@@ -590,7 +575,6 @@
 
 
         .servico {
-
             position: relative;
 
             min-height: 260px;
@@ -634,27 +618,21 @@
                 );
 
             transition:
-                transform
-                0.25s ease,
-                border-color
-                0.25s ease,
-                box-shadow
-                0.25s ease;
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
         }
 
 
         .servico::before {
-
             content: "";
 
             position: absolute;
 
             top: 0;
-
             left: 0;
 
             width: 100%;
-
             height: 3px;
 
             background:
@@ -667,9 +645,7 @@
 
 
         .servico:hover {
-
-            transform:
-                translateY(-5px);
+            transform: translateY(-5px);
 
             border-color:
                 rgba(
@@ -692,21 +668,16 @@
 
         /*
         =====================================================
-        ÍCONES DOS SERVIÇOS
+        ÍCONES
         =====================================================
         */
 
-
         .servico-icone {
-
             width: 59px;
-
             height: 59px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             margin-bottom: 22px;
@@ -753,7 +724,6 @@
 
 
         .servico h2 {
-
             margin-bottom: 12px;
 
             color: #ffffff;
@@ -765,9 +735,7 @@
 
 
         .servico p {
-
-            color:
-                var(--texto-secundario);
+            color: var(--texto-secundario);
 
             font-size: 14px;
 
@@ -777,13 +745,11 @@
 
         /*
         =====================================================
-        DESTAQUE
+        CARDS EM DESTAQUE
         =====================================================
         */
 
-
         .destaque {
-
             border-color:
                 rgba(
                     255,
@@ -795,7 +761,6 @@
 
 
         .destaque::before {
-
             background:
                 linear-gradient(
                     90deg,
@@ -805,9 +770,7 @@
         }
 
 
-        .destaque
-        .servico-icone {
-
+        .destaque .servico-icone {
             border-color:
                 rgba(
                     255,
@@ -828,13 +791,11 @@
 
         /*
         =====================================================
-        ÁREA FINAL
+        CHAMADA DE CONTATO
         =====================================================
         */
 
-
         .chamada {
-
             width: calc(
                 100% - 44px
             );
@@ -848,8 +809,7 @@
 
             overflow: hidden;
 
-            padding:
-                38px;
+            padding: 42px;
 
             border:
                 1px solid
@@ -892,32 +852,71 @@
         }
 
 
-        .chamada h2 {
+        .contato-icone {
+            width: 64px;
+            height: 64px;
 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin:
+                0
+                auto
+                18px;
+
+            border:
+                1px solid
+                rgba(
+                    118,
+                    255,
+                    168,
+                    0.55
+                );
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #25D366,
+                    #128C4A
+                );
+
+            font-size: 30px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    37,
+                    211,
+                    102,
+                    0.25
+                );
+        }
+
+
+        .chamada h2 {
             color: #ffffff;
 
-            font-size: 28px;
+            font-size: 30px;
         }
 
 
         .chamada h2 span {
-
-            color:
-                var(--dourado);
+            color: var(--dourado);
         }
 
 
         .chamada p {
-
             max-width: 670px;
 
             margin:
                 13px
                 auto
-                25px;
+                0;
 
-            color:
-                var(--texto-secundario);
+            color: var(--texto-secundario);
 
             font-size: 14px;
 
@@ -925,8 +924,21 @@
         }
 
 
-        .botoes {
+        .telefone {
+            display: block;
 
+            margin-top: 18px;
+
+            color: #ffffff;
+
+            font-size: 25px;
+            font-weight: 900;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .botoes {
             display: flex;
 
             justify-content: center;
@@ -934,24 +946,23 @@
             flex-wrap: wrap;
 
             gap: 10px;
+
+            margin-top: 26px;
         }
 
 
         .botao {
-
-            min-height: 49px;
+            min-height: 51px;
 
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
 
-            gap: 7px;
+            gap: 8px;
 
             padding:
                 0
-                20px;
+                22px;
 
             border-radius: 11px;
 
@@ -978,14 +989,13 @@
             font-weight: 800;
 
             transition:
-                0.2s ease;
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
 
         .botao:hover {
-
-            transform:
-                translateY(-2px);
+            transform: translateY(-2px);
 
             box-shadow:
                 0 10px 23px
@@ -998,20 +1008,44 @@
         }
 
 
-        .botao.dourado {
-
+        .botao.whatsapp {
             border-color:
-                #ffe174;
+                rgba(
+                    104,
+                    255,
+                    161,
+                    0.75
+                );
 
             background:
                 linear-gradient(
                     135deg,
-                    #ffd63e,
-                    #e99b00
+                    #25D366,
+                    #128C4A
                 );
 
-            color:
-                #06172e;
+            color: #ffffff;
+
+            box-shadow:
+                0 10px 25px
+                rgba(
+                    37,
+                    211,
+                    102,
+                    0.18
+                );
+        }
+
+
+        .botao.whatsapp:hover {
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    37,
+                    211,
+                    102,
+                    0.32
+                );
         }
 
 
@@ -1021,11 +1055,9 @@
         =====================================================
         */
 
-
         footer {
-
             padding:
-                24px
+                25px
                 20px;
 
             border-top:
@@ -1037,8 +1069,7 @@
                     0.14
                 );
 
-            color:
-                #7f98b3;
+            color: #7f98b3;
 
             text-align: center;
 
@@ -1048,19 +1079,26 @@
         }
 
 
+        .rodape-contato {
+            margin-top: 8px;
+
+            color: #a5bad1;
+
+            font-size: 12px;
+
+            letter-spacing: 0;
+        }
+
+
         /*
         =====================================================
         TABLET
         =====================================================
         */
 
-
-        @media (
-            max-width: 900px
-        ) {
+        @media (max-width: 900px) {
 
             .grade {
-
                 grid-template-columns:
                     repeat(
                         2,
@@ -1079,13 +1117,9 @@
         =====================================================
         */
 
-
-        @media (
-            max-width: 650px
-        ) {
+        @media (max-width: 650px) {
 
             .barra {
-
                 padding:
                     12px
                     10px;
@@ -1093,18 +1127,14 @@
 
 
             .barra-conteudo {
-
-                flex-direction:
-                    column;
+                flex-direction: column;
 
                 gap: 10px;
             }
 
 
             .logo-icone {
-
                 width: 39px;
-
                 height: 39px;
 
                 font-size: 19px;
@@ -1112,62 +1142,67 @@
 
 
             .logo-texto {
-
                 font-size: 22px;
             }
 
 
-            .menu {
+            .logo-subtitulo {
+                text-align: center;
 
+                font-size: 7.5px;
+            }
+
+
+            /*
+            No celular existem somente dois botões:
+            Início e WhatsApp.
+            */
+
+            .menu {
                 width: 100%;
 
                 display: grid;
 
                 grid-template-columns:
                     repeat(
-                        3,
+                        2,
                         1fr
                     );
 
-                gap: 6px;
+                gap: 7px;
             }
 
 
             .menu-link {
-
-                min-height: 41px;
+                min-height: 43px;
 
                 padding:
                     0
-                    6px;
+                    8px;
 
-                font-size: 9px;
+                font-size: 10px;
             }
 
 
             .hero {
-
                 padding:
-                    58px
+                    55px
                     18px
                     42px;
             }
 
 
             .hero h1 {
-
                 font-size: 38px;
             }
 
 
             .hero p {
-
                 font-size: 15px;
             }
 
 
             .servicos {
-
                 padding:
                     8px
                     13px
@@ -1176,16 +1211,13 @@
 
 
             .grade {
-
-                grid-template-columns:
-                    1fr;
+                grid-template-columns: 1fr;
 
                 gap: 12px;
             }
 
 
             .servico {
-
                 min-height: auto;
 
                 padding:
@@ -1195,36 +1227,35 @@
 
 
             .chamada {
-
                 width:
                     calc(
                         100% - 26px
                     );
 
-                margin-bottom:
-                    40px;
+                margin-bottom: 40px;
 
                 padding:
-                    29px
+                    30px
                     19px;
             }
 
 
             .chamada h2 {
+                font-size: 25px;
+            }
 
-                font-size: 24px;
+
+            .telefone {
+                font-size: 22px;
             }
 
 
             .botoes {
-
-                flex-direction:
-                    column;
+                flex-direction: column;
             }
 
 
             .botao {
-
                 width: 100%;
             }
         }
@@ -1241,11 +1272,12 @@
          CABEÇALHO
     ====================================================== -->
 
-
     <header class="barra">
 
         <div class="barra-conteudo">
 
+
+            <!-- LOGO -->
 
             <a
                 class="logo"
@@ -1256,41 +1288,38 @@
                     M
                 </span>
 
-                <span class="logo-texto">
-                    MDS<span>_TI</span>
+                <span class="logo-container">
+
+                    <span class="logo-texto">
+                        MDS<span>_TI</span>
+                    </span>
+
+                    <span class="logo-subtitulo">
+                        Tecnologia • Conectividade • Soluções
+                    </span>
+
                 </span>
 
             </a>
 
 
-            <nav class="menu">
+            <!-- SOMENTE INÍCIO + CONTATO -->
 
+            <nav class="menu">
 
                 <a
                     class="menu-link"
                     href="/"
                 >
-                    🏠 INÍCIO
+                    🏠 VOLTAR AO INÍCIO
                 </a>
 
 
                 <a
-                    class="menu-link"
-                    href="/teste"
-                >
-                    🧪 TESTE
+                    class="menu-link whatsapp"
+                    href="/">
+                    💬 CONTATO WHATSAPP
                 </a>
-
-
-                <a
-                    class="menu-link pagamento"
-                    href="https://pagamento-pix-ti.onrender.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💳 PAGAMENTO
-                </a>
-
 
             </nav>
 
@@ -1304,12 +1333,10 @@
          APRESENTAÇÃO
     ====================================================== -->
 
-
     <section class="hero">
 
-
         <div class="selo">
-            ⚡ Soluções MDS_TI
+            ⚡ SOLUÇÕES MDS_TI
         </div>
 
 
@@ -1338,7 +1365,6 @@
 
         <div class="linha"></div>
 
-
     </section>
 
 
@@ -1347,15 +1373,12 @@
          SERVIÇOS
     ====================================================== -->
 
-
     <section class="servicos">
-
 
         <div class="grade">
 
 
             <!-- FORMATAÇÃO PC -->
-
 
             <article class="servico">
 
@@ -1368,12 +1391,10 @@
                 </h2>
 
                 <p>
-
                     Formatação e reinstalação do sistema
                     operacional para computadores desktop,
                     com organização e configuração inicial
                     do equipamento.
-
                 </p>
 
             </article>
@@ -1381,7 +1402,6 @@
 
 
             <!-- NOTEBOOK -->
-
 
             <article class="servico">
 
@@ -1394,12 +1414,10 @@
                 </h2>
 
                 <p>
-
                     Formatação de notebooks com
                     reinstalação e configuração do sistema,
                     preparando o equipamento para voltar
                     ao uso.
-
                 </p>
 
             </article>
@@ -1407,7 +1425,6 @@
 
 
             <!-- RECEPTORES -->
-
 
             <article class="servico destaque">
 
@@ -1420,12 +1437,10 @@
                 </h2>
 
                 <p>
-
                     Serviço de atualização e configuração
                     de receptores compatíveis, verificando
                     as configurações necessárias para o
                     funcionamento do equipamento.
-
                 </p>
 
             </article>
@@ -1433,7 +1448,6 @@
 
 
             <!-- ANTENA -->
-
 
             <article class="servico destaque">
 
@@ -1446,20 +1460,17 @@
                 </h2>
 
                 <p>
-
                     Ajuste e direcionamento de antenas,
                     buscando o melhor posicionamento
                     possível para recepção adequada
                     do sinal disponível.
-
                 </p>
 
             </article>
 
 
 
-            <!-- REDE -->
-
+            <!-- DISTRIBUIÇÃO DE REDE -->
 
             <article class="servico">
 
@@ -1468,15 +1479,13 @@
                 </div>
 
                 <h2>
-                    Distribuição de Rede
+                    Distribuição de Rede de Internet
                 </h2>
 
                 <p>
-
                     Organização e distribuição da conexão
                     de internet entre diferentes ambientes,
                     equipamentos e pontos de utilização.
-
                 </p>
 
             </article>
@@ -1484,7 +1493,6 @@
 
 
             <!-- ROTEADOR -->
-
 
             <article class="servico">
 
@@ -1497,12 +1505,10 @@
                 </h2>
 
                 <p>
-
                     Configuração de roteadores,
-                    nome da rede Wi-Fi, senha,
+                    identificação da rede Wi-Fi, senha,
                     parâmetros básicos de conexão
                     e organização da rede local.
-
                 </p>
 
             </article>
@@ -1510,7 +1516,6 @@
 
 
             <!-- REPETIDOR -->
-
 
             <article class="servico">
 
@@ -1523,20 +1528,17 @@
                 </h2>
 
                 <p>
-
                     Instalação e configuração de
                     repetidores para ampliar a cobertura
                     da rede Wi-Fi em ambientes com
                     sinal reduzido.
-
                 </p>
 
             </article>
 
 
 
-            <!-- SUPORTE -->
-
+            <!-- EQUIPAMENTOS -->
 
             <article class="servico">
 
@@ -1549,12 +1551,10 @@
                 </h2>
 
                 <p>
-
                     Suporte para configurações básicas
                     de equipamentos de tecnologia,
                     conectividade e dispositivos
                     compatíveis.
-
                 </p>
 
             </article>
@@ -1562,7 +1562,6 @@
 
 
             <!-- SOLUÇÕES -->
-
 
             <article class="servico destaque">
 
@@ -1575,14 +1574,12 @@
                 </h2>
 
                 <p>
-
                     Precisa de ajuda com algum equipamento
                     ou configuração que não encontrou
                     nesta lista?
 
-                    Consulte a MDS_TI para verificar
-                    a disponibilidade do serviço.
-
+                    Entre em contato com a MDS_TI para
+                    consultar a disponibilidade do serviço.
                 </p>
 
             </article>
@@ -1590,17 +1587,20 @@
 
         </div>
 
-
     </section>
 
 
 
     <!-- =====================================================
-         CHAMADA FINAL
+         CONTATO
     ====================================================== -->
 
-
     <section class="chamada">
+
+
+        <div class="contato-icone">
+            💬
+        </div>
 
 
         <h2>
@@ -1616,31 +1616,25 @@
 
         <p>
 
-            Conheça as opções disponíveis na MDS_TI
-            e acesse rapidamente as áreas de teste,
-            pagamento e serviços.
+            Fale diretamente com a MDS_TI pelo WhatsApp
+            para solicitar informações sobre os serviços,
+            tirar dúvidas e consultar disponibilidade.
 
         </p>
+
+
+        <span class="telefone">
+            (11) 97793-7889
+        </span>
 
 
         <div class="botoes">
 
 
             <a
-                class="botao"
-                href="/teste"
-            >
-                🧪 FAÇA SEU TESTE
-            </a>
-
-
-            <a
-                class="botao dourado"
-                href="https://pagamento-pix-ti.onrender.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                💳 PAGAMENTO PIX
+                class="botao whatsapp"
+                href="/">
+                💬 FALAR COM A MDS_TI
             </a>
 
 
@@ -1663,10 +1657,15 @@
          RODAPÉ
     ====================================================== -->
 
-
     <footer>
 
-        MDS_TI • TECNOLOGIA • CONECTIVIDADE • SOLUÇÕES
+        <div>
+            MDS_TI • TECNOLOGIA • CONECTIVIDADE • SOLUÇÕES
+        </div>
+
+        <div class="rodape-contato">
+            WhatsApp: (11) 97793-7889
+        </div>
 
     </footer>
 
