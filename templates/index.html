@@ -25,14 +25,18 @@
             --texto-secundario: #667487;
             --borda: #d7e0e9;
             --fundo-campo: #f8fafc;
+
             --verde: #167447;
             --verde-fundo: #edf9f2;
             --verde-borda: #a7dfbf;
+
             --vermelho: #a52a2a;
             --vermelho-fundo: #fff2f2;
             --vermelho-borda: #efb1b1;
+
             --branco: #ffffff;
         }
+
 
         * {
             box-sizing: border-box;
@@ -40,19 +44,22 @@
             padding: 0;
         }
 
+
         html {
             -webkit-text-size-adjust: 100%;
         }
 
+
         body {
             min-height: 100vh;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 32px 18px;
 
             font-family:
-                Inter,
                 Arial,
                 Helvetica,
                 sans-serif;
@@ -78,20 +85,25 @@
                 );
         }
 
+
         .pagina {
             width: 100%;
             max-width: 580px;
         }
 
+
         .card {
             overflow: hidden;
+
             background: var(--branco);
+
             border-radius: 24px;
 
             box-shadow:
                 0 30px 70px
                 rgba(0, 0, 0, 0.30);
         }
+
 
         .linha-superior {
             height: 5px;
@@ -105,13 +117,16 @@
                 );
         }
 
+
         .conteudo {
             padding: 38px 40px 34px;
         }
 
+
         .cabecalho {
             margin-bottom: 28px;
         }
+
 
         .marca {
             display: inline-flex;
@@ -137,9 +152,11 @@
             letter-spacing: 1.4px;
         }
 
+
         .marca-icone {
             width: 8px;
             height: 8px;
+
             border-radius: 50%;
 
             background: #70e1ff;
@@ -148,6 +165,7 @@
                 0 0 0 4px
                 rgba(112, 225, 255, 0.18);
         }
+
 
         h1 {
             margin-bottom: 11px;
@@ -159,14 +177,18 @@
             letter-spacing: -0.7px;
         }
 
+
         .descricao {
             color: var(--texto-secundario);
+
             font-size: 15.5px;
             line-height: 1.65;
         }
 
+
         .separador {
             height: 1px;
+
             margin-bottom: 27px;
 
             background:
@@ -177,12 +199,15 @@
                 );
         }
 
+
         .campo {
             margin-bottom: 20px;
         }
 
+
         label {
             display: block;
+
             margin-bottom: 8px;
 
             color: #263b53;
@@ -191,13 +216,16 @@
             font-weight: 700;
         }
 
+
         .obrigatorio {
             color: var(--azul);
         }
 
+
         input {
             width: 100%;
             height: 54px;
+
             padding: 0 16px;
 
             border: 1px solid var(--borda);
@@ -211,17 +239,33 @@
             font-family: inherit;
             font-size: 16px;
 
-            transition: 0.2s;
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
         }
+
+
+        input::placeholder {
+            color: #99a5b5;
+        }
+
+
+        input:hover {
+            border-color: #b8c6d4;
+        }
+
 
         input:focus {
             border-color: var(--azul);
+
             background: #ffffff;
 
             box-shadow:
                 0 0 0 4px
                 rgba(8, 117, 193, 0.10);
         }
+
 
         button {
             width: 100%;
@@ -248,14 +292,20 @@
 
             font-family: inherit;
             font-size: 16px;
-            font-weight: 750;
+            font-weight: 700;
 
             cursor: pointer;
 
             box-shadow:
                 0 9px 22px
                 rgba(8, 117, 193, 0.22);
+
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s,
+                background 0.15s;
         }
+
 
         button:hover {
             background:
@@ -264,13 +314,26 @@
                     #076cb2,
                     #055b98
                 );
+
+            box-shadow:
+                0 11px 25px
+                rgba(8, 117, 193, 0.28);
         }
+
+
+        button:active {
+            transform: translateY(1px);
+        }
+
 
         button:disabled {
             cursor: not-allowed;
+
             background: #9bacbd;
+
             box-shadow: none;
         }
+
 
         .spinner {
             display: none;
@@ -283,14 +346,19 @@
                 rgba(255, 255, 255, 0.35);
 
             border-top-color: #ffffff;
+
             border-radius: 50%;
 
-            animation: girar 0.75s linear infinite;
+            animation:
+                girar 0.75s
+                linear infinite;
         }
+
 
         button.carregando .spinner {
             display: block;
         }
+
 
         @keyframes girar {
             to {
@@ -298,10 +366,12 @@
             }
         }
 
+
         .mensagem {
             display: none;
 
             margin-top: 22px;
+
             padding: 17px 18px;
 
             border-radius: 12px;
@@ -311,8 +381,10 @@
             line-height: 1.5;
         }
 
+
         .mensagem.sucesso {
             display: flex;
+            align-items: flex-start;
             gap: 11px;
 
             border: 1px solid var(--verde-borda);
@@ -321,8 +393,10 @@
             color: var(--verde);
         }
 
+
         .mensagem.erro {
             display: flex;
+            align-items: flex-start;
             gap: 11px;
 
             border: 1px solid var(--vermelho-borda);
@@ -331,14 +405,34 @@
             color: var(--vermelho);
         }
 
+
         .resultado-teste {
             display: none;
+
             margin-top: 22px;
         }
 
+
         .resultado-teste.ativo {
             display: block;
+
+            animation:
+                aparecer 0.35s ease;
         }
+
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
 
         .resultado-card {
             overflow: hidden;
@@ -349,6 +443,7 @@
             background: #f8fbfe;
         }
 
+
         .resultado-cabecalho {
             display: flex;
             align-items: center;
@@ -357,11 +452,21 @@
             padding: 18px 20px;
 
             border-bottom: 1px solid #dce7ef;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef8fd,
+                    #f8fcff
+                );
         }
+
 
         .sucesso-icone {
             width: 38px;
             height: 38px;
+
+            flex-shrink: 0;
 
             display: flex;
             align-items: center;
@@ -376,18 +481,23 @@
             font-weight: 900;
         }
 
+
         .resultado-titulo {
             color: #12304d;
+
             font-size: 17px;
-            font-weight: 750;
+            font-weight: 700;
         }
+
 
         .resultado-subtitulo {
             margin-top: 3px;
 
             color: #718093;
+
             font-size: 12.5px;
         }
+
 
         .resultado-conteudo {
             padding: 20px;
@@ -398,7 +508,10 @@
             line-height: 1.65;
 
             white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
+
 
         .rodape {
             margin-top: 27px;
@@ -409,28 +522,100 @@
             text-align: center;
         }
 
+
         .aviso {
             color: #8190a2;
+
             font-size: 12px;
             line-height: 1.6;
         }
 
+
+        .seguranca {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            margin-top: 9px;
+
+            color: #98a5b3;
+
+            font-size: 11px;
+        }
+
+
+        .seguranca-ponto {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #40a96b;
+        }
+
+
         @media (max-width: 600px) {
+
             body {
                 display: block;
+
                 padding: 18px 14px;
             }
+
 
             .card {
                 border-radius: 21px;
             }
 
+
             .conteudo {
-                padding: 29px 22px 25px;
+                padding:
+                    29px
+                    22px
+                    25px;
             }
+
 
             h1 {
                 font-size: 28px;
+            }
+
+
+            .descricao {
+                font-size: 15px;
+            }
+
+
+            input {
+                height: 55px;
+            }
+
+
+            button {
+                height: 57px;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+
+            body {
+                padding:
+                    12px
+                    10px;
+            }
+
+
+            .conteudo {
+                padding:
+                    25px
+                    18px
+                    22px;
+            }
+
+
+            h1 {
+                font-size: 25px;
             }
         }
     </style>
@@ -453,7 +638,9 @@
                         MDS_TI
                     </div>
 
-                    <h1>Solicitação de teste</h1>
+                    <h1>
+                        Solicitação de teste
+                    </h1>
 
                     <p class="descricao">
                         Preencha seus dados para solicitar acesso ao teste.
@@ -564,6 +751,7 @@
                             </div>
 
                             <div>
+
                                 <div class="resultado-titulo">
                                     Solicitação concluída
                                 </div>
@@ -571,6 +759,7 @@
                                 <div class="resultado-subtitulo">
                                     MDS_TI
                                 </div>
+
                             </div>
 
                         </div>
@@ -588,8 +777,14 @@
 
                     <p class="aviso">
                         Os dados informados serão utilizados
-                        exclusivamente para o atendimento desta solicitação.
+                        exclusivamente para o atendimento
+                        desta solicitação.
                     </p>
+
+                    <div class="seguranca">
+                        <span class="seguranca-ponto"></span>
+                        Formulário seguro MDS_TI
+                    </div>
 
                 </footer>
 
@@ -600,9 +795,6 @@
     </main>
 
     <script>
-        const WEB3FORMS_ACCESS_KEY =
-            {{ web3forms_access_key | default("", true) | tojson }};
-
         const formulario =
             document.getElementById("formulario");
 
@@ -648,7 +840,10 @@
                     );
 
                 if (numeros.length <= 2) {
-                    evento.target.value = numeros;
+
+                    evento.target.value =
+                        numeros;
+
                     return;
                 }
 
@@ -675,6 +870,7 @@
 
 
         function limparCelular(valor) {
+
             return valor.replace(
                 /\D/g,
                 ""
@@ -683,9 +879,19 @@
 
 
         function emailValido(email) {
+
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
                 email
             );
+        }
+
+
+        function limparMensagem() {
+
+            mensagem.innerHTML = "";
+
+            mensagem.className =
+                "mensagem";
         }
 
 
@@ -723,15 +929,6 @@
         }
 
 
-        function limparMensagem() {
-
-            mensagem.innerHTML = "";
-
-            mensagem.className =
-                "mensagem";
-        }
-
-
         function definirCarregando(
             carregando
         ) {
@@ -746,7 +943,7 @@
                 );
 
                 textoBotao.textContent =
-                    "Verificando e enviando...";
+                    "Gerando seu teste...";
 
             } else {
 
@@ -760,7 +957,7 @@
         }
 
 
-        async function lerRespostaJSON(
+        async function obterRespostaJSON(
             resposta
         ) {
 
@@ -776,49 +973,12 @@
             } catch (erro) {
 
                 console.error(
-                    "Resposta inválida:",
+                    "Resposta inválida do servidor:",
                     texto
                 );
 
                 throw new Error(
                     "O servidor retornou uma resposta inválida."
-                );
-            }
-        }
-
-
-        async function cancelarReserva(
-            token
-        ) {
-
-            if (!token) {
-                return;
-            }
-
-            try {
-
-                await fetch(
-                    "/cancelar-reserva",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                token: token
-                            })
-                    }
-                );
-
-            } catch (erro) {
-
-                console.error(
-                    "Não foi possível cancelar a reserva:",
-                    erro
                 );
             }
         }
@@ -891,33 +1051,15 @@
                     return;
                 }
 
-                if (!WEB3FORMS_ACCESS_KEY) {
-
-                    mostrarMensagem(
-                        "O serviço de envio não está configurado.",
-                        "erro"
-                    );
-
-                    return;
-                }
-
                 definirCarregando(
                     true
                 );
 
-                let tokenReserva = "";
-
                 try {
 
-                    /*
-                    ===========================================
-                    1. VERIFICA DUPLICIDADE NO clientes.json
-                    ===========================================
-                    */
-
-                    const respostaVerificacao =
+                    const resposta =
                         await fetch(
-                            "/verificar-cliente",
+                            "/solicitar-teste",
                             {
                                 method: "POST",
 
@@ -938,159 +1080,21 @@
                             }
                         );
 
-                    const resultadoVerificacao =
-                        await lerRespostaJSON(
-                            respostaVerificacao
+                    const resultado =
+                        await obterRespostaJSON(
+                            resposta
                         );
 
                     if (
-                        !respostaVerificacao.ok ||
-                        !resultadoVerificacao.success
+                        !resposta.ok ||
+                        !resultado.success
                     ) {
 
                         throw new Error(
-                            resultadoVerificacao.message ||
-                            "Não foi possível verificar o cadastro."
+                            resultado.message ||
+                            "Não foi possível processar a solicitação."
                         );
                     }
-
-                    tokenReserva =
-                        resultadoVerificacao.token;
-
-
-                    /*
-                    ===========================================
-                    2. ENVIA DIRETAMENTE AO WEB3FORMS
-                    ===========================================
-                    */
-
-                    const dataSolicitacao =
-                        new Date().toLocaleString(
-                            "pt-BR"
-                        );
-
-                    const conteudoEmail = `
-NOVA SOLICITAÇÃO DE TESTE MDS_TI
-
-=====================================
-DADOS DO CLIENTE
-=====================================
-
-Nome: ${nome}
-
-E-mail: ${email}
-
-WhatsApp: ${celular}
-
-Data da solicitação:
-${dataSolicitacao}
-
-=====================================
-
-Solicitação recebida através da página MDS_TI.
-`;
-
-                    const respostaEmail =
-                        await fetch(
-                            "https://api.web3forms.com/submit",
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Accept":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify({
-                                        access_key:
-                                            WEB3FORMS_ACCESS_KEY,
-
-                                        subject:
-                                            "Nova solicitação de teste | " +
-                                            nome,
-
-                                        from_name:
-                                            "MDS_TI - Solicitação",
-
-                                        name:
-                                            nome,
-
-                                        email:
-                                            email,
-
-                                        whatsapp:
-                                            celular,
-
-                                        message:
-                                            conteudoEmail
-                                    })
-                            }
-                        );
-
-                    const resultadoEmail =
-                        await lerRespostaJSON(
-                            respostaEmail
-                        );
-
-                    if (
-                        !respostaEmail.ok ||
-                        !resultadoEmail.success
-                    ) {
-
-                        throw new Error(
-                            resultadoEmail.message ||
-                            "Não foi possível enviar a solicitação."
-                        );
-                    }
-
-
-                    /*
-                    ===========================================
-                    3. CONFIRMA O REGISTRO NO clientes.json
-                    ===========================================
-                    */
-
-                    const respostaConfirmacao =
-                        await fetch(
-                            "/confirmar-cliente",
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Accept":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify({
-                                        token: tokenReserva
-                                    })
-                            }
-                        );
-
-                    const resultadoConfirmacao =
-                        await lerRespostaJSON(
-                            respostaConfirmacao
-                        );
-
-                    if (
-                        !respostaConfirmacao.ok ||
-                        !resultadoConfirmacao.success
-                    ) {
-
-                        throw new Error(
-                            resultadoConfirmacao.message ||
-                            "A solicitação foi enviada, mas o registro não foi confirmado."
-                        );
-                    }
-
 
                     formulario.reset();
 
@@ -1098,15 +1102,18 @@ Solicitação recebida através da página MDS_TI.
                         "none";
 
                     mostrarMensagem(
-                        "Solicitação enviada com sucesso.",
+                        resultado.message ||
+                        "Solicitação realizada com sucesso.",
                         "sucesso"
                     );
 
                     conteudoTeste.textContent =
-                        "Seu teste MDS_TI foi liberado.\n\n" +
-                        "Este e-mail e WhatsApp foram registrados. " +
-                        "Uma nova solicitação com os mesmos dados " +
-                        "não será permitida.";
+                        resultado.template ||
+                        (
+                            "Seu teste foi gerado com sucesso. " +
+                            "Aguarde o atendimento para receber " +
+                            "os dados de acesso."
+                        );
 
                     resultadoTeste.className =
                         "resultado-teste ativo";
@@ -1114,18 +1121,8 @@ Solicitação recebida através da página MDS_TI.
                 } catch (erro) {
 
                     console.error(
-                        "Erro no envio:",
+                        "Erro na solicitação:",
                         erro
-                    );
-
-                    /*
-                    Se o e-mail não foi enviado, remove a reserva.
-                    Se o cliente já estava cadastrado, tokenReserva
-                    estará vazio e nenhum registro será removido.
-                    */
-
-                    await cancelarReserva(
-                        tokenReserva
                     );
 
                     mostrarMensagem(
