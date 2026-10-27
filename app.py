@@ -6,6 +6,7 @@ import smtplib
 import tempfile
 from datetime import datetime, timezone
 from email.message import EmailMessage
+from html import unescape
 from pathlib import Path
 
 import fcntl
@@ -17,7 +18,7 @@ app = Flask(__name__)
 
 
 # ============================================================
-# CAMINHOS
+# CAMINHOS DOS ARQUIVOS
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -28,7 +29,7 @@ ARQUIVO_LOCK = BASE_DIR / "clientes.lock"
 
 
 # ============================================================
-# CONFIGURAÇÕES DA API
+# CONFIGURAÇÕES GERAIS
 # ============================================================
 
 CLUB_INFINITY_API_URL = os.environ.get(
@@ -41,19 +42,30 @@ CLUB_INFINITY_API_URL = os.environ.get(
 # FUNÇÕES BÁSICAS
 # ============================================================
 
+def obter_variavel(nome, valor_padrao=""):
+
+    return os.environ.get(
+        nome,
+        valor_padrao
+    ).strip()
+
+
 def agora_iso():
+
     return datetime.now(
         timezone.utc
     ).isoformat()
 
 
 def normalizar_email(email):
+
     return str(
         email or ""
     ).strip().lower()
 
 
 def normalizar_celular(celular):
+
     return re.sub(
         r"\D",
         "",
@@ -62,6 +74,7 @@ def normalizar_celular(celular):
 
 
 def email_valido(email):
+
     padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
 
     return bool(
@@ -72,10 +85,13 @@ def email_valido(email):
     )
 
 
-def obter_variavel(nome):
-    return os.environ.get(
-        nome,
-        ""
+def texto_seguro(valor):
+
+    if valor is None:
+        return ""
+
+    return unescape(
+        str(valor)
     ).strip()
 
 
@@ -117,7 +133,7 @@ def carregar_clientes():
             return dados["clientes"]
 
         print(
-            "AVISO: formato inválido em clientes.json."
+            "AVISO: clientes.json possui formato inválido."
         )
 
         return []
@@ -199,7 +215,7 @@ def salvar_clientes(clientes):
 
 
 # ============================================================
-# BLOQUEIO DO ARQUIVO
+# LOCK DO ARQUIVO JSON
 # ============================================================
 
 def executar_com_lock(funcao):
@@ -231,7 +247,7 @@ def executar_com_lock(funcao):
 
 
 # ============================================================
-# VERIFICAÇÃO DE DUPLICIDADE
+# CONTROLE DE DUPLICIDADE
 # ============================================================
 
 def localizar_cliente(
@@ -309,7 +325,7 @@ def reservar_cliente(
             32
         )
 
-        clientes.append({
+        novo_cliente = {
             "id": secrets.token_hex(8),
             "token_reserva": token_reserva,
             "nome": nome,
@@ -318,7 +334,11 @@ def reservar_cliente(
             "status": "reservado",
             "criado_em": agora_iso(),
             "confirmado_em": None
-        })
+        }
+
+        clientes.append(
+            novo_cliente
+        )
 
         salvar_clientes(
             clientes
@@ -369,6 +389,11 @@ def confirmar_cliente(
                     None
                 )
 
+                cliente.pop(
+                    "token",
+                    None
+                )
+
                 salvar_clientes(
                     clientes
                 )
@@ -390,7 +415,7 @@ def cancelar_reserva(
 
         clientes = carregar_clientes()
 
-        novos_clientes = []
+        clientes_atualizados = []
 
         removido = False
 
@@ -403,7 +428,7 @@ def cancelar_reserva(
                 )
             )
 
-            corresponde = (
+            mesmo_token = (
                 token_salvo
                 and secrets.compare_digest(
                     token_salvo,
@@ -411,25 +436,28 @@ def cancelar_reserva(
                 )
             )
 
-            reservado = (
+            esta_reservado = (
                 cliente.get("status")
                 == "reservado"
             )
 
-            if corresponde and reservado:
+            if (
+                mesmo_token
+                and esta_reservado
+            ):
 
                 removido = True
 
                 continue
 
-            novos_clientes.append(
+            clientes_atualizados.append(
                 cliente
             )
 
         if removido:
 
             salvar_clientes(
-                novos_clientes
+                clientes_atualizados
             )
 
         return removido
@@ -460,22 +488,22 @@ def criar_teste():
     if not token_api:
 
         raise RuntimeError(
-            "CLUB_INFINITY_TOKEN não configurado."
+            "Token da integração não configurado."
         )
 
     if not server_id:
 
         raise RuntimeError(
-            "CLUB_INFINITY_SERVER_ID não configurado."
+            "Servidor do teste não configurado."
         )
 
     if not package_id:
 
         raise RuntimeError(
-            "CLUB_INFINITY_PACKAGE_ID não configurado."
+            "Pacote do teste não configurado."
         )
 
-    headers = {
+    cabecalhos = {
         "Authorization": f"Bearer {token_api}",
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -497,7 +525,7 @@ def criar_teste():
 
         resposta = requests.post(
             url,
-            headers=headers,
+            headers=cabecalhos,
             json=payload,
             timeout=30
         )
@@ -505,13 +533,20 @@ def criar_teste():
     except requests.Timeout as erro:
 
         raise RuntimeError(
-            "A criação do teste demorou para responder."
+            "O serviço de criação do teste demorou "
+            "demais para responder."
         ) from erro
 
     except requests.RequestException as erro:
 
+        print(
+            "ERRO DE CONEXÃO COM A API:",
+            repr(erro)
+        )
+
         raise RuntimeError(
-            "Não foi possível conectar ao serviço do teste."
+            "Não foi possível conectar ao serviço "
+            "de criação do teste."
         ) from erro
 
     try:
@@ -521,40 +556,54 @@ def criar_teste():
     except ValueError as erro:
 
         print(
-            "RESPOSTA NÃO JSON DA API:",
+            "RESPOSTA INVÁLIDA DA API:",
             resposta.status_code,
             resposta.text[:500]
         )
 
         raise RuntimeError(
-            "O serviço do teste retornou uma resposta inválida."
+            "O serviço de criação retornou "
+            "uma resposta inválida."
         ) from erro
 
     print(
-        "STATUS DA CRIAÇÃO DO TESTE:",
+        "STATUS API CLUB INFINITY:",
         resposta.status_code
     )
 
-    if resposta.status_code in (
-        401,
-        403
-    ):
+    if resposta.status_code == 401:
 
         raise RuntimeError(
-            "A autorização da API expirou ou foi recusada."
+            "A autorização da integração expirou "
+            "ou não é válida."
+        )
+
+    if resposta.status_code == 403:
+
+        raise RuntimeError(
+            "A integração não possui autorização "
+            "para criar o teste."
         )
 
     if not resposta.ok:
 
-        mensagem_api = str(
-            resultado.get(
-                "message",
-                "A API recusou a criação do teste."
-            )
+        mensagem_api = resultado.get(
+            "message",
+            "A criação do teste foi recusada."
         )
 
+        if isinstance(
+            mensagem_api,
+            list
+        ):
+
+            mensagem_api = " ".join(
+                str(item)
+                for item in mensagem_api
+            )
+
         raise RuntimeError(
-            mensagem_api
+            str(mensagem_api)
         )
 
     dados_teste = resultado.get(
@@ -567,96 +616,69 @@ def criar_teste():
     ):
 
         raise RuntimeError(
-            "A API não retornou os dados do teste."
+            "A integração não retornou os dados do teste."
         )
 
-    username = str(
-        dados_teste.get(
-            "username",
-            ""
-        )
-    ).strip()
+    usuario = texto_seguro(
+        dados_teste.get("username")
+    )
 
-    password = str(
-        dados_teste.get(
-            "password",
-            ""
-        )
-    ).strip()
+    senha = texto_seguro(
+        dados_teste.get("password")
+    )
 
-    if not username or not password:
+    if not usuario or not senha:
 
         raise RuntimeError(
-            "A API não retornou usuário e senha."
+            "O serviço não retornou usuário e senha."
         )
 
     return {
-        "id": str(
+        "id": texto_seguro(
+            dados_teste.get("id")
+        ),
+
+        "username": usuario,
+
+        "password": senha,
+
+        "expires_at": texto_seguro(
             dados_teste.get(
-                "id",
-                ""
+                "expires_at_tz"
             )
-        ).strip(),
-
-        "username": username,
-
-        "password": password,
-
-        "expires_at": str(
-            dados_teste.get(
-                "expires_at_tz",
-                dados_teste.get(
-                    "expires_at",
-                    ""
-                )
+            or dados_teste.get(
+                "expires_at"
             )
-        ).strip(),
+        ),
 
-        "status": str(
-            dados_teste.get(
-                "status",
-                ""
-            )
-        ).strip(),
+        "status": texto_seguro(
+            dados_teste.get("status")
+        ),
 
-        "server": str(
-            dados_teste.get(
-                "server",
-                ""
-            )
-        ).strip(),
+        "server": texto_seguro(
+            dados_teste.get("server")
+        ),
 
-        "package": str(
-            dados_teste.get(
-                "package",
-                ""
-            )
-        ).strip(),
+        "package": texto_seguro(
+            dados_teste.get("package")
+        ),
 
         "connections": dados_teste.get(
             "connections",
             1
         ),
 
-        "m3u_url": str(
-            dados_teste.get(
-                "m3u_url",
-                ""
-            )
-        ).replace(
-            "&amp;",
-            "&"
-        ).strip(),
+        "m3u_url": texto_seguro(
+            dados_teste.get("m3u_url")
+        ),
 
-        "m3u_url_short": str(
-            dados_teste.get(
-                "m3u_url_short",
-                ""
-            )
-        ).replace(
-            "&amp;",
-            "&"
-        ).strip()
+        "m3u_url_short": texto_seguro(
+            dados_teste.get("m3u_url_short")
+        ),
+
+        "renew_url": texto_seguro(
+            dados_teste.get("renew_url")
+        )
     }
 
 
@@ -684,12 +706,14 @@ def enviar_email_teste(
     )
 
     smtp_host = obter_variavel(
-        "SMTP_HOST"
-    ) or "smtp.office365.com"
+        "SMTP_HOST",
+        "smtp.office365.com"
+    )
 
     smtp_port_texto = obter_variavel(
-        "SMTP_PORT"
-    ) or "587"
+        "SMTP_PORT",
+        "587"
+    )
 
     try:
 
@@ -704,19 +728,19 @@ def enviar_email_teste(
     if not email_user:
 
         raise RuntimeError(
-            "EMAIL_USER não configurado."
+            "EMAIL_USER não configurado no Render."
         )
 
     if not email_password:
 
         raise RuntimeError(
-            "EMAIL_PASSWORD não configurado."
+            "EMAIL_PASSWORD não configurado no Render."
         )
 
     if not email_destino:
 
         raise RuntimeError(
-            "EMAIL_DESTINO não configurado."
+            "EMAIL_DESTINO não configurado no Render."
         )
 
     mensagem = EmailMessage()
@@ -724,6 +748,8 @@ def enviar_email_teste(
     mensagem["From"] = email_user
 
     mensagem["To"] = email_destino
+
+    mensagem["Reply-To"] = email_cliente
 
     mensagem["Subject"] = (
         f"Novo teste MDS_TI | {nome}"
@@ -763,11 +789,19 @@ Link M3U:
 Link M3U curto:
 {teste.get("m3u_url_short", "")}
 
+Link de renovação:
+{teste.get("renew_url", "")}
+
 =====================================
 
-Os dados acima não foram gravados no clientes.json.
-O clientes.json contém somente os dados necessários
-para impedir solicitações repetidas.
+Os dados do teste não foram gravados no clientes.json.
+
+O clientes.json armazena somente:
+- nome;
+- e-mail;
+- WhatsApp;
+- status da solicitação;
+- datas do registro.
 """
 
     mensagem.set_content(
@@ -799,19 +833,38 @@ para impedir solicitações repetidas.
 
     except smtplib.SMTPAuthenticationError as erro:
 
+        print(
+            "ERRO DE AUTENTICAÇÃO SMTP:",
+            repr(erro)
+        )
+
         raise RuntimeError(
             "O servidor de e-mail recusou "
             "o usuário ou a senha."
         ) from erro
 
-    except (
-        smtplib.SMTPException,
-        OSError
-    ) as erro:
+    except smtplib.SMTPException as erro:
+
+        print(
+            "ERRO SMTP:",
+            repr(erro)
+        )
 
         raise RuntimeError(
             "Não foi possível enviar os dados "
-            "do teste por e-mail."
+            "do teste para o e-mail configurado."
+        ) from erro
+
+    except OSError as erro:
+
+        print(
+            "ERRO DE CONEXÃO SMTP:",
+            repr(erro)
+        )
+
+        raise RuntimeError(
+            "Não foi possível conectar ao "
+            "servidor de e-mail."
         ) from erro
 
 
@@ -847,7 +900,7 @@ def health():
 
 
 # ============================================================
-# SOLICITAR TESTE
+# SOLICITAÇÃO DO TESTE
 # ============================================================
 
 @app.route(
@@ -922,13 +975,14 @@ def solicitar_teste():
                 "duplicate": True,
                 "message": resultado_reserva.get(
                     "message",
-                    "Solicitação já realizada."
+                    "Esta solicitação já foi realizada."
                 )
             }), 409
 
-        token_reserva = resultado_reserva[
-            "token"
-        ]
+        token_reserva = resultado_reserva.get(
+            "token",
+            ""
+        )
 
         teste = criar_teste()
 
@@ -941,9 +995,16 @@ def solicitar_teste():
             teste=teste
         )
 
-        confirmar_cliente(
+        confirmado = confirmar_cliente(
             token_reserva
         )
+
+        if not confirmado:
+
+            print(
+                "AVISO: teste enviado, mas o registro "
+                "do cliente não foi confirmado."
+            )
 
         return jsonify({
             "success": True,
@@ -964,39 +1025,87 @@ def solicitar_teste():
             repr(erro)
         )
 
-        /*
-        Este comentário não deve existir em Python.
-        */
-
         if token_reserva:
 
             if teste_gerado:
 
-                /*
-                Se o teste já foi criado, não removemos
-                a reserva. Isso evita gerar outro teste
-                repetido caso somente o e-mail tenha falhado.
-                */
+                # O teste já foi criado.
+                # O registro é confirmado para impedir
+                # uma segunda criação do mesmo cliente.
 
-                confirmar_cliente(
-                    token_reserva
-                )
+                try:
+
+                    confirmar_cliente(
+                        token_reserva
+                    )
+
+                except Exception as erro_confirmacao:
+
+                    print(
+                        "ERRO AO CONFIRMAR APÓS FALHA:",
+                        repr(erro_confirmacao)
+                    )
 
             else:
 
-                cancelar_reserva(
-                    token_reserva
-                )
+                # Nenhum teste foi criado.
+                # A reserva pode ser removida para permitir
+                # uma nova tentativa.
 
-        return jsonify({
-            "success": False,
-            "message": str(
-                erro
-            ) or (
+                try:
+
+                    cancelar_reserva(
+                        token_reserva
+                    )
+
+                except Exception as erro_cancelamento:
+
+                    print(
+                        "ERRO AO CANCELAR RESERVA:",
+                        repr(erro_cancelamento)
+                    )
+
+        mensagem_erro = str(
+            erro
+        ).strip()
+
+        if not mensagem_erro:
+
+            mensagem_erro = (
                 "Não foi possível processar "
                 "a solicitação."
             )
+
+        return jsonify({
+            "success": False,
+            "message": mensagem_erro
         }), 500
+
+
+# ============================================================
+# ERRO 404
+# ============================================================
+
+@app.errorhandler(404)
+def pagina_nao_encontrada(erro):
+
+    return jsonify({
+        "success": False,
+        "message": "Rota não encontrada."
+    }), 404
+
+
+# ============================================================
+# ERRO 405
+# ============================================================
+
+@app.errorhandler(405)
+def metodo_nao_permitido(erro):
+
+    return jsonify({
+        "success": False,
+        "message": "Método não permitido nesta rota."
+    }), 405
 
 
 # ============================================================
