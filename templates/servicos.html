@@ -16,7 +16,7 @@
 
     <meta
         name="description"
-        content="Serviços MDS_TI - Informática, redes, Wi-Fi, receptores e antenas."
+        content="Serviços MDS_TI - Informática, redes, Wi-Fi, criação de sites, receptores e antenas."
     >
 
     <title>Serviços | MDS_TI</title>
@@ -103,11 +103,8 @@
 
         .barra {
             position: sticky;
-
             z-index: 1000;
-
             top: 0;
-
             width: 100%;
 
             padding:
@@ -170,7 +167,6 @@
         .logo {
             display: flex;
             align-items: center;
-
             gap: 12px;
         }
 
@@ -275,7 +271,6 @@
         .menu {
             display: flex;
             align-items: center;
-
             gap: 9px;
         }
 
@@ -791,14 +786,150 @@
 
         /*
         =====================================================
+        CARD CRIAÇÃO DE SITES
+        =====================================================
+        */
+
+        .site-card {
+            border-color:
+                rgba(
+                    22,
+                    184,
+                    255,
+                    0.55
+                );
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        8,
+                        82,
+                        145,
+                        0.92
+                    ),
+                    rgba(
+                        3,
+                        25,
+                        55,
+                        0.98
+                    )
+                );
+        }
+
+
+        .site-card::before {
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--azul-neon),
+                    var(--dourado),
+                    transparent
+                );
+        }
+
+
+        .site-card .servico-icone {
+            border-color:
+                rgba(
+                    22,
+                    184,
+                    255,
+                    0.70
+                );
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        22,
+                        184,
+                        255,
+                        0.25
+                    ),
+                    rgba(
+                        255,
+                        201,
+                        40,
+                        0.12
+                    )
+                );
+        }
+
+
+        .site-opcoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 17px;
+        }
+
+
+        .site-opcao {
+            padding:
+                6px
+                10px;
+
+            border:
+                1px solid
+                rgba(
+                    22,
+                    184,
+                    255,
+                    0.36
+                );
+
+            border-radius: 20px;
+
+            background:
+                rgba(
+                    0,
+                    127,
+                    209,
+                    0.12
+                );
+
+            color: #d9f3ff;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .site-opcao.pago {
+            border-color:
+                rgba(
+                    255,
+                    201,
+                    40,
+                    0.40
+                );
+
+            background:
+                rgba(
+                    255,
+                    201,
+                    40,
+                    0.10
+                );
+
+            color: var(--dourado-claro);
+        }
+
+
+        /*
+        =====================================================
         CHAMADA DE CONTATO
         =====================================================
         */
 
         .chamada {
-            width: calc(
-                100% - 44px
-            );
+            width:
+                calc(
+                    100% - 44px
+                );
 
             max-width: 1136px;
 
@@ -940,9 +1071,7 @@
 
         .botoes {
             display: flex;
-
             justify-content: center;
-
             flex-wrap: wrap;
 
             gap: 10px;
@@ -1153,11 +1282,6 @@
             }
 
 
-            /*
-            No celular existem somente dois botões:
-            Início e WhatsApp.
-            */
-
             .menu {
                 width: 100%;
 
@@ -1277,12 +1401,7 @@
         <div class="barra-conteudo">
 
 
-            <!-- LOGO -->
-
-            <a
-                class="logo"
-                href="/"
-            >
+            /
 
                 <span class="logo-icone">
                     M
@@ -1303,21 +1422,14 @@
             </a>
 
 
-            <!-- SOMENTE INÍCIO + CONTATO -->
-
             <nav class="menu">
 
-                <a
-                    class="menu-link"
-                    href="/"
-                >
+                /
                     🏠 VOLTAR AO INÍCIO
                 </a>
 
 
-                <a
-                    class="menu-link whatsapp"
-                    href="/">
+                https://wa.me/5511977937889?text=Olá%20MDS_TI!%20Gostaria%20de%20mais%20informações%20sobre%20os%20serviços.
                     💬 CONTATO WHATSAPP
                 </a>
 
@@ -1353,12 +1465,13 @@
 
         <p>
 
-            Serviços de informática, conectividade,
-            redes e equipamentos para sua casa ou negócio.
+            Serviços de informática, conectividade, redes,
+            criação de sites e equipamentos para sua casa
+            ou negócio.
 
-            Atendimento focado em configuração,
-            instalação e funcionamento adequado dos
-            seus equipamentos.
+            Atendimento focado em soluções práticas,
+            configuração, instalação, presença digital
+            e funcionamento adequado dos seus equipamentos.
 
         </p>
 
@@ -1419,6 +1532,46 @@
                     preparando o equipamento para voltar
                     ao uso.
                 </p>
+
+            </article>
+
+
+
+            <!-- CRIAÇÃO DE SITES -->
+
+            <article class="servico site-card">
+
+                <div class="servico-icone">
+                    🌐
+                </div>
+
+                <h2>
+                    Criação de Sites
+                </h2>
+
+                <p>
+                    Desenvolvimento de sites modernos e
+                    responsivos para divulgação de serviços,
+                    negócios, projetos, produtos e presença
+                    profissional na internet.
+
+                    Opções para projetos de visualização
+                    gratuita ou soluções profissionais
+                    pagas, de acordo com a necessidade
+                    de cada cliente.
+                </p>
+
+                <div class="site-opcoes">
+
+                    <span class="site-opcao">
+                        ✓ OPÇÃO FREE
+                    </span>
+
+                    <span class="site-opcao pago">
+                        ★ OPÇÃO PROFISSIONAL
+                    </span>
+
+                </div>
 
             </article>
 
@@ -1574,8 +1727,8 @@
                 </h2>
 
                 <p>
-                    Precisa de ajuda com algum equipamento
-                    ou configuração que não encontrou
+                    Precisa de ajuda com algum equipamento,
+                    site ou configuração que não encontrou
                     nesta lista?
 
                     Entre em contato com a MDS_TI para
@@ -1618,7 +1771,8 @@
 
             Fale diretamente com a MDS_TI pelo WhatsApp
             para solicitar informações sobre os serviços,
-            tirar dúvidas e consultar disponibilidade.
+            criação de sites, tirar dúvidas e consultar
+            disponibilidade.
 
         </p>
 
@@ -1631,17 +1785,12 @@
         <div class="botoes">
 
 
-            <a
-                class="botao whatsapp"
-                href="/">
+            https://wa.me/5511977937889?text=Olá%20MDS_TI!%20Gostaria%20de%20solicitar%20informações%20sobre%20um%20serviço.
                 💬 FALAR COM A MDS_TI
             </a>
 
 
-            <a
-                class="botao"
-                href="/"
-            >
+            /
                 🏠 VOLTAR AO INÍCIO
             </a>
 
