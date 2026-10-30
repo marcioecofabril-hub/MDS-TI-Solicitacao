@@ -69,14 +69,382 @@
 
         /*
         =====================================================
+        POPUP DE ABERTURA
+        =====================================================
+        */
+
+        .popup-promocao {
+            position: fixed;
+            z-index: 99999;
+
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(
+                    0,
+                    4,
+                    14,
+                    0.82
+                );
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            opacity: 1;
+            visibility: visible;
+
+            transition:
+                opacity 0.35s ease,
+                visibility 0.35s ease;
+        }
+
+        .popup-promocao.fechado {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .popup-conteudo {
+            position: relative;
+
+            width: min(
+                92vw,
+                760px
+            );
+
+            max-height: 92vh;
+
+            animation:
+                abrirPopup
+                0.55s
+                cubic-bezier(
+                    0.17,
+                    0.67,
+                    0.25,
+                    1.20
+                )
+                both;
+        }
+
+        @keyframes abrirPopup {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    scale(0.88)
+                    translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+            }
+        }
+
+        .popup-imagem {
+            display: block;
+
+            width: 100%;
+            max-height: 88vh;
+
+            object-fit: contain;
+
+            border:
+                2px solid
+                rgba(
+                    10,
+                    167,
+                    255,
+                    0.70
+                );
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 28px 75px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.72
+                ),
+
+                0 0 45px
+                rgba(
+                    0,
+                    153,
+                    255,
+                    0.28
+                );
+        }
+
+        .popup-fechar {
+            position: absolute;
+
+            z-index: 10;
+
+            top: -13px;
+            right: -13px;
+
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+
+            border:
+                2px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.70
+                );
+
+            border-radius: 50%;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e63131,
+                    #9d1010
+                );
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 23px;
+            font-weight: 900;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 22px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.48
+                );
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .popup-fechar:hover {
+            transform:
+                scale(1.08);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4949,
+                    #b81313
+                );
+        }
+
+        .popup-fechar:active {
+            transform:
+                scale(0.95);
+        }
+
+
+        /*
+        =====================================================
+        BOTÃO FLUTUANTE PROMOÇÃO
+        =====================================================
+        */
+
+        .promocao-flutuante {
+            position: fixed;
+
+            z-index: 5000;
+
+            right: 22px;
+            bottom: 22px;
+
+            min-height: 54px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding:
+                0
+                19px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    225,
+                    95,
+                    0.85
+                );
+
+            border-radius: 999px;
+
+            color: #071426;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe350,
+                    #ff9f0a
+                );
+
+            font-size: 13px;
+            font-weight: 900;
+
+            letter-spacing: 0.4px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.40
+                ),
+
+                0 0 25px
+                rgba(
+                    255,
+                    184,
+                    0,
+                    0.32
+                );
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+            animation:
+                pulsarPromocao
+                2.5s
+                ease-in-out
+                infinite;
+        }
+
+        .promocao-flutuante:hover {
+            transform:
+                translateY(-3px)
+                scale(1.03);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff087,
+                    #ffb41e
+                );
+
+            box-shadow:
+                0 16px 36px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.44
+                ),
+
+                0 0 32px
+                rgba(
+                    255,
+                    190,
+                    0,
+                    0.44
+                );
+        }
+
+        .promocao-flutuante:active {
+            transform:
+                scale(0.97);
+        }
+
+        .promocao-flutuante-icone {
+            font-size: 20px;
+        }
+
+        @keyframes pulsarPromocao {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 12px 30px
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.40
+                    ),
+
+                    0 0 18px
+                    rgba(
+                        255,
+                        184,
+                        0,
+                        0.20
+                    );
+            }
+
+            50% {
+                box-shadow:
+                    0 12px 30px
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.40
+                    ),
+
+                    0 0 32px
+                    rgba(
+                        255,
+                        184,
+                        0,
+                        0.48
+                    );
+            }
+        }
+
+
+        /*
+        =====================================================
         PÁGINA
         =====================================================
         */
 
         .pagina {
             position: relative;
+
             width: 100%;
             min-height: 100vh;
+
             overflow: hidden;
 
             background:
@@ -182,7 +550,11 @@
             top: 18px;
             left: 50%;
 
-            width: calc(100% - 40px);
+            width:
+                calc(
+                    100% - 40px
+                );
+
             max-width: 1180px;
 
             min-height: 74px;
@@ -201,7 +573,12 @@
 
             border:
                 1px solid
-                rgba(74, 186, 255, 0.38);
+                rgba(
+                    74,
+                    186,
+                    255,
+                    0.38
+                );
 
             border-radius: 20px;
 
@@ -213,14 +590,38 @@
                 );
 
             box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.48),
-                0 0 28px rgba(0, 126, 255, 0.14),
-                inset 0 1px 0 rgba(255, 255, 255, 0.10);
+                0 18px 45px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.48
+                ),
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+                0 0 28px
+                rgba(
+                    0,
+                    126,
+                    255,
+                    0.14
+                ),
 
-            transform: translateX(-50%);
+                inset 0 1px 0
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            transform:
+                translateX(-50%);
 
             animation:
                 entradaBarra
@@ -276,7 +677,12 @@
 
             border:
                 1px solid
-                rgba(255, 215, 62, 0.65);
+                rgba(
+                    255,
+                    215,
+                    62,
+                    0.65
+                );
 
             border-radius: 13px;
 
@@ -294,7 +700,12 @@
 
             box-shadow:
                 0 0 23px
-                rgba(255, 187, 0, 0.30);
+                rgba(
+                    255,
+                    187,
+                    0,
+                    0.30
+                );
         }
 
         .marca-icone::after {
@@ -319,6 +730,7 @@
 
         .marca-textos {
             display: flex;
+
             flex-direction: column;
         }
 
@@ -380,7 +792,12 @@
 
             border:
                 1px solid
-                rgba(65, 177, 255, 0.45);
+                rgba(
+                    65,
+                    177,
+                    255,
+                    0.45
+                );
 
             border-radius: 12px;
 
@@ -399,8 +816,21 @@
             letter-spacing: 0.2px;
 
             box-shadow:
-                0 7px 18px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                0 7px 18px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.25
+                ),
+
+                inset 0 1px 0
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
 
             cursor: pointer;
 
@@ -424,17 +854,36 @@
                 );
 
             box-shadow:
-                0 10px 27px rgba(0, 126, 255, 0.30),
-                0 0 17px rgba(0, 174, 255, 0.20);
+                0 10px 27px
+                rgba(
+                    0,
+                    126,
+                    255,
+                    0.30
+                ),
+
+                0 0 17px
+                rgba(
+                    0,
+                    174,
+                    255,
+                    0.20
+                );
         }
 
         .botao-menu:active {
-            transform: translateY(0);
+            transform:
+                translateY(0);
         }
 
         .botao-menu.pagamento {
             border-color:
-                rgba(255, 207, 48, 0.68);
+                rgba(
+                    255,
+                    207,
+                    48,
+                    0.68
+                );
 
             background:
                 linear-gradient(
@@ -444,25 +893,15 @@
                 );
 
             color: #071a30;
-
-            box-shadow:
-                0 8px 22px
-                rgba(255, 174, 0, 0.24);
         }
 
         .botao-menu.pagamento:hover {
-            border-color: #fff0a2;
-
             background:
                 linear-gradient(
                     135deg,
                     #ffe066,
                     #ffae0d
                 );
-
-            box-shadow:
-                0 12px 29px rgba(255, 179, 0, 0.38),
-                0 0 18px rgba(255, 217, 73, 0.20);
         }
 
         .botao-icone {
@@ -499,7 +938,12 @@
 
             border:
                 1px solid
-                rgba(77, 183, 255, 0.36);
+                rgba(
+                    77,
+                    183,
+                    255,
+                    0.36
+                );
 
             border-radius: 20px;
 
@@ -511,31 +955,27 @@
                 );
 
             box-shadow:
-                0 22px 55px rgba(0, 0, 0, 0.43),
-                0 0 32px rgba(0, 124, 255, 0.14);
+                0 22px 55px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.43
+                ),
 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+                0 0 32px
+                rgba(
+                    0,
+                    124,
+                    255,
+                    0.14
+                );
 
-            animation:
-                entradaPainel
-                0.85s
-                0.25s
-                ease
-                both;
-        }
+            backdrop-filter:
+                blur(16px);
 
-        @keyframes entradaPainel {
-
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            -webkit-backdrop-filter:
+                blur(16px);
         }
 
 
@@ -559,7 +999,12 @@
 
             border:
                 1px solid
-                rgba(85, 181, 255, 0.30);
+                rgba(
+                    85,
+                    181,
+                    255,
+                    0.30
+                );
 
             border-radius: 14px;
 
@@ -570,10 +1015,6 @@
                     rgba(3, 24, 54, 0.96)
                 );
 
-            box-shadow:
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.07);
-
             transition:
                 transform 0.2s ease,
                 border-color 0.2s ease,
@@ -581,26 +1022,26 @@
         }
 
         .acao:hover {
-            transform: translateY(-3px);
+            transform:
+                translateY(-3px);
 
             border-color:
-                rgba(87, 215, 255, 0.80);
-
-            box-shadow:
-                0 12px 27px rgba(0, 98, 210, 0.28),
-                0 0 20px rgba(0, 167, 255, 0.16);
+                rgba(
+                    87,
+                    215,
+                    255,
+                    0.80
+                );
         }
-
-
-        /*
-        =====================================================
-        CARD PAGAMENTO
-        =====================================================
-        */
 
         .acao.pagamento {
             border-color:
-                rgba(255, 205, 47, 0.55);
+                rgba(
+                    255,
+                    205,
+                    47,
+                    0.55
+                );
 
             background:
                 linear-gradient(
@@ -608,14 +1049,6 @@
                     rgba(82, 54, 2, 0.95),
                     rgba(38, 26, 2, 0.97)
                 );
-        }
-
-        .acao.pagamento:hover {
-            border-color: var(--dourado);
-
-            box-shadow:
-                0 12px 28px rgba(255, 179, 0, 0.27),
-                0 0 20px rgba(255, 211, 52, 0.16);
         }
 
 
@@ -637,22 +1070,43 @@
 
             border:
                 1px solid
-                rgba(91, 204, 255, 0.45);
+                rgba(
+                    91,
+                    204,
+                    255,
+                    0.45
+                );
 
             border-radius: 13px;
 
             background:
-                rgba(0, 137, 231, 0.17);
+                rgba(
+                    0,
+                    137,
+                    231,
+                    0.17
+                );
 
             font-size: 23px;
         }
 
-        .acao.pagamento .acao-icone {
+        .acao.pagamento
+        .acao-icone {
             border-color:
-                rgba(255, 213, 58, 0.62);
+                rgba(
+                    255,
+                    213,
+                    58,
+                    0.62
+                );
 
             background:
-                rgba(255, 183, 0, 0.16);
+                rgba(
+                    255,
+                    183,
+                    0,
+                    0.16
+                );
         }
 
 
@@ -676,8 +1130,6 @@
 
             font-size: 14px;
             font-weight: 900;
-
-            letter-spacing: 0.3px;
         }
 
         .acao-descricao {
@@ -688,7 +1140,8 @@
             line-height: 1.35;
         }
 
-        .acao.pagamento .acao-titulo {
+        .acao.pagamento
+        .acao-titulo {
             color: var(--dourado-claro);
         }
 
@@ -739,16 +1192,15 @@
             }
 
             .botao-menu {
-                padding: 0 13px;
+                padding:
+                    0
+                    13px;
+
                 font-size: 11px;
             }
 
             .painel-acoes {
                 max-width: 760px;
-            }
-
-            .acao-descricao {
-                display: none;
             }
         }
 
@@ -760,6 +1212,48 @@
         */
 
         @media (max-width: 680px) {
+
+            .popup-promocao {
+                padding: 13px;
+            }
+
+            .popup-conteudo {
+                width: 94vw;
+                max-height: 90vh;
+            }
+
+            .popup-imagem {
+                max-height: 88vh;
+
+                border-radius: 15px;
+            }
+
+            .popup-fechar {
+                top: -8px;
+                right: -5px;
+
+                width: 40px;
+                height: 40px;
+
+                font-size: 21px;
+            }
+
+            .promocao-flutuante {
+                right: 13px;
+                bottom: 13px;
+
+                min-height: 48px;
+
+                padding:
+                    0
+                    15px;
+
+                font-size: 11px;
+            }
+
+            .promocao-flutuante-icone {
+                font-size: 17px;
+            }
 
             .barra-superior {
                 top: 9px;
@@ -780,6 +1274,7 @@
 
             .marca {
                 justify-content: center;
+
                 margin-bottom: 10px;
             }
 
@@ -827,20 +1322,6 @@
                 font-size: 14px;
             }
 
-
-            /*
-            ================================================
-            BANNER NO CELULAR
-            ================================================
-
-            Mantemos o preenchimento total para não criar
-            aquele grande espaço vazio da versão anterior.
-
-            A posição vertical foi ajustada para mostrar
-            uma região um pouco melhor da arte.
-            ================================================
-            */
-
             .hero {
                 min-height: 100svh;
 
@@ -860,13 +1341,6 @@
                 background-repeat:
                     no-repeat;
             }
-
-
-            /*
-            ================================================
-            CARDS INFERIORES
-            ================================================
-            */
 
             .painel-acoes {
                 width: 100%;
@@ -903,8 +1377,6 @@
             }
 
             .acao-descricao {
-                display: block;
-
                 font-size: 10px;
             }
 
@@ -916,7 +1388,7 @@
 
         /*
         =====================================================
-        TELAS MUITO PEQUENAS
+        TELAS PEQUENAS
         =====================================================
         */
 
@@ -937,6 +1409,15 @@
             .hero {
                 padding-top: 125px;
             }
+
+            .promocao-flutuante {
+                right: 10px;
+                bottom: 10px;
+
+                padding:
+                    0
+                    13px;
+            }
         }
 
 
@@ -946,14 +1427,25 @@
         =====================================================
         */
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (
+            prefers-reduced-motion:
+            reduce
+        ) {
 
             *,
             *::before,
             *::after {
-                animation: none !important;
-                transition: none !important;
-                scroll-behavior: auto !important;
+                animation:
+                    none
+                    !important;
+
+                transition:
+                    none
+                    !important;
+
+                scroll-behavior:
+                    auto
+                    !important;
             }
         }
 
@@ -962,6 +1454,69 @@
 </head>
 
 <body>
+
+
+    <!-- ===================================================
+         POPUP PROMOCIONAL DE ABERTURA
+    ==================================================== -->
+
+    <div
+        class="popup-promocao"
+        id="popup-promocao"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Promoção MDS_TI"
+    >
+
+        <div class="popup-conteudo">
+
+            <button
+                type="button"
+                class="popup-fechar"
+                id="popup-fechar"
+                aria-label="Fechar promoção"
+                title="Fechar"
+            >
+                ×
+            </button>
+
+            <img
+                class="popup-imagem"
+                src="/static/banner-mds-ti.png"
+                alt="Banner promocional MDS_TI"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         BOTÃO FLUTUANTE DA PROMOÇÃO
+    ==================================================== -->
+
+    <a
+        class="promocao-flutuante"
+        href="https://pagamento-pix-ti.onrender.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Acessar promoção MDS_TI"
+        title="Acessar promoção"
+    >
+
+        <span
+            class="promocao-flutuante-icone"
+            aria-hidden="true"
+        >
+            🔥
+        </span>
+
+        <span>
+            PROMOÇÃO
+        </span>
+
+    </a>
+
 
     <main class="pagina">
 
@@ -1007,8 +1562,6 @@
                 aria-label="Menu principal"
             >
 
-                <!-- TESTE -->
-
                 <a
                     class="botao-menu"
                     href="/teste"
@@ -1027,8 +1580,6 @@
 
                 </a>
 
-
-                <!-- PAGAMENTO -->
 
                 <a
                     class="botao-menu pagamento"
@@ -1050,8 +1601,6 @@
 
                 </a>
 
-
-                <!-- SERVIÇOS -->
 
                 <a
                     class="botao-menu"
@@ -1085,13 +1634,8 @@
             aria-label="Portal MDS_TI"
         >
 
-
-            <!-- PAINEL INFERIOR -->
-
             <div class="painel-acoes">
 
-
-                <!-- FAÇA SEU TESTE -->
 
                 <a
                     class="acao"
@@ -1121,8 +1665,6 @@
                 </a>
 
 
-                <!-- PAGAMENTO -->
-
                 <a
                     class="acao pagamento"
                     href="https://pagamento-pix-ti.onrender.com/"
@@ -1151,8 +1693,6 @@
 
                 </a>
 
-
-                <!-- SERVIÇOS -->
 
                 <a
                     class="acao"
@@ -1194,8 +1734,68 @@
             MDS_TI • CONECTANDO O PRESENTE A UM FUTURO MELHOR
         </footer>
 
-
     </main>
+
+
+    <!-- ===================================================
+         CONTROLE DO POPUP
+    ==================================================== -->
+
+    <script>
+
+        (function () {
+
+            "use strict";
+
+            const popup =
+                document.getElementById(
+                    "popup-promocao"
+                );
+
+            const closeButton =
+                document.getElementById(
+                    "popup-fechar"
+                );
+
+
+            function closePromotion() {
+
+                popup.classList.add(
+                    "fechado"
+                );
+
+                document.body.style.overflow =
+                    "";
+
+            }
+
+
+            closeButton.addEventListener(
+                "click",
+                closePromotion
+            );
+
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        closePromotion();
+                    }
+                }
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        })();
+
+    </script>
 
 </body>
 
